@@ -1,0 +1,271 @@
+#include "GameStatePlaying.h"
+#include "Application.h"
+#include "Block.h"
+#include "Game.h"
+#include "Text.h"
+
+
+#include <assert.h>
+#include <sstream>
+
+namespace Ryzharto_ArcanoidGame
+{
+	void GameStatePlayingData::Init()
+	{
+		// Init game resources (terminate if error)
+		assert(font.loadFromFile(SETTINGS.RESOURCES_PATH + "Fonts/Roboto-Regular.ttf"));
+		assert(gameOverSoundBuffer.loadFromFile(SETTINGS.RESOURCES_PATH + "Death.wav"));
+		assert(gameWinSoundBuffer.loadFromFile(SETTINGS.RESOURCES_PATH + "tada-fanfare.wav"));
+		assert(backgroundTexture.loadFromFile(SETTINGS.RESOURCES_PATH + "CatsPaw_Nebula.jpg"));
+
+		// Init Factories
+		factories.emplace(BlockType::Simple, std::make_unique<SimpleBlockFactory>());
+		factories.emplace(BlockType::ThreeHit, std::make_unique<ThreeHitBlockFactory>());
+		factories.emplace(BlockType::Unbreakable, std::make_unique<UnbreakableBlockFactory>());
+
+		// Init background
+		InitSprite(background, SETTINGS.SCREEN_WIDTH, SETTINGS.SCREEN_HEIGHT, backgroundTexture);
+		background.setPosition(SETTINGS.SCREEN_WIDTH / 2, SETTINGS.SCREEN_HEIGHT / 2);
+
+		scoreText.setFont(font);
+		scoreText.setCharacterSize(24);
+		scoreText.setFillColor(sf::Color::Yellow);
+
+		inputHintText.setFont(font);
+		inputHintText.setCharacterSize(24);
+		inputHintText.setFillColor(sf::Color::White);
+		inputHintText.setString("Use arrow keys to move, ESC to pause");
+		inputHintText.setOrigin(GetTextOrigin(inputHintText, { 1.f, 0.f }));
+
+		// Init game objects
+		gameObjects.emplace_back(std::make_shared<Platform>(sf::Vector2f({ SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT - SETTINGS.PLATFORM_HEIGHT / 2.f })));
+		auto ball = std::make_shared<Ball>(sf::Vector2f({ SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT - SETTINGS.PLATFORM_HEIGHT - SETTINGS.BALL_SIZE / 2.f }));
+		ball->AddObserver(weak_from_this());
+		gameObjects.emplace_back(ball);
+		
+		CreateBlocks();
+
+		// Init Sounds
+		gameOverSound.setBuffer(gameOverSoundBuffer);
+		gameWinSound.setBuffer(gameWinSoundBuffer);
+	}
+
+	void GameStatePlayingData::HandleWindowEvent(const sf::Event& event)
+	{
+		if (event.type == sf::Event::KeyPressed)
+		{
+			if (event.key.code == sf::Keyboard::Escape)
+			{
+				Application::Instance().GetGame().PauseGame();
+			}
+		}
+	}
+
+	void GameStatePlayingData::Update(float timeDelta)
+	{
+		static auto updateFunctor = [timeDelta](auto obj) { obj->Update(timeDelta); };
+
+		std::for_each(gameObjects.begin(), gameObjects.end(), updateFunctor);
+		std::for_each(blocks.begin(), blocks.end(), updateFunctor);
+
+		std::shared_ptr<Platform> platform = std::dynamic_pointer_cast<Platform>(gameObjects[0]);
+		std::shared_ptr<Ball> ball = std::dynamic_pointer_cast<Ball>(gameObjects[1]);
+
+		// Check platform collision with ball
+		auto isCollision = platform->CheckCollision(ball);
+
+		// Blocks collision logic
+		bool needInverseDirX = false;
+		bool needInverseDirY = false;
+
+		bool hasBrokeOneBlock = false;
+
+		blocks.erase(
+			std::remove_if(blocks.begin(), blocks.end(),
+				[ball, &hasBrokeOneBlock, &needInverseDirX, &needInverseDirY, this](auto block)
+				{
+					if ((!hasBrokeOneBlock) && block->CheckCollision(ball))
+					{
+						hasBrokeOneBlock = true;
+						const auto ballPos = ball->GetPosition();
+						const auto blockRect = block->GetRect();
+						
+						if (!dynamic_cast<GlassBlock*>(block.get()))
+							GetBallInverse(ballPos, blockRect, needInverseDirX, needInverseDirY);
+					}
+					// Count score
+					if (block->IsBroken())
+					{
+						score++;
+						//std::cout << "Score: " << score << "\n";
+						return true;
+					}
+					//return block->IsBroken();
+					return false;
+				}),
+			blocks.end()
+		);
+
+		if (needInverseDirX)
+		{
+			ball->InvertDirectionX();
+		}
+		if (needInverseDirY)
+		{
+			ball->InvertDirectionY();
+		}
+
+		/*// Game won condition
+		//const bool isGameWin = blocks.empty();
+		const bool isGameWin = blocks.size() <= breakableBlocksCount;
+		const bool isGameWin = std::all_of(blocks.begin(), blocks.end(), [](const auto& block)
+			{
+				return dynamic_cast<UnbreakableBlock*>(block.get()) != nullptr;
+			});
+		// GameOver condition
+		const bool isGameOver = !isCollision && ball->GetPosition().y > platform->GetRect().top;
+
+		Game& game = Application::Instance().GetGame();
+		
+		// Game won state
+		if (isGameWin)
+		{
+			gameWinSound.play();
+			game.LoadNextLevel();
+
+			// Find player in records table and update his score
+			//game.UpdateRecord(SETTINGS.PLAYER_NAME, score);
+		}
+		// GameOver state
+		else if (isGameOver)
+		{
+			gameOverSound.play();
+
+			// Find player in records table and update his score
+			//game.UpdateRecord(SETTINGS.PLAYER_NAME, score);
+			game.LooseGame();
+		}*/
+	}
+
+	void GameStatePlayingData::Draw(sf::RenderWindow& window)
+	{
+		// Draw background
+		window.draw(background);
+
+		static auto drawFunc = [&window](auto block) { block->Draw(window); };
+		// Draw game objects
+		std::for_each(gameObjects.begin(), gameObjects.end(), drawFunc);
+		std::for_each(blocks.begin(), blocks.end(), drawFunc);
+
+		scoreText.setOrigin(GetTextOrigin(scoreText, { 0.f, 0.f }));
+		scoreText.setPosition(10.f, 10.f);
+		window.draw(scoreText);
+
+		sf::Vector2f viewSize = window.getView().getSize();
+		inputHintText.setPosition(viewSize.x - 10.f, 10.f);
+		window.draw(inputHintText);
+	}
+
+	void GameStatePlayingData::LoadNextLevel()
+	{
+		if (currentLevel >= levelLoader.GetLevelCount() - 1)
+		{
+			Game& game = Application::Instance().GetGame();
+
+			game.WinGame();
+		}
+		else
+		{
+			std::shared_ptr <Platform> platform = std::dynamic_pointer_cast<Platform>(gameObjects[0]);
+			std::shared_ptr<Ball> ball = std::dynamic_pointer_cast<Ball>(gameObjects[1]);
+			platform->Restart();
+			ball->Restart();
+
+			blocks.clear();
+			++currentLevel;
+			CreateBlocks();
+		}
+	}
+
+	void GameStatePlayingData::CreateBlocks()
+	{
+		for (const auto& pair : factories)
+		{
+			pair.second->ClearCounter();
+		}
+
+		auto self = weak_from_this();
+
+		auto level = levelLoader.GetLevel(currentLevel);
+
+		for (auto pairPosBlockType : level.m_blocks)
+		{
+			auto blockType = pairPosBlockType.second;
+			sf::Vector2i pos = pairPosBlockType.first;
+
+			sf::Vector2f position { (float)(SETTINGS.BLOCK_SPACING + SETTINGS.BLOCK_WIDTH / 2.f + pos.x * (SETTINGS.BLOCK_WIDTH + SETTINGS.BLOCK_SPACING)), (float)pos.y * SETTINGS.BLOCK_HEIGHT };
+
+			blocks.emplace_back(factories.at(blockType)->CreateBlock(position));
+			blocks.back()->AddObserver(self);
+		}		
+
+		int breakableCount = 0;
+
+		for (const auto& pair : factories)
+		{
+			breakableBlocksCount += pair.second->GetCreatedBreakableBlocksCount();
+		}
+
+		// MaxBlocks count used for correct calculation of Leaderboard
+		Game& game = Application::Instance().GetGame();
+		//game.maxBlocks = static_cast<int>(blocks.size()) - unbreakableCount;
+		game.maxBlocks = breakableCount;
+	}
+
+	void GameStatePlayingData::GetBallInverse(const sf::Vector2f& ballPos, const sf::FloatRect& blockRect, bool& needInverseDirX, bool& needInverseDirY) {
+
+		if (ballPos.y > blockRect.top + blockRect.height)
+		{
+			needInverseDirY = true;
+		}
+		if (ballPos.x < blockRect.left)
+		{
+			needInverseDirX = true;
+		}
+		if (ballPos.x > blockRect.left + blockRect.width)
+		{
+			needInverseDirX = true;
+		}
+	}
+
+	void GameStatePlayingData::Notify(std::shared_ptr<IObservable> observable)
+	{
+		if (auto block = std::dynamic_pointer_cast<Block>(observable))//; block) 
+		{
+			--breakableBlocksCount;
+			Game& game = Application::Instance().GetGame();
+			if (breakableBlocksCount == 0) 
+			{
+				gameWinSound.play();
+				game.LoadNextLevel();
+			}
+			/*
+			else
+			{
+				auto percent = random<int>(0, 100);
+				if (SETTINGS.BONUS_PROPABILITY_PERCENT >= percent) {
+					BonusType bonusType = (BonusType)(random<int>(0, (int)BonusType::Count - 1));
+					bonuses.at(bonusType).Activate();
+				}
+			}*/
+		}
+		else if (auto ball = std::dynamic_pointer_cast<Ball>(observable))//; ball)
+		{
+			if (ball->GetPosition().y > gameObjects.front()->GetRect().top) 
+			{
+				gameOverSound.play();
+				Application::Instance().GetGame().LooseGame();
+			}
+		}
+	}
+}
