@@ -3,7 +3,7 @@
 #include "GameStateData.h"
 #include <vector>
 
-namespace Ryzharto_ArcanoidGame
+namespace Ryzharto_RogaliqueGame
 {
 	class Game;
 

@@ -1,11 +1,10 @@
 #pragma once
-#include "Block.h"
 #include <vector>
 #include <string>
 #include <memory>
 #include <map>
 
-namespace Ryzharto_ArcanoidGame
+namespace Ryzharto_RogaliqueGame
 {
 	enum class BlockType
 	{
@@ -16,7 +15,7 @@ namespace Ryzharto_ArcanoidGame
 
 	struct Level
 	{
-		std::vector<std::pair<sf::Vector2i, BlockType>> m_blocks;
+		
 	};
 
 	class LevelLoader final
@@ -30,7 +29,6 @@ namespace Ryzharto_ArcanoidGame
 	private:
 		void LoadLevelsFromFile();
 
-		static BlockType CharToBlockType(char symbol);
 		std::vector<Level> levels;
 	};
 }

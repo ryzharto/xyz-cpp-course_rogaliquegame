@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "GameObject.h"
 
-namespace Ryzharto_ArcanoidGame
+namespace Ryzharto_RogaliqueGame
 {
 	class Background : public GameObject
 	{

@@ -6,7 +6,7 @@
 #include <cstdio>
 #define DEBUG(x) Debug(x, #x)
 
-namespace Ryzharto_ArcanoidGame
+namespace Ryzharto_RogaliqueGame
 {
 	struct DebugLogger
 	{

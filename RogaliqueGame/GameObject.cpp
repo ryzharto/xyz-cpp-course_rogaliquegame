@@ -2,7 +2,7 @@
 #include "Sprite.h"
 #include <assert.h>
 
-namespace Ryzharto_ArcanoidGame
+namespace Ryzharto_RogaliqueGame
 {
 	GameObject::GameObject(const std::string& texturePath, const sf::Vector2f& position, float width, float height) : startPosition(position)
 	{

@@ -4,7 +4,7 @@
 #include <list>
 #include <functional>
 
-namespace Ryzharto_ArcanoidGame
+namespace Ryzharto_RogaliqueGame
 {
 	struct MenuItem
 	{

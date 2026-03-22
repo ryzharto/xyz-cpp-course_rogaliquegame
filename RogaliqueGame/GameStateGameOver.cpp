@@ -5,7 +5,7 @@
 #include "Text.h"
 #include <sstream>
 
-namespace Ryzharto_ArcanoidGame
+namespace Ryzharto_RogaliqueGame
 {
 	const char* PLAYER_NAME = "Player";
 

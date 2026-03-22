@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-namespace Ryzharto_ArcanoidGame
+namespace Ryzharto_RogaliqueGame
 {
 	class GameWorld
 	{
@@ -21,7 +21,7 @@ namespace Ryzharto_ArcanoidGame
 		const std::string SOUNDS_PATH = RESOURCES_PATH + "Sounds/";
 		const std::string LEVELS_CONFIG_PATH = RESOURCES_PATH + "levels.config";
 
-		const std::string GAME_NAME = "Ryzharto's Arcanoid Game";
+		const std::string GAME_NAME = "Ryzharto's Rogalique Game";
 
 		const unsigned int SCREEN_WIDTH = 800;
 		const unsigned int SCREEN_HEIGHT = 600;

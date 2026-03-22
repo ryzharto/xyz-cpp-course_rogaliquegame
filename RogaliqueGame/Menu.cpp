@@ -1,7 +1,7 @@
 #include "Menu.h"
 #include <assert.h>
 
-namespace Ryzharto_ArcanoidGame
+namespace Ryzharto_RogaliqueGame
 {
 	void Menu::Init(const MenuItem& item)
 	{

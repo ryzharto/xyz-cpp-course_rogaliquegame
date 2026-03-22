@@ -1,6 +1,6 @@
 #include "Debug.h"
 
-namespace Ryzharto_ArcanoidGame
+namespace Ryzharto_RogaliqueGame
 {
 	void EnableConsole()
 	{

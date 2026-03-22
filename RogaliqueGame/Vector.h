@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Ryzharto_ArcanoidGame
+namespace Ryzharto_RogaliqueGame
 {
 	template<typename T>
 	struct Vector2D

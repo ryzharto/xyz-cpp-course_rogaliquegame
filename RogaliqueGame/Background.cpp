@@ -3,7 +3,7 @@
 #include "GameSettings.h"
 #include <assert.h>
 
-namespace Ryzharto_ArcanoidGame
+namespace Ryzharto_RogaliqueGame
 {
 	// Функция инициализации игрока
 	Background::Background(const sf::Vector2f position) : GameObject(SETTINGS.RESOURCES_PATH + "grass_3.jpg", position, SETTINGS.SCREEN_WIDTH, SETTINGS.SCREEN_HEIGHT)

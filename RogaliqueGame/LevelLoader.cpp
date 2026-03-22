@@ -4,32 +4,11 @@
 #include <assert.h>
 #include <filesystem>
 
-namespace Ryzharto_ArcanoidGame
+namespace Ryzharto_RogaliqueGame
 {
 	Level& LevelLoader::GetLevel(int i)
 	{
 		return levels.at(i);
-	}
-
-	BlockType LevelLoader::CharToBlockType(char symbol)
-	{
-		BlockType blockType;
-		switch (symbol)
-		{
-		case '1':
-			blockType = BlockType::Simple;
-			break;
-		case '2':
-			blockType = BlockType::ThreeHit;
-			break;
-		case '0':
-			blockType = BlockType::Unbreakable;
-			break;
-		default:
-			assert(false);
-			break;
-		}
-		return blockType;
 	}
 
 	void LevelLoader::LoadLevelsFromFile()
@@ -54,7 +33,7 @@ namespace Ryzharto_ArcanoidGame
 				{
 					if (c != ' ')
 					{
-						levels.back().m_blocks.emplace_back(std::make_pair(sf::Vector2i{ x, y }, CharToBlockType(c)));
+						
 					}
 					++x;
 				}

@@ -1,7 +1,7 @@
 #include "Application.h"
 #include <cstdlib>
 
-namespace Ryzharto_ArcanoidGame
+namespace Ryzharto_RogaliqueGame
 {
 	Application& Application::Instance()
 	{

@@ -7,7 +7,7 @@
 #include "GameStateMainMenu.h"
 #include "GameStateRecords.h"
 
-namespace Ryzharto_ArcanoidGame
+namespace Ryzharto_RogaliqueGame
 {
 	Game::Game()
 	{

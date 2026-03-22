@@ -3,7 +3,7 @@
 #include "Game.h"
 #include "Debug.h"
 
-namespace Ryzharto_ArcanoidGame
+namespace Ryzharto_RogaliqueGame
 {
 	class Application
 	{

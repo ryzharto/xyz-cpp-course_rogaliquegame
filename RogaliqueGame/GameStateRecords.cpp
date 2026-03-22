@@ -5,7 +5,7 @@
 #include <assert.h>
 #include <sstream>
 
-namespace Ryzharto_ArcanoidGame
+namespace Ryzharto_RogaliqueGame
 {
 	void GameStateRecordsData::Init()
 	{

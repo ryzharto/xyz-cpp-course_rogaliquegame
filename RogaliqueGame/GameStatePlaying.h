@@ -2,19 +2,14 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "GameStateData.h"
-#include "Platform.h"
-#include "Ball.h"
 #include "LevelLoader.h"
-#include "BlockFactory.h"
 #include "IObserver.h"
 
 #include <unordered_map>
 
-namespace Ryzharto_ArcanoidGame
+namespace Ryzharto_RogaliqueGame
 {
 	class Game;
-	class Block;
-	class BlockFactory;
 
 	class GameStatePlayingData : public GameStateData, public IObserver, public std::enable_shared_from_this<GameStatePlayingData>
 	{
@@ -29,8 +24,6 @@ namespace Ryzharto_ArcanoidGame
 		int score = 0;
 
 	private:
-		void CreateBlocks();
-		void GetBallInverse(const sf::Vector2f& ballPos, const sf::FloatRect& blockRect, bool& needInverseDirX, bool& needInverseDirY);
 
 		// Resources
 		sf::Font font;
@@ -39,8 +32,7 @@ namespace Ryzharto_ArcanoidGame
 		sf::SoundBuffer bonusSoundBuffer;
 
 		// Game data
-		std::vector<std::shared_ptr<GameObject>> gameObjects;
-		std::vector<std::shared_ptr<Block>> blocks;
+
 
 		// UI data
 		sf::Text scoreText;
@@ -54,7 +46,6 @@ namespace Ryzharto_ArcanoidGame
 		sf::Sound bonusSound;
 
 		// Blocks creator
-		std::unordered_map<BlockType, std::unique_ptr<BlockFactory>> factories;
 		int breakableBlocksCount = 0;
 
 		// Levels

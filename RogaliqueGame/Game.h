@@ -6,7 +6,7 @@
 #include "GameState.h"
 #include <unordered_map>
 
-namespace Ryzharto_ArcanoidGame
+namespace Ryzharto_RogaliqueGame
 {
 	enum class GameOptions : std::uint8_t
 	{

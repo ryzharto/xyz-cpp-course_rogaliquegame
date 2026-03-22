@@ -3,7 +3,7 @@
 #include "Game.h"
 #include <assert.h>
 
-namespace Ryzharto_ArcanoidGame
+namespace Ryzharto_RogaliqueGame
 {
 	void GameStatePauseMenuData::Init()
 	{

@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <SFML/Graphics.hpp>
 
-namespace Ryzharto_ArcanoidGame
+namespace Ryzharto_RogaliqueGame
 {
 	sf::Vector2f GetSpriteScale(const sf::Sprite& sprite, const Vector2Df& desiredSize)
 	{

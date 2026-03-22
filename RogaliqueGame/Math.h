@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "Vector.h"
 
-namespace Ryzharto_ArcanoidGame
+namespace Ryzharto_RogaliqueGame
 {
 	sf::Vector2f GetSpriteScale(const sf::Sprite& sprite, const Vector2Df& desiredSize);
 	sf::Vector2f GetItemOrigin(const sf::Sprite& sprite, const Vector2Df& relativePosition);
@@ -59,9 +59,9 @@ namespace Ryzharto_ArcanoidGame
 }
 
 template<>
-struct std::hash<Ryzharto_ArcanoidGame::Vector2Di>
+struct std::hash<Ryzharto_RogaliqueGame::Vector2Di>
 {
-	std::size_t operator()(const Ryzharto_ArcanoidGame::Vector2Di& v) const noexcept
+	std::size_t operator()(const Ryzharto_RogaliqueGame::Vector2Di& v) const noexcept
 	{
 		return std::hash<int>()(v.x) ^ (std::hash<int>()(v.y) << 1);
 	}

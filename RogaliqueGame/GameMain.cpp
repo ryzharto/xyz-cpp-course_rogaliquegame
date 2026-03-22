@@ -8,7 +8,7 @@
 
 #include "Debug.h"
 
-using namespace Ryzharto_ArcanoidGame;
+using namespace Ryzharto_RogaliqueGame;
 
 int main()
 {
