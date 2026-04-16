@@ -7,6 +7,7 @@
     </Filter>
     <Filter Include="Headers">
       <UniqueIdentifier>{2f09bdb2-ad7b-4cc1-9223-0349e5f89fe8}</UniqueIdentifier>
+      <Extensions>h</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -65,6 +66,12 @@
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="Text.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="DeveloperLevel.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -136,6 +143,12 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Vector.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="DeveloperLevel.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
