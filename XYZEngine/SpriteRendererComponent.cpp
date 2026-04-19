@@ -54,15 +54,14 @@ namespace XYZEngine
 	void SpriteRendererComponent::SetPixelSize(int newWidth, int newHeight)
 	{
 		auto originalSize = sprite->getTexture()->getSize();
-		sprite->setScale((float)newWidth / (float)originalSize.x, -(float)newHeight / (float)originalSize.y);
+		scale = { (float)newWidth / (float)originalSize.x, -(float)newHeight / (float)originalSize.y };
 	}
 
 	void SpriteRendererComponent::FlipX(bool flip)
 	{
 		if (flip != isFlipX)
 		{
-			auto scale = sprite->getScale();
-			sprite->setScale({ -scale.x, scale.y });
+			scale = { -scale.x, scale.y };
 			isFlipX = flip;
 		}
 	}
@@ -71,8 +70,7 @@ namespace XYZEngine
 	{
 		if (flip != isFlipY)
 		{
-			auto scale = sprite->getScale();
-			sprite->setScale({ scale.x, -scale.y });
+			scale = { scale.x, -scale.y };
 			isFlipY = flip;
 		}
 	}

@@ -34,8 +34,8 @@ namespace XYZEngine
 		sf::RectangleShape rectangle(sf::Vector2f(bounds.width, bounds.height));
 		rectangle.setPosition(bounds.left, bounds.top);
 		rectangle.setFillColor(sf::Color::Transparent);
-		rectangle.setOutlineColor(sf::Color::White);
-		rectangle.setOutlineThickness(4);
+		//rectangle.setOutlineColor(sf::Color::White);
+		//rectangle.setOutlineThickness(4);
 
 		RenderSystem::Instance()->Render(rectangle);
 	}

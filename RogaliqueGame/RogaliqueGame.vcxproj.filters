@@ -26,9 +26,6 @@
     <ClCompile Include="Game.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="GameState.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
@@ -74,6 +71,21 @@
     <ClCompile Include="DeveloperLevel.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="AI.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Music.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Floor.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Wall.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -86,9 +98,6 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="GameSettings.h">
@@ -149,6 +158,21 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="DeveloperLevel.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="AI.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Music.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Floor.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Wall.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

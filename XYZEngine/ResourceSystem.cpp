@@ -119,6 +119,34 @@ namespace XYZEngine
 		textureMaps.erase(textureMap);
 	}
 
+	void ResourceSystem::LoadSound(const std::string& name, std::string sourcePath)
+	{
+		if (sounds.find(name) != sounds.end())
+		{
+			return;
+		}
+
+		sf::SoundBuffer* newSound = new sf::SoundBuffer();
+		if (newSound->loadFromFile(sourcePath))
+		{
+			sounds.emplace(name, newSound);
+		}
+	}
+
+	const sf::SoundBuffer* ResourceSystem::GetSound(const std::string& name) const
+	{
+		return sounds.find(name)->second;
+	}
+
+	void ResourceSystem::DeleteSound(const std::string& name)
+	{
+		auto soundPair = sounds.find(name);
+
+		sf::SoundBuffer* deletingSound = soundPair->second;
+		sounds.erase(soundPair);
+		delete deletingSound;
+	}
+
 	void ResourceSystem::Clear()
 	{
 		DeleteAllTextures();
@@ -155,4 +183,18 @@ namespace XYZEngine
 		}
 	}
 
+	void ResourceSystem::DeleteAllSounds()
+	{
+		std::vector<std::string> keysToDelete;
+
+		for (const auto& soundPair : sounds)
+		{
+			keysToDelete.push_back(soundPair.first);
+		}
+
+		for (const auto& key : keysToDelete)
+		{
+			DeleteSound(key);
+		}
+	}
 }
