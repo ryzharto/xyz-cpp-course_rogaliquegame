@@ -15,8 +15,8 @@ namespace Ryzharto_RogaliqueGame
 		transform->SetWorldPosition(position);
 
 		auto renderer = gameObject->AddComponent<XYZEngine::SpriteRendererComponent>();
-		renderer->SetTexture(*XYZEngine::ResourceSystem::Instance()->GetTextureShared("ball"));
-		renderer->SetPixelSize(100, 100);
+		renderer->SetTexture(*XYZEngine::ResourceSystem::Instance()->GetTextureShared("Raptor_biege"));
+		renderer->SetPixelSize(200, 100);
 
 		auto aiInput = gameObject->AddComponent<XYZEngine::InputComponent>();
 

@@ -14,7 +14,7 @@ namespace Ryzharto_RogaliqueGame
 		transform->SetWorldPosition(position);
 
 		auto playerRenderer = gameObject->AddComponent<XYZEngine::SpriteRendererComponent>();
-		playerRenderer->SetTexture(*XYZEngine::ResourceSystem::Instance()->GetTextureMapElementShared("player",0));
+		playerRenderer->SetTexture(*XYZEngine::ResourceSystem::Instance()->GetTextureShared("player"));
 		playerRenderer->SetPixelSize(100, 100);
 
 		auto playerCamera = gameObject->AddComponent<XYZEngine::CameraComponent>();
