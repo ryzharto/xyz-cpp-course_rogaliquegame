@@ -2,10 +2,9 @@
 #include "Application.h"
 #include "Game.h"
 #include "Text.h"
-
-
-#include <assert.h>
+#include <cassert>
 #include <sstream>
+//#include "Logger.h"
 
 namespace Ryzharto_RogaliqueGame
 {
@@ -77,6 +76,7 @@ namespace Ryzharto_RogaliqueGame
 		if (currentLevel >= levelLoader.GetLevelCount() - 1)
 		{
 			Game& game = Application::Instance().GetGame();
+			//XYZEngine::LOG_WARN("LoadNextLevel called at final level. Triggering WinGame again?");
 
 			game.WinGame();
 		}

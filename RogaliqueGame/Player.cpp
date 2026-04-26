@@ -3,7 +3,9 @@
 #include <SpriteColliderComponent.h>
 #include <MovementComponent.h>
 #include <SpriteDirectionComponent.h>
-//#include <SpriteMovementAnimationComponent.h>
+#include <SpriteMovementAnimationComponent.h>
+#include <StatsComponent.h>
+#include <AttackComponent.h>
 
 namespace Ryzharto_RogaliqueGame
 {
@@ -14,7 +16,7 @@ namespace Ryzharto_RogaliqueGame
 		transform->SetWorldPosition(position);
 
 		auto playerRenderer = gameObject->AddComponent<XYZEngine::SpriteRendererComponent>();
-		playerRenderer->SetTexture(*XYZEngine::ResourceSystem::Instance()->GetTextureShared("player"));
+		playerRenderer->SetTexture(*XYZEngine::ResourceSystem::Instance()->GetTextureShared("player")); // GetTextureMapElementShared("player",0))
 		playerRenderer->SetPixelSize(100, 100);
 
 		auto playerCamera = gameObject->AddComponent<XYZEngine::CameraComponent>();
@@ -35,6 +37,17 @@ namespace Ryzharto_RogaliqueGame
 
 		//auto animator = gameObject->AddComponent<XYZEngine::SpriteMovementAnimationComponent>();
 		//animator->Initialize("player", 6.f);
+
+		auto playerStats = gameObject->AddComponent<XYZEngine::StatsComponent>();
+		playerStats->SetHealth(100.f);
+		playerStats->SetArmour(100.f);
+
+		auto attack = gameObject->AddComponent<XYZEngine::AttackComponent>();
+		attack->SetAttackPower(15.f);
+		attack->SetAttackRange(5.f);
+		attack->SetAttackCooldown(0.7f);
+
+		XYZEngine::LOG_INFO("Player GameObject constructed with components: Transform, SpriteRenderer, Camera, Input, Movement, Rigidbody, Collider, Stats");
 	}
 
 	XYZEngine::GameObject* Player::GetGameObject()

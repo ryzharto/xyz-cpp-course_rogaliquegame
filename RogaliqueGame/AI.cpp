@@ -5,6 +5,9 @@
 #include "SpriteDirectionComponent.h"
 #include "SpriteRendererComponent.h"
 #include <FollowComponent.h>
+#include <StatsComponent.h>
+#include <AttackComponent.h>
+#include "AIBehaviorComponent.h"
 
 namespace Ryzharto_RogaliqueGame
 {
@@ -30,6 +33,18 @@ namespace Ryzharto_RogaliqueGame
 		rigidbody->SetKinematic(false);
 
 		auto collider = gameObject->AddComponent<XYZEngine::SpriteColliderComponent>();
+
+		auto aiStats = gameObject->AddComponent<XYZEngine::StatsComponent>();
+
+		auto attack = gameObject->AddComponent<XYZEngine::AttackComponent>();
+		attack->SetAttackPower(5.f);
+		attack->SetAttackRange(150.f);
+		attack->SetAttackCooldown(1.2f);
+
+		auto behavior = gameObject->AddComponent<XYZEngine::AIBehaviorComponent>();
+		behavior->SetTarget(player);
+
+		XYZEngine::LOG_INFO("AI GameObject constructed with components: Transform, SpriteRenderer, Input, SpriteDirection, Follow, Rigidbody, Collider");
 	}
 
 	XYZEngine::GameObject* AI::GetGameObject()

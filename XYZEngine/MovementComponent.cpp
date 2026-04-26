@@ -10,7 +10,8 @@ namespace XYZEngine
 
 		if (input == nullptr)
 		{
-			std::cout << "Need input component for movement" << std::endl;
+			//std::cout << "Need input component for movement" << std::endl;
+			LOG_WARN("'MovementComponent' requires 'InputComponent' which is missing. Removing component from GameObject '" + gameObject->GetName() + "'");
 			gameObject->RemoveComponent(this);
 		}
 	}

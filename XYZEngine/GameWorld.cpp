@@ -55,6 +55,7 @@ namespace XYZEngine
 		GameObject* newGameObject = new GameObject(name);
 		gameObjects.push_back(newGameObject);
 		return newGameObject;
+		LOG_INFO("GameObject created : " + name);
 	}
 
 	void GameWorld::DestroyGameObject(GameObject* gameObject)

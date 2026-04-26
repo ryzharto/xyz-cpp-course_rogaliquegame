@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "RenderSystem.h"
+#include <cassert>
 
 namespace XYZEngine
 {
@@ -11,6 +12,12 @@ namespace XYZEngine
 
 	void RenderSystem::SetMainWindow(sf::RenderWindow* newWindow)
 	{
+		if (!newWindow)
+		{
+			LOG_ERROR("RenderSystem::SetMainWindow called with null window pointer");
+			assert(false);
+		}
+
 		window = newWindow;
 	}
 
@@ -21,6 +28,13 @@ namespace XYZEngine
 
 	void RenderSystem::Render(const sf::Drawable& drawable)
 	{
+		if (!window)
+		{
+			LOG_ERROR("RenderSystem::Render called but no window is set");
+			assert(false);
+			return;
+		}
+
 		window->draw(drawable);
 	}
 }

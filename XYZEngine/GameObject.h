@@ -1,6 +1,7 @@
 #pragma once
 #include "TransformComponent.h"
 #include <iostream>
+#include "Logger.h"
 
 namespace XYZEngine
 {
@@ -24,14 +25,16 @@ namespace XYZEngine
 		{
 			if constexpr (!std::is_base_of<Component, T>::value)
 			{
-				std::cout << "T must be derived from Component." << std::endl;
+				//std::cout << "T must be derived from Component." << std::endl;
+				LOG_WARN("Attempt to add type which is not a Component to GameObject");
 				return nullptr;
 			}
 			if constexpr (std::is_same<T, TransformComponent>::value)
 			{
 				if (GetComponent<TransformComponent>() != nullptr)
 				{
-					std::cout << "Can't add Transform, because if will breal the engine loop" << std::endl;
+					//std::cout << "Can't add Transform, because it will break the engine loop" << std::endl;
+					LOG_WARN("Attempt to add duplicate TransformComponent to GameObject '{}'");
 					return nullptr;
 				}				
 			}
@@ -41,6 +44,21 @@ namespace XYZEngine
 			std::cout << "Add new component: " << newComponent << std::endl;
 			return newComponent;
 		}
+
+		/*template <typename T, typename... Args>
+		T* AddComponent(Args&&... args)
+		{
+			if constexpr (!std::is_base_of<Component, T>::value)
+			{
+				std::cout << "T must be derived from Component." << std::endl;
+				return nullptr;
+			}
+
+			T* newComponent = new T(std::forward<Args>(args)...);
+			components.push_back(newComponent);
+			std::cout << "Add new component: " << newComponent << std::endl;
+			return newComponent;
+		}*/
 
 		void RemoveComponent(Component* component)
 		{

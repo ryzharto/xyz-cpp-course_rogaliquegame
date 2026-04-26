@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "ResourceSystem.h"
+#include "Logger.h"
+#include <cassert>
 
 namespace XYZEngine
 {
@@ -21,17 +23,40 @@ namespace XYZEngine
 		{
 			newTexture->setSmooth(isSmooth);
 			textures.emplace(name, newTexture);
+			LOG_INFO("Texture loaded: " + name + " (" + sourcePath + ")");
+		}
+		else
+		{
+			delete newTexture;
+			LOG_ERROR("Failed to load texture '" + name + "' from '" + sourcePath + "'");
+			throw std::runtime_error("Texture loading failed" + name);
 		}
 	}
 
 	const sf::Texture* ResourceSystem::GetTextureShared(const std::string& name) const
 	{
+		auto it = textures.find(name);
+		if (it == textures.end())
+		{
+			LOG_WARN("Resource '" + name + "' not found in cache");
+			assert(false);
+			return nullptr;
+		}
+
 		return textures.find(name)->second;
 	}
 
 	sf::Texture* ResourceSystem::GetTextureCopy(const std::string& name) const
 	{
-		return new sf::Texture(*textures.find(name)->second);
+		auto it = textures.find(name);
+		if (it == textures.end())
+		{
+			LOG_WARN("Resource '" + name + "' not found in cache");
+			assert(false);
+			return nullptr;
+		}
+
+		return new sf::Texture(*textures.find(name)->second);		
 	}
 
 	void ResourceSystem::DeleteSharedTexture(const std::string& name)
@@ -82,13 +107,34 @@ namespace XYZEngine
 				}
 			}
 			textureMaps.emplace(name, *textureMapElements);
+			LOG_INFO("Texture map loaded: " + name + " (" + sourcePath + ")");
+		}
+		else
+		{
+			LOG_ERROR("Failed to load texture map '" + name + "' from '" + sourcePath + "'");
+			assert(false);
+			throw std::runtime_error("Texture map loading failed");
 		}
 	}
 
 	const sf::Texture* ResourceSystem::GetTextureMapElementShared(const std::string& name, int elementIndex) const
 	{
 		auto textureMap = textureMaps.find(name);
+		if (textureMap == textureMaps.end())
+		{
+			LOG_WARN("Texture map '" + name + "' not found in cache");
+			assert(false);
+			return nullptr;
+		}
+
 		auto textures = textureMap->second;
+		if (elementIndex < 0 || elementIndex >= static_cast<int>(textures.size()))
+		{
+			LOG_WARN("Texture map element index '" + std::to_string(elementIndex) + "' is out of range [0, " + std::to_string(textures.size() - 1) + "] for map '" + name + "'");
+			assert(false);
+			return nullptr;
+		}
+
 		return textures[elementIndex];
 	}
 
@@ -123,6 +169,8 @@ namespace XYZEngine
 	{
 		if (sounds.find(name) != sounds.end())
 		{
+			LOG_ERROR("Failed to load sound '" + name + "' from '" + sourcePath + "'");
+			assert(false);
 			return;
 		}
 
@@ -130,11 +178,20 @@ namespace XYZEngine
 		if (newSound->loadFromFile(sourcePath))
 		{
 			sounds.emplace(name, newSound);
+			LOG_INFO("Sound loaded: " + name + " (" + sourcePath + ")");
 		}
 	}
 
 	const sf::SoundBuffer* ResourceSystem::GetSound(const std::string& name) const
 	{
+		auto it = sounds.find(name);
+		if (it == sounds.end())
+		{
+			LOG_WARN("Resource '" + name + "' not found in cache");
+			assert(false);
+			return nullptr;
+		}
+
 		return sounds.find(name)->second;
 	}
 

@@ -59,12 +59,12 @@ namespace XYZEngine
 							if (intersectionPosition.y > aPosition.y)
 							{
 								aTransform->MoveBy({ 0, -intersectionHeight });
-								std::cout << "Top collision" << std::endl;
+								//std::cout << "Top collision" << std::endl;
 							}
 							else
 							{
 								aTransform->MoveBy({ 0, intersectionHeight });
-								std::cout << "Down collision" << std::endl;
+								//std::cout << "Down collision" << std::endl;
 							}
 						}
 						else
@@ -72,12 +72,12 @@ namespace XYZEngine
 							if (intersectionPosition.x > aPosition.x)
 							{
 								aTransform->MoveBy({ -intersectionWidth, 0.f });
-								std::cout << "Right collision" << std::endl;
+								//std::cout << "Right collision" << std::endl;
 							}
 							else
 							{
 								aTransform->MoveBy({ intersectionWidth, 0.f });
-								std::cout << "Left collision" << std::endl;
+								//std::cout << "Left collision" << std::endl;
 							}
 						}
 
@@ -107,6 +107,7 @@ namespace XYZEngine
 	{
 		std::cout << "Subscribe " << collider << std::endl;
 		colliders.push_back(collider);
+		LOG_INFO("Collider subscribed: " + std::to_string((uintptr_t)collider));
 	}
 	void PhysicsSystem::Unsubscribe(ColliderComponent* collider)
 	{

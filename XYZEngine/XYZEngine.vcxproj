@@ -149,6 +149,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AIBehaviorComponent.h" />
+    <ClInclude Include="AttackComponent.h" />
     <ClInclude Include="AudioComponent.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="ColliderComponent.h" />
@@ -175,12 +177,16 @@
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteColliderComponent.h" />
     <ClInclude Include="SpriteDirectionComponent.h" />
+    <ClInclude Include="SpriteMovementAnimationComponent.h" />
     <ClInclude Include="SpriteRendererComponent.h" />
+    <ClInclude Include="StatsComponent.h" />
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="Trigger.h" />
     <ClInclude Include="Vector.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AIBehaviorComponent.cpp" />
+    <ClCompile Include="AttackComponent.cpp" />
     <ClCompile Include="AudioComponent.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="ColliderComponent.cpp" />
@@ -206,7 +212,9 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteColliderComponent.cpp" />
     <ClCompile Include="SpriteDirectionComponent.cpp" />
+    <ClCompile Include="SpriteMovementAnimationComponent.cpp" />
     <ClCompile Include="SpriteRendererComponent.cpp" />
+    <ClCompile Include="StatsComponent.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
     <ClCompile Include="Trigger.cpp" />
   </ItemGroup>

@@ -8,7 +8,8 @@ namespace XYZEngine
 		auto spriteRenderer = gameObject->GetComponent<SpriteRendererComponent>();
 		if (spriteRenderer == nullptr)
 		{
-			std::cout << "SpriteRenderer required to SpriteCollider." << std::endl;
+			//std::cout << "SpriteRenderer required SpriteCollider." << std::endl;
+			LOG_WARN("'SpriteRenderer' requires 'SpriteCollider' which is missing. Removing component from GameObject '" + gameObject->GetName() + "'");
 			gameObject->RemoveComponent(this);
 			return;
 		}

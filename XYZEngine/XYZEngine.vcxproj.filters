@@ -70,6 +70,18 @@
     <ClCompile Include="SpriteDirectionComponent.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="StatsComponent.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteMovementAnimationComponent.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackComponent.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="AIBehaviorComponent.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -160,6 +172,18 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Logger.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="StatsComponent.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteMovementAnimationComponent.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackComponent.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="AIBehaviorComponent.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,4 +1,5 @@
 #include "DeveloperLevel.h"
+#include "Logger.h"
 
 using namespace XYZEngine;
 
@@ -70,9 +71,24 @@ namespace Ryzharto_RogaliqueGame
 				}
 			}
 		}
+		LOG_INFO("Level generation: " + std::to_string(floors.size()) + " floors, " + std::to_string(walls.size()) + " walls created.");
 
+		// Player creation
 		player = std::make_unique<Player>(std::forward<XYZEngine::Vector2Df>({width / 2 * 128.f, height / 2 * 128.f}));
+		if (!player->GetGameObject())
+		{
+			LOG_ERROR("Player GameObject is null!");
+		}
+		LOG_INFO("Player created");
+
+		// AI characters creation
 		ai = std::make_unique<AI>(std::forward<XYZEngine::Vector2Df>({ width / 3 * 128.f, height / 3 * 128.f }), player->GetGameObject());
+		if (!ai->GetGameObject())
+		{
+			LOG_ERROR("AI GameObject is null!");
+		}
+		LOG_INFO("AI characters created.");
+
 		music = std::make_unique<Music>("music");
 	}
 

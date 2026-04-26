@@ -31,7 +31,8 @@ namespace XYZEngine
 	{
 		if (window == nullptr)
 		{
-			std::cout << "NULL window render." << std::endl;
+			//std::cout << "NULL window render." << std::endl;
+			LOG_WARN("CameraComponent on '" + gameObject->GetName() +"' has no window set");
 		}
 	}
 
@@ -49,7 +50,8 @@ namespace XYZEngine
 	{
 		if (newZoom <= 0)
 		{
-			std::cout << "Not allowed zoom lesser or equal than zero" << std::endl;
+			//std::cout << "Not allowed zoom lesser or equal than zero" << std::endl;
+			LOG_WARN("Camera zoom factor must be > 0, received '" + std::to_string(newZoom) + "'");
 			return;
 		}
 		view->zoom(newZoom);

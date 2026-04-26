@@ -11,7 +11,8 @@ namespace XYZEngine
 
 		if (transform == nullptr)
 		{
-			std::cout << "FollowComponent requires a TransformComponent." << std::endl;
+			//std::cout << "FollowComponent requires a TransformComponent." << std::endl;
+			LOG_WARN("'FollowComponent' requires 'TransformComponent' which is missing. Removing component from GameObject '" + gameObject->GetName() + "'");
 			gameObject->RemoveComponent(this);
 		}
 	}
@@ -23,7 +24,8 @@ namespace XYZEngine
 			targetTransform = targetObject->GetComponent<TransformComponent>();
 			if (targetTransform == nullptr)
 			{
-				std::cout << "Target object has no TransformComponent." << std::endl;
+				//std::cout << "Target object has no TransformComponent." << std::endl;
+				LOG_WARN("'SetTarget' requires 'TransformComponent' which is missing. Removing component from GameObject '" + gameObject->GetName() + "'");
 			}
 		}
 	}

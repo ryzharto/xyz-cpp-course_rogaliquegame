@@ -3,6 +3,7 @@
 #include "GameWorld.h"
 #include "RenderSystem.h"
 #include <iostream>
+#include <cassert>
 
 namespace XYZEngine
 {
@@ -23,6 +24,14 @@ namespace XYZEngine
 
 	void Engine::Run()
 	{
+		sf::RenderWindow& window = RenderSystem::Instance()->GetMainWindow();
+		if (!window.isOpen())
+		{
+			LOG_ERROR("Main window is not open. Engine cannot run.");
+			assert(false);  // в debug остановимся здесь
+			throw std::runtime_error("Main window not open");
+		}
+
 		// Init game clock
 		sf::Clock gameClock;
 		sf::Event event;
@@ -67,5 +76,6 @@ namespace XYZEngine
 
 		LoggerRegistry::getInstance().registerLogger("global", logger);
 		LoggerRegistry::getInstance().setDefaultLogger(logger);
+		LOG_INFO("Logger initialized with ConsoleSink and FileSink (log.txt)");
 	}
 }

@@ -1,4 +1,5 @@
 #include "Floor.h"
+#include "Logger.h"
 
 namespace Ryzharto_RogaliqueGame
 {
@@ -11,5 +12,7 @@ namespace Ryzharto_RogaliqueGame
 		auto renderer = gameObject->AddComponent<XYZEngine::SpriteRendererComponent>();
 		renderer->SetTexture(*XYZEngine::ResourceSystem::Instance()->GetTextureMapElementShared("level_floors", textureMapIndex));
 		renderer->SetPixelSize(128, 128);
+
+		XYZEngine::LOG_INFO("Floor created at position (" + std::to_string(position.x) + ", " + std::to_string(position.y) + ")");
 	}
 }

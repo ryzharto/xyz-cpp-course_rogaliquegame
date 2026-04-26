@@ -1,6 +1,7 @@
 #include "Wall.h"
 //#include <SpriteMovementAnimationComponent.h>
 #include <SpriteColliderComponent.h>
+#include "Logger.h"
 
 
 namespace Ryzharto_RogaliqueGame
@@ -19,5 +20,7 @@ namespace Ryzharto_RogaliqueGame
 		rigidbody->SetKinematic(true);
 
 		auto collider = gameObject->AddComponent<XYZEngine::SpriteColliderComponent>();
+
+		XYZEngine::LOG_INFO("Wall created at position (" + std::to_string(position.x) + ", " + std::to_string(position.y) + ")");
 	}
 }

@@ -19,7 +19,8 @@ namespace XYZEngine
 	};
 
 	// Logging to console
-	class ConsoleSink : public LogSink {
+	class ConsoleSink : public LogSink
+	{
 	public:
 		void log(LogLevel level, const std::string& message) override
 		{
@@ -27,8 +28,10 @@ namespace XYZEngine
 		}
 
 	private:
-		std::string logLevelToString(LogLevel level) {
-			switch (level) {
+		std::string logLevelToString(LogLevel level)
+		{
+			switch (level)
+			{
 			case LogLevel::INFO: return "[INFO]";
 			case LogLevel::WARNING: return "[WARNING]";
 			case LogLevel::ERROR: return "[ERROR]";
@@ -91,7 +94,8 @@ namespace XYZEngine
 		void log(LogLevel level, const std::string& message)
 		{
 			std::lock_guard<std::mutex> lock(logMutex);
-			for (auto& sink : sinks) {
+			for (auto& sink : sinks)
+			{
 				sink->log(level, message);
 			}
 		}
@@ -119,7 +123,8 @@ namespace XYZEngine
 		std::shared_ptr<Logger> getLogger(const std::string& name)
 		{
 			std::lock_guard<std::mutex> lock(registryMutex);
-			if (loggers.find(name) != loggers.end()) {
+			if (loggers.find(name) != loggers.end())
+			{
 				return loggers[name];
 			}
 			return defaultLogger;
