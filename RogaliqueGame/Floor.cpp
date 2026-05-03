@@ -1,0 +1,18 @@
+#include "Floor.h"
+#include "Logger.h"
+
+namespace Ryzharto_RogaliqueGame
+{
+	Floor::Floor(const XYZEngine::Vector2Df& position, int textureMapIndex)
+	{
+		gameObject = XYZEngine::GameWorld::Instance()->CreateGameObject("Floor");
+		auto transform = gameObject->GetComponent<XYZEngine::TransformComponent>();
+		transform->SetWorldPosition(position);
+
+		auto renderer = gameObject->AddComponent<XYZEngine::SpriteComponent>();
+		renderer->SetTexture(*XYZEngine::ResourceSystem::Instance()->GetTextureMapElementShared("level_floors", textureMapIndex));
+		renderer->SetPixelSize(128, 128);
+
+		XYZEngine::LOG_INFO("Floor created at position (" + std::to_string(position.x) + ", " + std::to_string(position.y) + ")");
+	}
+}

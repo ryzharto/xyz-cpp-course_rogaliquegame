@@ -1,7 +1,7 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 #include "Game.h"
-#include "Debug.h"
+//#include "Debug.h"
 
 namespace Ryzharto_RogaliqueGame
 {

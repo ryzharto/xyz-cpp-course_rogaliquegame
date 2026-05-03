@@ -37,7 +37,7 @@ namespace Ryzharto_RogaliqueGame
 			}
 		}
 
-		DrawTextList(window, texts, expandedItem.childrenSpacing, expandedItem.childrenOrientation, expandedItem.childrenAlignment, position, origin);
+		XYZEngine::DrawTextList(window, texts, expandedItem.childrenSpacing, expandedItem.childrenOrientation, expandedItem.childrenAlignment, position, origin);
 	}
 
 	void Menu::PressOnSelectedItem()
