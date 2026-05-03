@@ -6,7 +6,7 @@ namespace XYZEngine
 	SpriteMovementAnimationComponent::SpriteMovementAnimationComponent(GameObject* gameObject) : Component(gameObject)
 	{
 		movement = gameObject->GetComponent<MovementComponent>();
-		renderer = gameObject->GetComponent<SpriteRendererComponent>();
+		renderer = gameObject->GetComponent<SpriteComponent>();
 
 		if (movement == nullptr)
 		{
@@ -17,7 +17,7 @@ namespace XYZEngine
 		else if (renderer == nullptr)
 		{
 			//std::cout << "Need renderer component for movement animation" << std::endl;
-			LOG_WARN("'SpriteMovementAnimationComponent' requires 'SpriteRendererComponent' which is missing. Removing component from GameObject '" + gameObject->GetName() + "'");
+			LOG_WARN("'SpriteMovementAnimationComponent' requires 'SpriteComponent' which is missing. Removing component from GameObject '" + gameObject->GetName() + "'");
 			gameObject->RemoveComponent(this);
 		}
 	}

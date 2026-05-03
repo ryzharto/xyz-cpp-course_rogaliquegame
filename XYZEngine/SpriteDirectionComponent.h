@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "InputComponent.h"
-#include "SpriteRendererComponent.h"
+#include "SpriteComponent.h"
 
 namespace XYZEngine
 {
@@ -14,7 +14,7 @@ namespace XYZEngine
 		void Render() override;
 	private:
 		InputComponent* input;
-		SpriteRendererComponent* spriteRenderer;
+		SpriteComponent* spriteRenderer;
 	};
 }
 

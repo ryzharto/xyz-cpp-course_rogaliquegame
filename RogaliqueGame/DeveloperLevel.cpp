@@ -1,4 +1,5 @@
 #include "DeveloperLevel.h"
+#include "MazeGenerator.h"
 #include "Logger.h"
 
 using namespace XYZEngine;
@@ -71,6 +72,11 @@ namespace Ryzharto_RogaliqueGame
 				}
 			}
 		}
+
+		// Maze Generator
+		MazeGenerator mazeGenerator(width, height, this);
+		mazeGenerator.Generate();
+
 		LOG_INFO("Level generation: " + std::to_string(floors.size()) + " floors, " + std::to_string(walls.size()) + " walls created.");
 
 		// Player creation

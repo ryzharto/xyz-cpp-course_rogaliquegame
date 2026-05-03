@@ -3,7 +3,6 @@
 #include <SpriteColliderComponent.h>
 #include "MovementComponent.h"
 #include "SpriteDirectionComponent.h"
-#include "SpriteRendererComponent.h"
 #include <FollowComponent.h>
 #include <StatsComponent.h>
 #include <AttackComponent.h>
@@ -17,7 +16,7 @@ namespace Ryzharto_RogaliqueGame
 		auto transform = gameObject->GetComponent<XYZEngine::TransformComponent>();
 		transform->SetWorldPosition(position);
 
-		auto renderer = gameObject->AddComponent<XYZEngine::SpriteRendererComponent>();
+		auto renderer = gameObject->AddComponent<XYZEngine::SpriteComponent>();
 		renderer->SetTexture(*XYZEngine::ResourceSystem::Instance()->GetTextureShared("Raptor_biege"));
 		renderer->SetPixelSize(200, 100);
 

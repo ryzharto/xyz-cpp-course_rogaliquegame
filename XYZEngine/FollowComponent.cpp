@@ -7,7 +7,7 @@ namespace XYZEngine
 	FollowComponent::FollowComponent(GameObject* gameObject) : Component(gameObject)
 	{
 		transform = gameObject->GetComponent<TransformComponent>();
-		spriteRenderer = gameObject->GetComponent<SpriteRendererComponent>();
+		spriteRenderer = gameObject->GetComponent<SpriteComponent>();
 
 		if (transform == nullptr)
 		{

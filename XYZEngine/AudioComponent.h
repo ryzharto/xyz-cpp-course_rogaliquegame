@@ -23,7 +23,7 @@ namespace XYZEngine
 		void Pause();
 		void Resume();
 	private:
-		sf::Sound* sound;
+		std::unique_ptr<sf::Sound> sound;
 	};
 
 }

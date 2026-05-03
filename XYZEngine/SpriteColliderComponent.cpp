@@ -5,7 +5,7 @@ namespace XYZEngine
 {
 	SpriteColliderComponent::SpriteColliderComponent(GameObject* gameObject) : ColliderComponent(gameObject)
 	{
-		auto spriteRenderer = gameObject->GetComponent<SpriteRendererComponent>();
+		auto spriteRenderer = gameObject->GetComponent<SpriteComponent>();
 		if (spriteRenderer == nullptr)
 		{
 			//std::cout << "SpriteRenderer required SpriteCollider." << std::endl;
@@ -14,7 +14,7 @@ namespace XYZEngine
 			return;
 		}
 
-		sprite = gameObject->GetComponent<SpriteRendererComponent>()->GetSprite();
+		sprite = gameObject->GetComponent<SpriteComponent>()->GetSprite();
 		PhysicsSystem::Instance()->Subscribe(this);
 	}
 	SpriteColliderComponent::~SpriteColliderComponent()

@@ -1,5 +1,4 @@
 #pragma once
-
 #include "TransformComponent.h"
 #include "Vector.h"
 #include <SFML/Graphics.hpp>
@@ -7,11 +6,11 @@
 
 namespace XYZEngine
 {
-	class SpriteRendererComponent : public Component
+	class SpriteComponent : public Component
 	{
 	public:
-		SpriteRendererComponent(GameObject* gameObject);
-		~SpriteRendererComponent();
+		SpriteComponent(GameObject* gameObject);
+		~SpriteComponent();
 
 		void Update(float deltaTime) override;
 		void Render() override;
@@ -25,7 +24,7 @@ namespace XYZEngine
 
 	private:
 		Vector2Df scale;
-		sf::Sprite* sprite;
+		std::unique_ptr<sf::Sprite> sprite;
 		TransformComponent* transform;
 
 		bool isFlipX = false;

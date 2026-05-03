@@ -5,13 +5,13 @@ namespace XYZEngine
 {
 	AudioComponent::AudioComponent(GameObject* gameObject) : Component(gameObject)
 	{
-		sound = new sf::Sound;
+		sound = std::make_unique<sf::Sound>();
 	}
 
 	AudioComponent::~AudioComponent()
 	{
 		sound->stop();
-		delete sound;
+		//delete sound;
 	}
 
 	void AudioComponent::Update(float deltaTime)

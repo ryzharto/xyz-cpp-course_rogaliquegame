@@ -20,7 +20,10 @@ namespace Ryzharto_RogaliqueGame
 
 
 		// Init background
-		InitSprite(background, SETTINGS.SCREEN_WIDTH, SETTINGS.SCREEN_HEIGHT, backgroundTexture);
+		//InitSprite(background, SETTINGS.SCREEN_WIDTH, SETTINGS.SCREEN_HEIGHT, backgroundTexture);
+		background.setTexture(backgroundTexture);
+		background.setOrigin(backgroundTexture.getSize().x / 2.f, backgroundTexture.getSize().y / 2.f);
+		background.setScale(SETTINGS.SCREEN_WIDTH / backgroundTexture.getSize().x, SETTINGS.SCREEN_HEIGHT / backgroundTexture.getSize().y);
 		background.setPosition(SETTINGS.SCREEN_WIDTH / 2, SETTINGS.SCREEN_HEIGHT / 2);
 
 		scoreText.setFont(font);
@@ -31,7 +34,7 @@ namespace Ryzharto_RogaliqueGame
 		inputHintText.setCharacterSize(48);
 		inputHintText.setFillColor(sf::Color::White);
 		inputHintText.setString("TO BE CONTINUED..., ESC to pause");
-		inputHintText.setOrigin(GetTextOrigin(inputHintText, { 0.f, 0.f }));
+		inputHintText.setOrigin(XYZEngine::GetTextOrigin(inputHintText, { 0.f, 0.f }));
 
 		// Init game objects
 

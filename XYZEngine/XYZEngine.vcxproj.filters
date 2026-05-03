@@ -22,7 +22,7 @@
     <ClCompile Include="RenderSystem.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="SpriteRendererComponent.cpp">
+    <ClCompile Include="SpriteComponent.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="CameraComponent.cpp">
@@ -82,6 +82,9 @@
     <ClCompile Include="AIBehaviorComponent.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -120,7 +123,7 @@
     <ClInclude Include="RenderSystem.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="SpriteRendererComponent.h">
+    <ClInclude Include="SpriteComponent.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="CameraComponent.h">
@@ -184,6 +187,9 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="AIBehaviorComponent.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

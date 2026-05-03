@@ -6,7 +6,7 @@ namespace XYZEngine
 	SpriteDirectionComponent::SpriteDirectionComponent(GameObject* gameObject) : Component(gameObject)
 	{
 		input = gameObject->GetComponent<InputComponent>();
-		spriteRenderer = gameObject->GetComponent<SpriteRendererComponent>();
+		spriteRenderer = gameObject->GetComponent<SpriteComponent>();
 	}
 
 	void SpriteDirectionComponent::Update(float deltaTime)

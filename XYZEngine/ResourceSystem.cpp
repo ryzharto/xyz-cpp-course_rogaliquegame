@@ -11,6 +11,7 @@ namespace XYZEngine
 		return &resourceSystem;
 	}
 
+	// Textures
 	void ResourceSystem::LoadTexture(const std::string& name, std::string sourcePath, bool isSmooth)
 	{
 		if (textures.find(name) != textures.end())
@@ -18,19 +19,16 @@ namespace XYZEngine
 			return;
 		}
 
-		sf::Texture* newTexture = new sf::Texture();
-		if (newTexture->loadFromFile(sourcePath))
+		auto newTexture = std::make_unique<sf::Texture>();
+		if (!newTexture->loadFromFile(sourcePath))
 		{
-			newTexture->setSmooth(isSmooth);
-			textures.emplace(name, newTexture);
-			LOG_INFO("Texture loaded: " + name + " (" + sourcePath + ")");
-		}
-		else
-		{
-			delete newTexture;
 			LOG_ERROR("Failed to load texture '" + name + "' from '" + sourcePath + "'");
 			throw std::runtime_error("Texture loading failed" + name);
 		}
+
+		newTexture->setSmooth(isSmooth);
+		textures.emplace(name, std::move(newTexture));
+		LOG_INFO("Texture loaded: " + name + " (" + sourcePath + ")");
 	}
 
 	const sf::Texture* ResourceSystem::GetTextureShared(const std::string& name) const
@@ -43,7 +41,7 @@ namespace XYZEngine
 			return nullptr;
 		}
 
-		return textures.find(name)->second;
+		return it->second.get();
 	}
 
 	sf::Texture* ResourceSystem::GetTextureCopy(const std::string& name) const
@@ -56,18 +54,16 @@ namespace XYZEngine
 			return nullptr;
 		}
 
-		return new sf::Texture(*textures.find(name)->second);		
+		return new sf::Texture(*it->second);		
 	}
 
 	void ResourceSystem::DeleteSharedTexture(const std::string& name)
 	{
-		auto texturePair = textures.find(name);
-
-		sf::Texture* deletingTexture = texturePair->second;
-		textures.erase(texturePair);
-		delete deletingTexture;
+		textures.erase(name);
+		LOG_INFO("Texture deleted: " + name);
 	}
 
+	// Texture maps
 	void ResourceSystem::LoadTextureMap(const std::string& name, std::string sourcePath, sf::Vector2u elementPixelSize, int totalElements, bool isSmooth)
 	{
 		if (textureMaps.find(name) != textureMaps.end())
@@ -165,21 +161,22 @@ namespace XYZEngine
 		textureMaps.erase(textureMap);
 	}
 
+	// Sounds
 	void ResourceSystem::LoadSound(const std::string& name, std::string sourcePath)
 	{
 		if (sounds.find(name) != sounds.end())
+			return;
+
+		auto newSound = std::make_unique<sf::SoundBuffer>();
+		if (!newSound->loadFromFile(sourcePath))
 		{
 			LOG_ERROR("Failed to load sound '" + name + "' from '" + sourcePath + "'");
 			assert(false);
-			return;
+			throw std::runtime_error("Sound loading failed");
 		}
 
-		sf::SoundBuffer* newSound = new sf::SoundBuffer();
-		if (newSound->loadFromFile(sourcePath))
-		{
-			sounds.emplace(name, newSound);
-			LOG_INFO("Sound loaded: " + name + " (" + sourcePath + ")");
-		}
+		sounds.emplace(name, std::move(newSound));
+		LOG_INFO("Sound loaded: " + name + " (" + sourcePath + ")");
 	}
 
 	const sf::SoundBuffer* ResourceSystem::GetSound(const std::string& name) const
@@ -192,37 +189,26 @@ namespace XYZEngine
 			return nullptr;
 		}
 
-		return sounds.find(name)->second;
+		return it->second.get();
 	}
 
 	void ResourceSystem::DeleteSound(const std::string& name)
 	{
-		auto soundPair = sounds.find(name);
-
-		sf::SoundBuffer* deletingSound = soundPair->second;
-		sounds.erase(soundPair);
-		delete deletingSound;
+		sounds.erase(name);
+		LOG_INFO("Sound deleted: " + name);
 	}
 
 	void ResourceSystem::Clear()
 	{
 		DeleteAllTextures();
 		DeleteAllTextureMaps();
+		DeleteAllSounds();
+		LOG_INFO("ResourceSystem cleared");
 	}
 
 	void ResourceSystem::DeleteAllTextures()
 	{
-		std::vector<std::string> keysToDelete;
-
-		for (const auto& texturePair : textures)
-		{
-			keysToDelete.push_back(texturePair.first);
-		}
-
-		for (const auto& key : keysToDelete)
-		{
-			DeleteSharedTexture(key);
-		}
+		textures.clear();
 	}
 
 	void ResourceSystem::DeleteAllTextureMaps()
@@ -242,16 +228,6 @@ namespace XYZEngine
 
 	void ResourceSystem::DeleteAllSounds()
 	{
-		std::vector<std::string> keysToDelete;
-
-		for (const auto& soundPair : sounds)
-		{
-			keysToDelete.push_back(soundPair.first);
-		}
-
-		for (const auto& key : keysToDelete)
-		{
-			DeleteSound(key);
-		}
+		sounds.clear();
 	}
 }

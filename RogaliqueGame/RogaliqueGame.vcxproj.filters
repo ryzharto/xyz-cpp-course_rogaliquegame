@@ -14,55 +14,10 @@
     <ClCompile Include="GameMain.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Application.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Background.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="Debug.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="GameState.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="GameStateData.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="GameStateGameOver.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="GameStateGameWin.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="GameStateMainMenu.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="GameStatePauseMenu.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="GameStatePlaying.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="GameStateRecords.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="LevelLoader.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Math.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Menu.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprite.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Text.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
@@ -77,81 +32,24 @@
     <ClCompile Include="Music.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="Floor.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="Wall.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="MazeGenerator.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Background.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Debug.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="GameSettings.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="GameState.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="GameStateData.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="GameStateGameOver.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="GameStateGameWin.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="GameStateMainMenu.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="GameStatePauseMenu.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="GameStatePlaying.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="GameStateRecords.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="ICollidable.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="IDelayedAction.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="IObserver.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="LevelLoader.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Math.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Menu.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprite.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Text.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
@@ -166,13 +64,13 @@
     <ClInclude Include="Music.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Floor.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Wall.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="MazeGenerator.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

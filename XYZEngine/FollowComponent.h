@@ -1,7 +1,7 @@
 #pragma once
 #include "Component.h"
 #include "TransformComponent.h"
-#include "SpriteRendererComponent.h"
+#include "SpriteComponent.h"
 
 namespace XYZEngine
 {
@@ -19,7 +19,7 @@ namespace XYZEngine
 	private:
 		TransformComponent* transform = nullptr;
 		TransformComponent* targetTransform = nullptr;
-		SpriteRendererComponent* spriteRenderer = nullptr;
+		SpriteComponent* spriteRenderer = nullptr;
 
 		float speed = 100.f; // default speed
 	};

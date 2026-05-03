@@ -178,8 +178,9 @@
     <ClInclude Include="SpriteColliderComponent.h" />
     <ClInclude Include="SpriteDirectionComponent.h" />
     <ClInclude Include="SpriteMovementAnimationComponent.h" />
-    <ClInclude Include="SpriteRendererComponent.h" />
+    <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="StatsComponent.h" />
+    <ClInclude Include="Text.h" />
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="Trigger.h" />
     <ClInclude Include="Vector.h" />
@@ -213,8 +214,9 @@
     <ClCompile Include="SpriteColliderComponent.cpp" />
     <ClCompile Include="SpriteDirectionComponent.cpp" />
     <ClCompile Include="SpriteMovementAnimationComponent.cpp" />
-    <ClCompile Include="SpriteRendererComponent.cpp" />
+    <ClCompile Include="SpriteComponent.cpp" />
     <ClCompile Include="StatsComponent.cpp" />
+    <ClCompile Include="Text.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
     <ClCompile Include="Trigger.cpp" />
   </ItemGroup>

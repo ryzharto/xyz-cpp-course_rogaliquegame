@@ -1,6 +1,7 @@
+#include "pch.h"
 #include "Text.h"
 
-namespace Ryzharto_RogaliqueGame
+namespace XYZEngine
 {
 	sf::Vector2f GetTextOrigin(const sf::Text& text, const sf::Vector2f& relativePosition)
 	{

@@ -21,7 +21,7 @@ namespace XYZEngine
 	private:
 		TransformComponent* transform;
 		sf::RenderWindow* window;
-		sf::View* view;
+		std::unique_ptr<sf::View> view;
 	};
 }
 

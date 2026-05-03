@@ -12,7 +12,7 @@ namespace Ryzharto_RogaliqueGame
 		auto transform = gameObject->GetComponent<XYZEngine::TransformComponent>();
 		transform->SetWorldPosition(position);
 
-		auto renderer = gameObject->AddComponent<XYZEngine::SpriteRendererComponent>();
+		auto renderer = gameObject->AddComponent<XYZEngine::SpriteComponent>();
 		renderer->SetTexture(*XYZEngine::ResourceSystem::Instance()->GetTextureMapElementShared("level_walls", textureMapIndex));
 		renderer->SetPixelSize(128, 128);
 
@@ -20,7 +20,7 @@ namespace Ryzharto_RogaliqueGame
 		rigidbody->SetKinematic(true);
 
 		auto collider = gameObject->AddComponent<XYZEngine::SpriteColliderComponent>();
-
+		
 		XYZEngine::LOG_INFO("Wall created at position (" + std::to_string(position.x) + ", " + std::to_string(position.y) + ")");
 	}
 }

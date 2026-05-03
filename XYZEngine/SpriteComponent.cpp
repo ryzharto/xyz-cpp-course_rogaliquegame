@@ -1,32 +1,29 @@
 #include "pch.h"
-#include "SpriteRendererComponent.h"
+#include "SpriteComponent.h"
 #include "TransformComponent.h"
 #include "RenderSystem.h"
 
 namespace XYZEngine
 {
-	SpriteRendererComponent::SpriteRendererComponent(GameObject* gameObject) : Component(gameObject)
+	SpriteComponent::SpriteComponent(GameObject* gameObject) : Component(gameObject)
 	{
-		sprite = new sf::Sprite();
+		sprite = std::make_unique<sf::Sprite>();
 		scale = { 1, -1 };
 		sprite->setScale({ 1,-1 });
 		transform = gameObject->GetComponent<TransformComponent>();
 	}
 
-	SpriteRendererComponent::~SpriteRendererComponent()
-	{
-		if (sprite != nullptr)
-		{
-			delete sprite;
-		}
-	}
-
-	void SpriteRendererComponent::Update(float deltaTime)
+	SpriteComponent::~SpriteComponent()
 	{
 
 	}
 
-	void SpriteRendererComponent::Render()
+	void SpriteComponent::Update(float deltaTime)
+	{
+
+	}
+
+	void SpriteComponent::Render()
 	{
 		if (sprite != nullptr)
 		{
@@ -39,25 +36,25 @@ namespace XYZEngine
 		}
 	}
 
-	const sf::Sprite* SpriteRendererComponent::GetSprite() const
+	const sf::Sprite* SpriteComponent::GetSprite() const
 	{
-		return sprite;
+		return sprite.get();
 	}
 
-	void SpriteRendererComponent::SetTexture(const sf::Texture& newTexture)
+	void SpriteComponent::SetTexture(const sf::Texture& newTexture)
 	{
 		sprite->setTexture(newTexture);
 		auto textureSize = sprite->getTexture()->getSize();
 		sprite->setOrigin({ 0.5f * textureSize.x, 0.5f * textureSize.y });
 	}
 
-	void SpriteRendererComponent::SetPixelSize(int newWidth, int newHeight)
+	void SpriteComponent::SetPixelSize(int newWidth, int newHeight)
 	{
 		auto originalSize = sprite->getTexture()->getSize();
 		scale = { (float)newWidth / (float)originalSize.x, -(float)newHeight / (float)originalSize.y };
 	}
 
-	void SpriteRendererComponent::FlipX(bool flip)
+	void SpriteComponent::FlipX(bool flip)
 	{
 		if (flip != isFlipX)
 		{
@@ -66,7 +63,7 @@ namespace XYZEngine
 		}
 	}
 
-	void SpriteRendererComponent::FlipY(bool flip)
+	void SpriteComponent::FlipY(bool flip)
 	{
 		if (flip != isFlipY)
 		{

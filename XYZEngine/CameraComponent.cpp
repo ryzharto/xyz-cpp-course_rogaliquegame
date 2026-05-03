@@ -7,13 +7,13 @@ namespace XYZEngine
 {
 	CameraComponent::CameraComponent(GameObject* gameObject) : Component(gameObject)
 	{
-		view = new sf::View(sf::FloatRect(0, 0, 800, -600));
+		view = std::make_unique<sf::View>(sf::FloatRect(0, 0, 800, -600));
 		transform = gameObject->GetComponent<TransformComponent>();
 	}
 
 	CameraComponent::~CameraComponent()
 	{
-		delete view;
+		//delete view;
 	}
 
 	void CameraComponent::Update(float deltaTime)

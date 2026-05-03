@@ -1,6 +1,7 @@
 #pragma once
 #include <map>
 #include <string>
+#include <memory>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
@@ -29,9 +30,9 @@ namespace XYZEngine
 		void Clear();
 
 	private:
-		std::map<std::string, sf::Texture*> textures;
+		std::map<std::string, std::unique_ptr<sf::Texture>> textures;
 		std::map<std::string, std::vector<sf::Texture*>> textureMaps;
-		std::map<std::string, sf::SoundBuffer*> sounds;
+		std::map<std::string, std::unique_ptr<sf::SoundBuffer>> sounds;
 
 		ResourceSystem() {};
 		~ResourceSystem() {};

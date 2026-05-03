@@ -44,7 +44,7 @@ namespace XYZEngine
 			currentHealth = 0;
 		}
 
-		LOG_INFO("Taking" + std::to_string(damage) + " damage, current health " + std::to_string(currentHealth));
+		LOG_INFO("Taking " + std::to_string(damage) + " damage, current health " + std::to_string(currentHealth));
 	}
 
 	void StatsComponent::Heal(float amount)
@@ -55,7 +55,7 @@ namespace XYZEngine
 			currentHealth = maxHealth;
 		}
 
-		LOG_INFO("Healed" + std::to_string(amount) + " health, current health " + std::to_string(currentHealth));
+		LOG_INFO("Healed " + std::to_string(amount) + " health, current health " + std::to_string(currentHealth));
 	}
 
 	void StatsComponent::Update(float deltaTime)

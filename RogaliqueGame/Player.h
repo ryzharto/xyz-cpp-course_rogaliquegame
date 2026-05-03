@@ -1,7 +1,7 @@
 #pragma once
 #include "CameraComponent.h"
 #include "GameWorld.h"
-#include "SpriteRendererComponent.h"
+#include "SpriteComponent.h"
 #include "RenderSystem.h"
 #include "InputComponent.h"
 #include "GameObject.h"

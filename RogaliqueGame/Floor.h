@@ -1,6 +1,6 @@
 #pragma once
 #include <GameWorld.h>
-#include <SpriteRendererComponent.h>
+#include <SpriteComponent.h>
 #include <ResourceSystem.h>
 #include "GameObject.h"
 

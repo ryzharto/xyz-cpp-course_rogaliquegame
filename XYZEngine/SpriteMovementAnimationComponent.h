@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "MovementComponent.h"
-#include "SpriteRendererComponent.h"
+#include "SpriteComponent.h"
 #include "ResourceSystem.h"
 
 namespace XYZEngine
@@ -17,7 +17,7 @@ namespace XYZEngine
 		void Render() override;
 	private:
 		MovementComponent* movement;
-		SpriteRendererComponent* renderer;
+		SpriteComponent* renderer;
 
 		std::vector<const sf::Texture*> textureMap;
 		float secondsForFrame = 0.f;
