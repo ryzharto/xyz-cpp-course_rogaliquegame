@@ -11,18 +11,22 @@ namespace Ryzharto_RogaliqueGame
 {
 	Player::Player(const XYZEngine::Vector2Df& position)
 	{
+		// GameObject
 		gameObject = XYZEngine::GameWorld::Instance()->CreateGameObject("Player");
 		auto transform = gameObject->GetComponent<XYZEngine::TransformComponent>();
 		transform->SetWorldPosition(position);
 
+		// Sprite
 		auto playerRenderer = gameObject->AddComponent<XYZEngine::SpriteComponent>();
 		playerRenderer->SetTexture(*XYZEngine::ResourceSystem::Instance()->GetTextureShared("player")); // GetTextureMapElementShared("player",0))
 		playerRenderer->SetPixelSize(100, 100);
 
+		// Camera
 		auto playerCamera = gameObject->AddComponent<XYZEngine::CameraComponent>();
 		playerCamera->SetWindow(&XYZEngine::RenderSystem::Instance()->GetMainWindow());
 		playerCamera->SetBaseResolution(1280, 720);
 
+		// Input
 		auto playerInput = gameObject->AddComponent<XYZEngine::InputComponent>();
 
 		auto movement = gameObject->AddComponent<XYZEngine::MovementComponent>();
@@ -30,6 +34,7 @@ namespace Ryzharto_RogaliqueGame
 
 		auto spriteDirection = gameObject->AddComponent<XYZEngine::SpriteDirectionComponent>();
 
+		// Physics
 		auto rigidbody = gameObject->AddComponent<XYZEngine::RigidbodyComponent>();
 		rigidbody->SetKinematic(false);
 

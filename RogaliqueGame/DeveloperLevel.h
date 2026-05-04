@@ -3,6 +3,8 @@
 #include <array>
 #include "Scene.h"
 #include "Player.h"
+#include "EnemySpawner.h"
+#include "EnemyRaptor.h"
 #include "AI.h"
 #include "Music.h"
 #include "Floor.h"
@@ -24,6 +26,8 @@ namespace Ryzharto_RogaliqueGame
 
 	private:
 		std::shared_ptr<Player> player;
+		std::shared_ptr<EnemyRaptor> enemy_1;
+		std::shared_ptr<EnemyRaptor> enemy_2;
 		std::shared_ptr<AI> ai;
 		std::unique_ptr<Music> music;	
 	};

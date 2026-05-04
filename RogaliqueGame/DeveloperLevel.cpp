@@ -87,13 +87,13 @@ namespace Ryzharto_RogaliqueGame
 		}
 		LOG_INFO("Player created");
 
-		// AI characters creation
-		ai = std::make_unique<AI>(std::forward<XYZEngine::Vector2Df>({ width / 3 * 128.f, height / 3 * 128.f }), player->GetGameObject());
-		if (!ai->GetGameObject())
-		{
-			LOG_ERROR("AI GameObject is null!");
-		}
-		LOG_INFO("AI characters created.");
+		// Enemy characters creation
+		// EnemySpawner
+		std::vector<XYZEngine::Vector2Df> spawnPositions = {	{ width / 2.f * 128.f, height / 4.f * 128.f }, 
+																{ width / 3.f * 128.f, height / 2.f * 128.f }, 
+																{ width / 3.f * 128.f, height / 3.f * 128.f } };
+
+		auto enemies = EnemySpawner::SpawnEnemies("Raptor", 3, spawnPositions, player->GetGameObject());
 
 		music = std::make_unique<Music>("music");
 	}

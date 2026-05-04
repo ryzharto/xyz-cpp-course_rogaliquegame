@@ -16,16 +16,15 @@ namespace Ryzharto_RogaliqueGame
 		auto transform = gameObject->GetComponent<XYZEngine::TransformComponent>();
 		transform->SetWorldPosition(position);
 
-		auto renderer = gameObject->AddComponent<XYZEngine::SpriteComponent>();
-		renderer->SetTexture(*XYZEngine::ResourceSystem::Instance()->GetTextureShared("Raptor_biege"));
-		renderer->SetPixelSize(200, 100);
+		auto sprite = gameObject->AddComponent<XYZEngine::SpriteComponent>();
+		sprite->SetTexture(*XYZEngine::ResourceSystem::Instance()->GetTextureShared("Raptor_biege"));
+		sprite->SetPixelSize(200, 100);
 
 		auto aiInput = gameObject->AddComponent<XYZEngine::InputComponent>();
 
 		auto spriteDirection = gameObject->AddComponent<XYZEngine::SpriteDirectionComponent>();
 
 		auto follower = gameObject->AddComponent<XYZEngine::FollowComponent>();
-		follower->SetTarget(player);
 		follower->SetSpeed(120.f);
 
 		auto rigidbody = gameObject->AddComponent<XYZEngine::RigidbodyComponent>();
@@ -41,6 +40,8 @@ namespace Ryzharto_RogaliqueGame
 		attack->SetAttackCooldown(1.2f);
 
 		auto behavior = gameObject->AddComponent<XYZEngine::AIBehaviorComponent>();
+		behavior->SetDetectionRadius(500.f);
+		behavior->SetChaseSpeed(100.f);
 		behavior->SetTarget(player);
 
 		XYZEngine::LOG_INFO("AI GameObject constructed with components: Transform, SpriteRenderer, Input, SpriteDirection, Follow, Rigidbody, Collider");

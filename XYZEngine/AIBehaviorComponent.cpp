@@ -1,9 +1,7 @@
 #include "pch.h"
 #include "AIBehaviorComponent.h"
 #include "TransformComponent.h"
-#include "AttackComponent.h"
 #include "StatsComponent.h"
-#include "GameWorld.h"
 
 namespace XYZEngine
 {
@@ -11,11 +9,14 @@ namespace XYZEngine
     {
         transform = gameObject->GetComponent<TransformComponent>();
         attackComponent = gameObject->GetComponent<AttackComponent>();
+        followComponent = gameObject->GetComponent<FollowComponent>();
 
         if (!transform)
             LOG_WARN("AIBehaviorComponent requires TransformComponent");
         if (!attackComponent)
             LOG_WARN("AIBehaviorComponent works better with AttackComponent");
+        if (!followComponent)
+            LOG_WARN("AIBehaviorComponent works better with FollowComponent");
     }
 
     void AIBehaviorComponent::SetTarget(GameObject* newTarget)
@@ -23,9 +24,14 @@ namespace XYZEngine
         target = newTarget;
     }
 
+    void AIBehaviorComponent::SetChaseSpeed(float newChaseSpeed)
+    {
+        chaseSpeed = newChaseSpeed;
+    }
+
     void AIBehaviorComponent::Update(float deltaTime)
     {
-        if (!target || !attackComponent || !transform)
+        if (!target || !transform  || !attackComponent)
             return;
 
         auto targetTransform = target->GetComponent<TransformComponent>();
@@ -33,9 +39,43 @@ namespace XYZEngine
             return;
 
         float distance = (targetTransform->GetWorldPosition() - transform->GetWorldPosition()).GetLength();
-        if (distance <= attackComponent->GetAttackRange())
+        float attackRange = attackComponent->GetAttackRange();
+
+        // Changing states depending on distance
+        if (distance <= attackRange && attackComponent->CanAttack())
         {
+            currentState = AIState::Attack;
+        }
+        else if (distance <= detectionRadius)
+        {
+            currentState = AIState::Chase;
+        }
+        else
+        {
+            currentState = AIState::Idle;
+        }
+
+        // Actions depending on state
+        switch (currentState)
+        {
+        case AIState::Idle:
+            if (followComponent)
+                followComponent->SetSpeed(0.f); // stand still
+            break;
+
+        case AIState::Chase:
+            if (followComponent)
+            {
+                followComponent->SetTarget(target);
+                followComponent->SetSpeed(chaseSpeed);
+            }
+            break;
+
+        case AIState::Attack:
+            if (followComponent)
+                followComponent->SetSpeed(0.f);
             attackComponent->PerformMeleeAttack(target);
+            break;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace XYZEngine
 		void Render() override;
 	private:
 		InputComponent* input;
-		SpriteComponent* spriteRenderer;
+		SpriteComponent* sprite;
 	};
 }
 

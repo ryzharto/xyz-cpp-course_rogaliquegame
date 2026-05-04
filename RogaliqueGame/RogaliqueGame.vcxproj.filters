@@ -41,6 +41,15 @@
     <ClCompile Include="MazeGenerator.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyRaptor.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemySpawner.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Debug.h">
@@ -71,6 +80,15 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="MazeGenerator.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyRaptor.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySpawner.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

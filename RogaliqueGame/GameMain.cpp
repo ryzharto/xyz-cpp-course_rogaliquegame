@@ -21,7 +21,7 @@ int main()
 
 	XYZEngine::ResourceSystem::Instance()->LoadTexture("player", "Resources/Textures/vecteezy_soldier-in-uniform-cartoon.png");
 	XYZEngine::ResourceSystem::Instance()->LoadTexture("Raptor_biege", "Resources/Textures/velociraptor-dinosaur-beige.png");
-	//XYZEngine::ResourceSystem::Instance()->LoadTexture("Raptor_red", "Resources/Textures/velociraptor-dinosaur-red.png");
+	XYZEngine::ResourceSystem::Instance()->LoadTexture("Raptor_red", "Resources/Textures/velociraptor-dinosaur-red.png");
 	//XYZEngine::ResourceSystem::Instance()->LoadTexture("Brachiosaurus", "Resources/Textures/brachiosaurus.png");
 	//XYZEngine::ResourceSystem::Instance()->LoadTexture("Pteranodon", "Resources/Textures/pteranodon-dinosaur.png");
 

@@ -163,6 +163,9 @@
     <ClCompile Include="AI.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="DeveloperLevel.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyRaptor.cpp" />
+    <ClCompile Include="EnemySpawner.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
@@ -180,6 +183,9 @@
     <ClInclude Include="AI.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="DeveloperLevel.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyRaptor.h" />
+    <ClInclude Include="EnemySpawner.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="GameSettings.h" />
     <ClInclude Include="LevelLoader.h" />

@@ -10,7 +10,7 @@ namespace Ryzharto_RogaliqueGame
 	class AI
 	{
 	public:
-		AI(const XYZEngine::Vector2Df& posiiton, XYZEngine::GameObject* player);
+		AI(const XYZEngine::Vector2Df& position, XYZEngine::GameObject* player);
 		XYZEngine::GameObject* GetGameObject();
 	private:
 		XYZEngine::GameObject* gameObject;
