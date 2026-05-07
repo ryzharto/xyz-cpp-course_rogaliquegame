@@ -9,19 +9,18 @@
 #include "DeveloperLevel.h"
 #include "Matrix2D.h"
 
-//#include "Debug.h"
-
 //using namespace Ryzharto_RogaliqueGame;
 
 int main()
 {
 	XYZEngine::Engine::Instance(); // Logger initialize
 
-	XYZEngine::RenderSystem::Instance()->SetMainWindow(new sf::RenderWindow(sf::VideoMode(1280, 720), "Ryzharto's Rogalique"));
+	XYZEngine::RenderSystem::Instance()->SetMainWindow(new sf::RenderWindow(sf::VideoMode(1280, 720), "Ryzharto's Creta Roguelite"));
 
 	XYZEngine::ResourceSystem::Instance()->LoadTexture("player", "Resources/Textures/vecteezy_soldier-in-uniform-cartoon.png");
 	XYZEngine::ResourceSystem::Instance()->LoadTexture("Raptor_biege", "Resources/Textures/velociraptor-dinosaur-beige.png");
-	//XYZEngine::ResourceSystem::Instance()->LoadTexture("Raptor_red", "Resources/Textures/velociraptor-dinosaur-red.png");
+	XYZEngine::ResourceSystem::Instance()->LoadTexture("Raptor_red", "Resources/Textures/velociraptor-dinosaur-red.png");
+	XYZEngine::ResourceSystem::Instance()->LoadTexture("Bullet", "Resources/Textures/bullet.png");
 	//XYZEngine::ResourceSystem::Instance()->LoadTexture("Brachiosaurus", "Resources/Textures/brachiosaurus.png");
 	//XYZEngine::ResourceSystem::Instance()->LoadTexture("Pteranodon", "Resources/Textures/pteranodon-dinosaur.png");
 
@@ -35,7 +34,6 @@ int main()
 	developerLevel->Start();	
 
 	XYZEngine::Engine::Instance()->Run();
-	//Application::Instance().Run();
 
 	return 0;
 }

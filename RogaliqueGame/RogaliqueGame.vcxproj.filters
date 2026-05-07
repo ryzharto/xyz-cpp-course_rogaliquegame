@@ -26,9 +26,6 @@
     <ClCompile Include="DeveloperLevel.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="AI.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="Music.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
@@ -39,6 +36,18 @@
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="MazeGenerator.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyRaptor.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemySpawner.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -58,9 +67,6 @@
     <ClInclude Include="DeveloperLevel.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="AI.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Music.h">
       <Filter>Headers</Filter>
     </ClInclude>
@@ -71,6 +77,18 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="MazeGenerator.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyRaptor.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySpawner.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

@@ -5,19 +5,18 @@ namespace XYZEngine
 {
 	SpriteDirectionComponent::SpriteDirectionComponent(GameObject* gameObject) : Component(gameObject)
 	{
-		input = gameObject->GetComponent<InputComponent>();
-		spriteRenderer = gameObject->GetComponent<SpriteComponent>();
+		sprite = gameObject->GetComponent<SpriteComponent>();
 	}
 
 	void SpriteDirectionComponent::Update(float deltaTime)
 	{
-		if (input->GetHorizontalAxis() < 0)
+		if (input.GetHorizontalAxis() < 0)
 		{
-			spriteRenderer->FlipX(true);
+			sprite->FlipX(true);
 		}
-		if (input->GetHorizontalAxis() > 0)
+		if (input.GetHorizontalAxis() > 0)
 		{
-			spriteRenderer->FlipX(false);
+			sprite->FlipX(false);
 		}
 	}
 

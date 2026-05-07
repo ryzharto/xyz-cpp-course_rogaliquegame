@@ -18,6 +18,8 @@ namespace XYZEngine
 		virtual void Render() = 0;
 
 		void SetTrigger(bool newIsTrigger);
+		void SetStatic(bool newIsStatic) { isStatic = newIsStatic; }
+		bool IsStatic() const { return isStatic; }
 
 		void SubscribeCollision(std::function<void(Collision)> onCollisionAction);
 		void UnsubscribeCollision(std::function<void(Collision)> onCollisionAction);
@@ -33,6 +35,7 @@ namespace XYZEngine
 	protected:
 		sf::FloatRect bounds;
 		bool isTrigger = false;
+		bool isStatic = false;
 
 		void OnCollision(Collision collision);
 		void OnTriggerEnter(Trigger trigger);

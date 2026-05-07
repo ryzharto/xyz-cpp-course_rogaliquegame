@@ -8,12 +8,18 @@ namespace XYZEngine
 	public:
 		StatsComponent(GameObject* gameObject);
 
-		float GetCurrentHealth() const { return currentHealth; };
-		float GetMaxHealth() const { return maxHealth; };
-		float GetArmour() const { return armour; };
+		float GetCurrentHealth() const { return currentHealth; }
+		float GetMaxHealth() const { return maxHealth; }
+		float GetArmour() const { return armour; }
 
 		void SetHealth(float newHealth);
 		void SetArmour(float newArmour);
+
+		float GetCurrentStamina() const { return currentStamina;  }
+		float GetMaxStamina() const { return maxStamina; }
+		
+		void UseStamina(float amount);
+		void RegenStamina(float amount);
 
 		void TakeDamage(float damage);
 		void Heal(float amount);
@@ -22,8 +28,11 @@ namespace XYZEngine
 		void Render() override;
 
 	private:
-		float maxHealth;
-		float currentHealth;
-		float armour;
+		float maxHealth = 100.f;
+		float currentHealth = 100.f;
+		float maxStamina = 100.f;
+		float currentStamina = 100.f;
+		float staminaRegenRate = 10.f; // points per second
+		float armour = 100.f;
 	};
 }

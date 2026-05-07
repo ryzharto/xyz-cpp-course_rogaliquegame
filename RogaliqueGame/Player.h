@@ -3,7 +3,6 @@
 #include "GameWorld.h"
 #include "SpriteComponent.h"
 #include "RenderSystem.h"
-#include "InputComponent.h"
 #include "GameObject.h"
 #include "Vector.h"
 
@@ -13,7 +12,7 @@ namespace Ryzharto_RogaliqueGame
 	{
 	public:
 		Player(const XYZEngine::Vector2Df& position);
-		XYZEngine::GameObject* GetGameObject();
+		XYZEngine::GameObject* GetGameObject() { return gameObject; }
 
 	private:
 		XYZEngine::GameObject* gameObject;
