@@ -42,7 +42,7 @@ namespace XYZEngine
 		float reloadCooldown = 2.f; // seconds for reload
 		float timeSinceReload = 0.f; // reload timer
 		bool isReloading = false;
-		float muzzleOffset = 75.f;
+		float muzzleOffset = 100.f;
 
 		InputManager& input = InputManager::Instance();
 

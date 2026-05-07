@@ -44,7 +44,7 @@ namespace Ryzharto_RogaliqueGame
 
 		auto playerStats = gameObject->AddComponent<XYZEngine::StatsComponent>();
 		playerStats->SetHealth(100.f);
-		playerStats->SetArmour(100.f);
+		playerStats->SetArmour(10.f);
 
 		auto attack = gameObject->AddComponent<XYZEngine::AttackComponent>();
 		attack->SetAttackPower(15.f);

@@ -7,6 +7,8 @@
 #include "Engine.h"
 #include "ResourceSystem.h"
 #include "DeveloperLevel.h"
+#include "HUD.h"
+#include "UIManager.h"
 #include "Matrix2D.h"
 
 //using namespace Ryzharto_RogaliqueGame;
@@ -32,6 +34,16 @@ int main()
 
 	auto developerLevel = std::make_shared<Ryzharto_RogaliqueGame::DeveloperLevel>();
 	developerLevel->Start();	
+
+	auto playerObj = developerLevel->GetPlayer();
+	if (playerObj)
+	{
+		auto hud = std::make_shared<Ryzharto_RogaliqueGame::HUD>(playerObj);
+		XYZEngine::UIManager::Instance()->PushScreen(hud);
+		LOG_INFO("HUD pushed successfully");
+	}
+	else
+		LOG_ERROR("Player not found, HD cannot be created");
 
 	XYZEngine::Engine::Instance()->Run();
 

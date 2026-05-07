@@ -50,6 +50,12 @@
     <ClCompile Include="Projectile.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseMenu.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Debug.h">
@@ -89,6 +95,12 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Projectile.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseMenu.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

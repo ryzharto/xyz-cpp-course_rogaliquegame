@@ -167,9 +167,11 @@
     <ClCompile Include="EnemySpawner.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="GameMain.cpp" />
+    <ClCompile Include="HUD.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="MazeGenerator.cpp" />
     <ClCompile Include="Music.cpp" />
+    <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Wall.cpp" />
@@ -187,9 +189,11 @@
     <ClInclude Include="EnemySpawner.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="GameSettings.h" />
+    <ClInclude Include="HUD.h" />
     <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="MazeGenerator.h" />
     <ClInclude Include="Music.h" />
+    <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Wall.h" />

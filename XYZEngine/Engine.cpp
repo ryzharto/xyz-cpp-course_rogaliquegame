@@ -2,9 +2,8 @@
 #include "Engine.h"
 #include "GameWorld.h"
 #include "RenderSystem.h"
-//#include "InputComponent.h"
 #include "InputManager.h"
-//#include "UIManager.h"
+#include "UIManager.h"
 #include <iostream>
 #include <cassert>
 
@@ -23,6 +22,8 @@ namespace XYZEngine
 		srand(seed);
 
 		SetupLogger();
+
+		UIManager::Instance();
 	}
 
 	void Engine::Run()
@@ -55,21 +56,22 @@ namespace XYZEngine
 				}
 
 				// Handle UI events first
-				//UIManager::Instance().HandleEvent(event);
-				// Если ввод не заблокирован – обновляем InputManager
-				//if (!UIManager::Instance().IsInputBlocked())
+				UIManager::Instance()->HandleEvent(event);
+
+				// If input is not blocked - update InputManager
+				if (!UIManager::Instance()->IsInputBlocked())
 					InputManager::Instance().HandleEvents(event);
 			}
 
 			// Update axes and mouse position
 			InputManager::Instance().UpdateAxes();
 
-			//if (!UIManager::Instance().IsInputBlocked())
-			//{
-			GameWorld::Instance()->Update(deltaTime);
-			GameWorld::Instance()->FixedUpdate(deltaTime);
-			//}
-			// 
+			if (!UIManager::Instance()->IsInputBlocked())
+			{
+				GameWorld::Instance()->Update(deltaTime);
+				GameWorld::Instance()->FixedUpdate(deltaTime);
+			}
+			
 			// Rendering
 			if (!RenderSystem::Instance()->GetMainWindow().isOpen())
 			{
@@ -79,8 +81,8 @@ namespace XYZEngine
 			RenderSystem::Instance()->GetMainWindow().clear();
 			GameWorld::Instance()->Render();
 			GameWorld::Instance()->LateUpdate();
-			//UIManager::Instance().Update(deltaTime);
-			//UIManager::Instance().Draw(window);
+			UIManager::Instance()->Update(deltaTime);
+			UIManager::Instance()->Draw(window);
 			RenderSystem::Instance()->GetMainWindow().display();
 
 			// Reset frame input flags

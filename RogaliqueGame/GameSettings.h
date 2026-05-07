@@ -3,16 +3,16 @@
 
 namespace Ryzharto_RogaliqueGame
 {
-	class GameWorld
+	class GameConfig
 	{
 	private: 
-		GameWorld() = default;
+		GameConfig() = default;
 
 	public:
-		static GameWorld& Instance()
+		static GameConfig& Instance()
 		{
-			static GameWorld gameWorld;
-			return gameWorld;
+			static GameConfig gameConfig;
+			return gameConfig;
 		}
 
 		const std::string RESOURCES_PATH = "Resources/";
@@ -23,8 +23,8 @@ namespace Ryzharto_RogaliqueGame
 
 		const std::string GAME_NAME = "Ryzharto's Rogalique Game";
 
-		const unsigned int SCREEN_WIDTH = 800;
-		const unsigned int SCREEN_HEIGHT = 600;
+		const unsigned int SCREEN_WIDTH = 1280;
+		const unsigned int SCREEN_HEIGHT = 720;
 		const float TIME_PER_FRAME = 1.f / 60.f; // 60 fps
 
 		/*
@@ -60,7 +60,7 @@ namespace Ryzharto_RogaliqueGame
 	};
 }
 
-#define SETTINGS GameWorld::Instance()
+#define SETTINGS GameConfig::Instance()
 
 
 

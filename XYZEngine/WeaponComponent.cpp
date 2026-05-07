@@ -73,7 +73,7 @@ namespace XYZEngine
 	float WeaponComponent::GetReloadProgress() const
 	{
 		if (!isReloading) return 0.f;
-		return 1.f - (reloadCooldown / timeSinceReload);
+		return 1.f - (timeSinceReload / reloadCooldown);
 	}
 
 	void WeaponComponent::Fire()
