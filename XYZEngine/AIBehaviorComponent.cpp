@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "AIBehaviorComponent.h"
-#include "TransformComponent.h"
-#include "StatsComponent.h"
+#include "GameWorld.h"
 
 namespace XYZEngine
 {
@@ -10,6 +9,7 @@ namespace XYZEngine
         transform = gameObject->GetComponent<TransformComponent>();
         attackComponent = gameObject->GetComponent<AttackComponent>();
         followComponent = gameObject->GetComponent<FollowComponent>();
+        stats = gameObject->GetComponent<StatsComponent>();
 
         if (!transform)
             LOG_WARN("AIBehaviorComponent requires TransformComponent");
@@ -17,6 +17,8 @@ namespace XYZEngine
             LOG_WARN("AIBehaviorComponent works better with AttackComponent");
         if (!followComponent)
             LOG_WARN("AIBehaviorComponent works better with FollowComponent");
+        if (!stats)
+            LOG_WARN("AIBehaviorComponent works better with StatsComponent");
     }
 
     void AIBehaviorComponent::SetTarget(GameObject* newTarget)
@@ -55,6 +57,11 @@ namespace XYZEngine
             currentState = AIState::Idle;
         }
 
+        if (stats->GetCurrentHealth() <= 0)
+        {
+            currentState = AIState::Dead;
+        }
+
         // Actions depending on state
         switch (currentState)
         {
@@ -75,6 +82,9 @@ namespace XYZEngine
             if (followComponent)
                 followComponent->SetSpeed(0.f);
             attackComponent->PerformMeleeAttack(target);
+            break;
+        case AIState::Dead:
+                GameWorld::Instance()->DestroyGameObject(gameObject);
             break;
         }
     }

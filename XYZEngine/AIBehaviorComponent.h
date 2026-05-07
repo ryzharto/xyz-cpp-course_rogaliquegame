@@ -1,7 +1,9 @@
 #pragma once
 #include "GameObject.h"
+#include "TransformComponent.h"
 #include "AttackComponent.h"
 #include "FollowComponent.h"
+#include "StatsComponent.h"
 
 namespace XYZEngine
 {
@@ -11,6 +13,7 @@ namespace XYZEngine
         Patrol,
         Chase,
         Attack,
+        Dead,
     };
 
 	class AIBehaviorComponent : public Component
@@ -31,6 +34,7 @@ namespace XYZEngine
         TransformComponent* transform = nullptr;
         AttackComponent* attackComponent = nullptr;
         FollowComponent* followComponent = nullptr;
+        StatsComponent* stats = nullptr;
 
         float detectionRadius = 500.f;
         float speed = 50.f;

@@ -2,10 +2,10 @@
 #include "GameWorld.h"
 #include "RenderSystem.h"
 #include "ResourceSystem.h"
-#include "InputComponent.h"
 #include "SpriteComponent.h"
 #include "SpriteDirectionComponent.h"
 #include "SpriteColliderComponent.h"
+#include "SpriteMovementAnimationComponent.h"
 #include "FollowComponent.h"
 #include "StatsComponent.h"
 #include "AttackComponent.h"
@@ -20,8 +20,6 @@ namespace Ryzharto_RogaliqueGame
 		transform->SetWorldPosition(position);
 
 		auto sprite = gameObject->AddComponent<XYZEngine::SpriteComponent>();
-
-		auto aiInput = gameObject->AddComponent<XYZEngine::InputComponent>();
 
 		auto spriteDirection = gameObject->AddComponent<XYZEngine::SpriteDirectionComponent>();
 

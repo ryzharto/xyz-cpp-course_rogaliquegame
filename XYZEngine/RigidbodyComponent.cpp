@@ -16,11 +16,11 @@ namespace XYZEngine
 		linearVelocity = (1.f - linearDamping * deltaTime) * linearVelocity;
 		angleVelocity = (1.f - angleDamping * deltaTime) * angleVelocity;
 
-		if (linearVelocity.x < 0.001f)
+		if (fabs(linearVelocity.x) < 0.001f)
 		{
 			linearVelocity = { 0.f, linearVelocity.y };
 		}
-		if (linearVelocity.y < 0.001f)
+		if (fabs(linearVelocity.y) < 0.001f)
 		{
 			linearVelocity = { linearVelocity.x, 0.f };
 		}

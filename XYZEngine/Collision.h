@@ -8,12 +8,15 @@ namespace XYZEngine
 	struct Collision
 	{
 	public:
-		Collision(ColliderComponent* newFirst, ColliderComponent* newSecond, sf::FloatRect newCollisionRect) :
-			first(newFirst), second(newSecond), collisionRect(newCollisionRect) {
-		};
-	private:
+		Collision(ColliderComponent* newFirst, ColliderComponent* newSecond, sf::FloatRect newCollisionRect) : first(newFirst), second(newSecond), collisionRect(newCollisionRect) {};
+
 		ColliderComponent* first;
 		ColliderComponent* second;
 		sf::FloatRect collisionRect;
+
+	private:
+		//ColliderComponent* first;
+		//ColliderComponent* second;
+		//sf::FloatRect collisionRect;
 	};
 }

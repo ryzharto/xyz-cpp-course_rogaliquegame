@@ -20,6 +20,7 @@ namespace Ryzharto_RogaliqueGame
 		rigidbody->SetKinematic(true);
 
 		auto collider = gameObject->AddComponent<XYZEngine::SpriteColliderComponent>();
+		collider->SetStatic(true);
 		
 		XYZEngine::LOG_INFO("Wall created at position (" + std::to_string(position.x) + ", " + std::to_string(position.y) + ")");
 	}

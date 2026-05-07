@@ -21,6 +21,18 @@ namespace XYZEngine
 		armour = newArmour;
 	}
 
+	void StatsComponent::UseStamina(float amount)
+	{
+		currentStamina -= amount;
+		if (currentStamina < 0.f) currentStamina = 0.f;
+	}
+
+	void StatsComponent::RegenStamina(float amount)
+	{
+		currentStamina += amount;
+		if (currentStamina > maxStamina) currentStamina = maxStamina;
+	}
+
 	void StatsComponent::TakeDamage(float damage)
 	{
 		damage -= armour;
@@ -60,6 +72,13 @@ namespace XYZEngine
 
 	void StatsComponent::Update(float deltaTime)
 	{
+		// Stamina regeneration
+		if (currentStamina < maxStamina)
+		{
+			currentStamina += staminaRegenRate * deltaTime;
+			if (currentStamina > maxStamina) 
+				currentStamina = maxStamina;
+		}
 	}
 
 	void StatsComponent::Render()

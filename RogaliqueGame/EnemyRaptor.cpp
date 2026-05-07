@@ -30,6 +30,7 @@ namespace Ryzharto_RogaliqueGame
 
 		//Stats
 		auto aiStats = gameObject->GetComponent<XYZEngine::StatsComponent>();
+		aiStats->SetHealth(100.f);
 
 		// Attack
 		auto attack = gameObject->GetComponent<XYZEngine::AttackComponent>();

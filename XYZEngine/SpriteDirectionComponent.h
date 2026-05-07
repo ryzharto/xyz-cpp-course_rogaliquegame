@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObject.h"
-#include "InputComponent.h"
+#include "InputManager.h"
 #include "SpriteComponent.h"
 
 namespace XYZEngine
@@ -13,7 +13,7 @@ namespace XYZEngine
 		void Update(float deltaTime) override;
 		void Render() override;
 	private:
-		InputComponent* input;
+		InputManager& input = InputManager::Instance();
 		SpriteComponent* sprite;
 	};
 }

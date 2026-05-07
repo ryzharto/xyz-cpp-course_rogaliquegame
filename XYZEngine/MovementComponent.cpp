@@ -5,21 +5,13 @@ namespace XYZEngine
 {
 	MovementComponent::MovementComponent(GameObject* gameObject) : Component(gameObject)
 	{
-		input = gameObject->GetComponent<InputComponent>();
 		transform = gameObject->GetComponent<TransformComponent>();
-
-		if (input == nullptr)
-		{
-			//std::cout << "Need input component for movement" << std::endl;
-			LOG_WARN("'MovementComponent' requires 'InputComponent' which is missing. Removing component from GameObject '" + gameObject->GetName() + "'");
-			gameObject->RemoveComponent(this);
-		}
 	}
 
 	void MovementComponent::Update(float deltaTime)
 	{
-		float xAxis = input->GetHorizontalAxis();
-		float yAxis = input->GetVerticalAxis();
+		float xAxis = input.GetHorizontalAxis();
+		float yAxis = input.GetVerticalAxis();
 
 		transform->MoveBy(speed * deltaTime * Vector2Df{ xAxis, yAxis });
 

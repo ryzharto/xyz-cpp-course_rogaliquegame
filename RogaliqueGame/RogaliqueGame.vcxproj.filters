@@ -26,9 +26,6 @@
     <ClCompile Include="DeveloperLevel.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="AI.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="Music.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
@@ -50,6 +47,9 @@
     <ClCompile Include="EnemySpawner.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Debug.h">
@@ -65,9 +65,6 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="DeveloperLevel.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="AI.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Music.h">
@@ -89,6 +86,9 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="EnemySpawner.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

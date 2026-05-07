@@ -1,11 +1,12 @@
 #include "Player.h"
 #include "ResourceSystem.h"
-#include <SpriteColliderComponent.h>
-#include <MovementComponent.h>
-#include <SpriteDirectionComponent.h>
-#include <SpriteMovementAnimationComponent.h>
-#include <StatsComponent.h>
-#include <AttackComponent.h>
+#include "SpriteColliderComponent.h"
+#include "MovementComponent.h"
+#include "SpriteDirectionComponent.h"
+#include "SpriteMovementAnimationComponent.h"
+#include "StatsComponent.h"
+#include "AttackComponent.h"
+#include "WeaponComponent.h"
 
 namespace Ryzharto_RogaliqueGame
 {
@@ -16,19 +17,17 @@ namespace Ryzharto_RogaliqueGame
 		auto transform = gameObject->GetComponent<XYZEngine::TransformComponent>();
 		transform->SetWorldPosition(position);
 
-		// Sprite
-		auto playerRenderer = gameObject->AddComponent<XYZEngine::SpriteComponent>();
-		playerRenderer->SetTexture(*XYZEngine::ResourceSystem::Instance()->GetTextureShared("player")); // GetTextureMapElementShared("player",0))
-		playerRenderer->SetPixelSize(100, 100);
-
 		// Camera
 		auto playerCamera = gameObject->AddComponent<XYZEngine::CameraComponent>();
 		playerCamera->SetWindow(&XYZEngine::RenderSystem::Instance()->GetMainWindow());
 		playerCamera->SetBaseResolution(1280, 720);
 
-		// Input
-		auto playerInput = gameObject->AddComponent<XYZEngine::InputComponent>();
+		// Sprite
+		auto playerRenderer = gameObject->AddComponent<XYZEngine::SpriteComponent>();
+		playerRenderer->SetTexture(*XYZEngine::ResourceSystem::Instance()->GetTextureShared("player")); // GetTextureMapElementShared("player",0))
+		playerRenderer->SetPixelSize(100, 100);
 
+		// Movement
 		auto movement = gameObject->AddComponent<XYZEngine::MovementComponent>();
 		movement->SetSpeed(400.f);
 
@@ -52,11 +51,11 @@ namespace Ryzharto_RogaliqueGame
 		attack->SetAttackRange(5.f);
 		attack->SetAttackCooldown(0.7f);
 
-		XYZEngine::LOG_INFO("Player GameObject constructed with components: Transform, SpriteRenderer, Camera, Input, Movement, Rigidbody, Collider, Stats");
-	}
+		auto weapon = gameObject->AddComponent<XYZEngine::WeaponComponent>();
+		weapon->SetFireRate(3.f);
+		weapon->SetBulletSpeed(600.f);
+		weapon->SetMaxAmmo(30);
 
-	XYZEngine::GameObject* Player::GetGameObject()
-	{
-		return gameObject;
+		XYZEngine::LOG_INFO("Player GameObject constructed with components: Transform, SpriteRenderer, Camera, Input, Movement, Rigidbody, Collider, Stats");
 	}
 }

@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObject.h"
-#include "InputComponent.h"
+#include "InputManager.h"
 
 namespace XYZEngine
 {
@@ -16,7 +16,7 @@ namespace XYZEngine
 		float GetSpeed() const;
 		float GetAccelerationSquared() const;
 	private:
-		InputComponent* input;
+		InputManager& input = InputManager::Instance();
 		TransformComponent* transform;
 
 		float speed = 0;
