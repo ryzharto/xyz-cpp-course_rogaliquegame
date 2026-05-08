@@ -12,7 +12,7 @@ namespace XYZEngine
 
         void Update(float deltaTime) override;
         void Draw(sf::RenderWindow& window) override;
-        bool HandleEvent(const sf::Event& event) override;
+        void HandleEvent(const sf::Event& event) override;
 
         void AddChild(std::shared_ptr<UIElement> child);
         void RemoveChild(std::shared_ptr<UIElement> child);
@@ -20,9 +20,13 @@ namespace XYZEngine
         bool IsModal() const { return isModal; }
         void SetModal(bool modal) { isModal = modal; }
 
+        void Close() { pendingClose = true; }
+        bool IsClosing() const { return pendingClose;  }
+
     protected:
         std::vector<std::shared_ptr<UIElement>> children;
         bool isModal = false;
+        bool pendingClose = false;
     };
 }
 

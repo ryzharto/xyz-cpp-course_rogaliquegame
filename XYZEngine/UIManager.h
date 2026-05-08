@@ -16,12 +16,16 @@ namespace XYZEngine
 		void Update(float deltaTime);
 		void Draw(sf::RenderWindow& window);
 		void HandleEvent(const sf::Event& event);
+		void CloseActiveModal();
 
 		bool IsInputBlocked() const;
 
 	private:
 		UIManager() = default;
+		void ProcessPendingClosures();
+
 		std::vector<std::shared_ptr<UIScreen>> screens;
+		std::vector<std::shared_ptr<UIScreen>> pendingRemove;
 	};
 }
 

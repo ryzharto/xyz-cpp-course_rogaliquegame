@@ -9,7 +9,7 @@ namespace XYZEngine
 		virtual ~UIElement() = default;
 		virtual void Update(float deltaTime) {}
 		virtual void Draw(sf::RenderWindow& window) = 0;
-		virtual bool HandleEvent(const sf::Event& event) { return false; }
+		virtual void HandleEvent(const sf::Event& event) {};
 
 		void SetPosition(const sf::Vector2f& pos) { position = pos; }
 		const sf::Vector2f& GetPosition() const { return position; }

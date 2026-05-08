@@ -4,6 +4,7 @@
 #include "RenderSystem.h"
 #include "InputManager.h"
 #include "UIManager.h"
+#include "../RogaliqueGame/PauseMenu.h"
 #include <iostream>
 #include <cassert>
 
@@ -22,8 +23,6 @@ namespace XYZEngine
 		srand(seed);
 
 		SetupLogger();
-
-		UIManager::Instance();
 	}
 
 	void Engine::Run()
@@ -62,6 +61,16 @@ namespace XYZEngine
 				if (!UIManager::Instance()->IsInputBlocked())
 					InputManager::Instance().HandleEvents(event);
 			}
+
+			// Process PauseMenu open/close
+			/*if (InputManager::Instance().IsPauseButtonPressed())
+			{
+				if (!UIManager::Instance()->IsInputBlocked())
+				{
+					UIManager::Instance()->PushScreen(std::make_shared<Ryzharto_RogaliqueGame::PauseMenu>());
+					LOG_INFO("ENGINE::RUN: Pause menu opened");
+				}
+			}*/
 
 			// Update axes and mouse position
 			InputManager::Instance().UpdateAxes();

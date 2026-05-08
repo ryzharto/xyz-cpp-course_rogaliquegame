@@ -79,14 +79,14 @@ namespace XYZEngine
 			auto textureSize = textureMap.getSize();
 			int loadedElements = 0;
 
-			for (int y = 0; y <= textureSize.y - elementPixelSize.y; y += elementPixelSize.y)
+			for (unsigned int y = 0; y <= textureSize.y - elementPixelSize.y; y += elementPixelSize.y)
 			{
 				if (loadedElements == totalElements)
 				{
 					break;
 				}
 
-				for (int x = 0; x <= textureSize.x - elementPixelSize.x; x += elementPixelSize.x)
+				for (unsigned int x = 0; x <= textureSize.x - elementPixelSize.x; x += elementPixelSize.x)
 				{
 					if (loadedElements == totalElements)
 					{

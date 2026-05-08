@@ -2,6 +2,7 @@
 #include "InputManager.h"
 #include "RenderSystem.h"
 #include "UIManager.h"
+#include "../RogaliqueGame/PauseMenu.h"
 
 namespace XYZEngine
 {
@@ -21,8 +22,6 @@ namespace XYZEngine
 				reloadButtonPressed = true;
 			else if (event.key.code == sf::Keyboard::I || event.key.code == sf::Keyboard::Tab)
 				inventoryButtonPressed = true;
-			else if (event.key.code == sf::Keyboard::Escape || event.key.code == sf::Keyboard::P || event.key.code == sf::Keyboard::Pause)
-				pauseButtonPressed = true;
 			// Add here more keys if needed
 			break;
 
@@ -59,9 +58,6 @@ namespace XYZEngine
 				bool currentLeftButtonPressed = sf::Mouse::isButtonPressed(sf::Mouse::Left);
 
 				if (currentLeftButtonPressed && !mouseLeftButtonPressed)
-				{
-					//LOG_INFO("Input Manager::UpdateAxes: Mouse left button just pressed");
-				}
 				mouseLeftButtonPressed = currentLeftButtonPressed;
 			}
 		}

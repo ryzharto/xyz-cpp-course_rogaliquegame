@@ -1,5 +1,5 @@
 #pragma once
-#include <UIScreen.h>
+#include "UIScreen.h"
 #include <SFML/Graphics.hpp>
 
 namespace Ryzharto_RogaliqueGame
@@ -11,7 +11,7 @@ namespace Ryzharto_RogaliqueGame
 		void Init() override;
 		void Update(float deltaTime) override;
 		void Draw(sf::RenderWindow& window) override;
-		void HandleEvent(const sf::Event* event);
+		void HandleEvent(const sf::Event& event) override;
 
 	private:
 		sf::Font font;

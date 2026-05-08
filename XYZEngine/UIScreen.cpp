@@ -15,14 +15,10 @@ namespace XYZEngine
 			child->Draw(window);
 	}
 
-	bool UIScreen::HandleEvent(const sf::Event& event)
+	void UIScreen::HandleEvent(const sf::Event& event)
 	{
 		for (auto& child : children)
-		{
-			if (child->HandleEvent(event))
-				return true;
-		}
-		return false;
+			child->HandleEvent(event);
 	}
 
 	void UIScreen::AddChild(std::shared_ptr<UIElement> child)
