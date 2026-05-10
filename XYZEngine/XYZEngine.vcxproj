@@ -163,6 +163,8 @@
     <ClInclude Include="GameWorld.h" />
     <ClInclude Include="IDelayedAction.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="InteractableComponent.h" />
+    <ClInclude Include="InventoryComponent.h" />
     <ClInclude Include="IObserver.h" />
     <ClInclude Include="LifetimeComponent.h" />
     <ClInclude Include="Logger.h" />
@@ -203,6 +205,8 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameWorld.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="InteractableComponent.cpp" />
+    <ClCompile Include="InventoryComponent.cpp" />
     <ClCompile Include="LifetimeComponent.cpp" />
     <ClCompile Include="Matrix2D.cpp" />
     <ClCompile Include="MovementComponent.cpp" />

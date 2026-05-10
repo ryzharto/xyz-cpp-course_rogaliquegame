@@ -2,6 +2,9 @@
 #include "MazeGenerator.h"
 #include "Logger.h"
 
+// TEST INDLUDES
+#include "InteractableComponent.h"
+
 using namespace XYZEngine;
 
 namespace Ryzharto_RogaliqueGame
@@ -73,13 +76,13 @@ namespace Ryzharto_RogaliqueGame
 			}
 		}
 
-		// Maze Generator
+		// MAZE GENERATOR
 		MazeGenerator mazeGenerator(width, height, this);
 		//mazeGenerator.Generate();
 
 		LOG_INFO("Level generation: " + std::to_string(floors.size()) + " floors, " + std::to_string(walls.size()) + " walls created.");
 
-		// Player creation
+		// PLAYER
 		player = std::make_unique<Player>(std::forward<XYZEngine::Vector2Df>({width / 2 * 128.f, height / 2 * 128.f}));
 		if (!player->GetGameObject())
 		{
@@ -87,13 +90,33 @@ namespace Ryzharto_RogaliqueGame
 		}
 		LOG_INFO("Player created");
 
-		// Enemy characters creation
+		// ENEMIES
 		// EnemySpawner
 		std::vector<XYZEngine::Vector2Df> spawnPositions = {	{ width / 2.f * 128.f, height / 4.f * 128.f }, 
 																{ width / 3.f * 128.f, height / 2.f * 128.f }, 
 																{ width / 3.f * 128.f, height / 3.f * 128.f } };
 
 		auto enemies = EnemySpawner::SpawnEnemies("Raptor", 3, spawnPositions, player->GetGameObject());
+
+		// TEST OBJECTS
+		auto* testObj = XYZEngine::GameWorld::Instance()->CreateGameObject("Test Terminal");
+		testObj->GetComponent<TransformComponent>()->SetWorldPosition({ 500.f, 300.f });
+		auto* sprite = testObj->AddComponent<XYZEngine::SpriteComponent>();
+		sprite->SetTexture(*XYZEngine::ResourceSystem::Instance()->GetTextureShared("Raptor_biege"));
+		sprite->SetPixelSize(64, 64);
+		auto* interact = testObj->AddComponent<XYZEngine::InteractableComponent>();
+		interact->SetPrompt("Press E: Terminal");
+		interact->SetInteractionRadius(100.f);
+		interact->AddAction("Hack", [](XYZEngine::GameObject* instigator, XYZEngine::GameObject* self)
+			{
+			LOG_INFO("Terminal hacked!");
+			});
+		interact->AddAction("Destroy", [](XYZEngine::GameObject* instigator, XYZEngine::GameObject* self)
+			{
+			XYZEngine::GameWorld::Instance()->DestroyGameObject(self);
+			LOG_INFO("Terminal destroyed!");
+			});
+
 
 		music = std::make_unique<Music>("music");
 	}

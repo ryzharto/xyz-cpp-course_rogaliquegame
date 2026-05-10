@@ -110,7 +110,7 @@ namespace Ryzharto_RogaliqueGame
         if (selectedIndex >= 0 && selectedIndex < static_cast<int>(items.size()))
         {
             sf::Vector2f pos = items[selectedIndex].getPosition();
-            selector.setPosition(pos.x - 10, pos.y - 5);
+            selector.setPosition(pos.x - 10, pos.y - 5); // little offset to left and down
         }
 	}
 

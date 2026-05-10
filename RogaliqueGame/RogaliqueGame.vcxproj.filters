@@ -56,6 +56,15 @@
     <ClCompile Include="PauseMenu.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="InventoryScreen.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldItem.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="InteractionMenu.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Debug.h">
@@ -101,6 +110,18 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="PauseMenu.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryScreen.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldItem.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractionMenu.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

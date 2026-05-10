@@ -168,6 +168,8 @@
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="InteractionMenu.cpp" />
+    <ClCompile Include="InventoryScreen.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="MazeGenerator.cpp" />
     <ClCompile Include="Music.cpp" />
@@ -175,6 +177,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Wall.cpp" />
+    <ClCompile Include="WorldItem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\XYZEngine\XYZEngine.vcxproj">
@@ -190,6 +193,9 @@
     <ClInclude Include="Floor.h" />
     <ClInclude Include="GameSettings.h" />
     <ClInclude Include="HUD.h" />
+    <ClInclude Include="InteractionMenu.h" />
+    <ClInclude Include="InventoryScreen.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="MazeGenerator.h" />
     <ClInclude Include="Music.h" />
@@ -197,6 +203,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Wall.h" />
+    <ClInclude Include="WorldItem.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

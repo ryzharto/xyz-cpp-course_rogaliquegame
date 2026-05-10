@@ -1,5 +1,8 @@
 #include "pch.h"
 #include "GameWorld.h"
+#include "InteractableComponent.h"
+#include "UIManager.h"
+#include "..//RogaliqueGame/InteractionMenu.h"
 
 namespace XYZEngine
 {
@@ -37,9 +40,18 @@ namespace XYZEngine
 
 	void GameWorld::LateUpdate()
 	{
-		for (int i = markedToDestroyGameObjects.size() - 1; i >= 0; i--)
+		// Copy of marked to delete objects to avoid invalidation of iterators
+		std::vector<GameObject*> toDestroy = markedToDestroyGameObjects;
+		markedToDestroyGameObjects.clear();
+
+		for (auto* obj : toDestroy)
 		{
-			DestroyGameObjectImmediate(markedToDestroyGameObjects[i]);
+			// Check that object is still exist in world
+			if (std::find_if(gameObjects.begin(), gameObjects.end(),
+				[obj](const auto& up) { return up == obj; }) != gameObjects.end())
+			{
+				DestroyGameObjectImmediate(obj);
+			}
 		}
 	}
 
@@ -79,6 +91,56 @@ namespace XYZEngine
 		}
 
 		fixedCounter = 0.f;
+	}
+
+	void GameWorld::ProcessInteract(GameObject* instigator)
+	{
+		if (!instigator) return;
+
+		auto* playerTransform = instigator->GetComponent<TransformComponent>();
+		if (!playerTransform) return;
+
+		Vector2Df playerPos = playerTransform->GetWorldPosition();
+
+		InteractableComponent* nearest = nullptr;
+		GameObject* nearestObj = nullptr;
+		float bestDist = 0.f;
+
+		for (auto& go : gameObjects)
+		{
+			auto* interact = go->GetComponent<InteractableComponent>();
+			if (!interact) continue;
+
+			auto* goTransform = go->GetComponent<TransformComponent>();
+			if (!goTransform) continue;
+
+			float dist = (goTransform->GetWorldPosition() - playerPos).GetLength();
+			float radius = interact->GetInteractionRadius();
+
+			if (dist <= radius)
+			{
+				if (!nearest || dist < bestDist)
+				{
+					nearest = interact;
+					nearestObj = go;
+					bestDist = dist;
+				}
+			}
+		}
+
+		if (nearest)
+		{
+			if (nearest->GetActions().size() == 1)
+			{
+			nearest->ExecuteAction(0, instigator);
+			}
+			else
+			{
+				// Show modal interaction menu
+				UIManager::Instance()->PushScreen(std::make_shared<Ryzharto_RogaliqueGame::InteractionMenu>(nearestObj, instigator));
+				LOG_INFO("GameWorld::ProcessInteract: InteractionMenu showed");
+			}
+		}
 	}
 
 	void GameWorld::Print() const

@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "UIManager.h"
+#include "GameWorld.h"
 #include "../RogaliqueGame/PauseMenu.h"
+#include "../RogaliqueGame/InventoryScreen.h"
 
 namespace XYZEngine
 {
@@ -57,6 +59,9 @@ namespace XYZEngine
 
 	void UIManager::HandleEvent(const sf::Event& event)
 	{
+		pendingPop = false;
+		eventConsumed = false;
+
 		if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
 		{
 			if (!IsInputBlocked())
@@ -67,19 +72,53 @@ namespace XYZEngine
 			}
 		}
 
+		if (event.type == sf::Event::KeyPressed && (event.key.code == sf::Keyboard::Tab || event.key.code == sf::Keyboard::I))
+		{
+			if (!IsInputBlocked())
+			{
+				auto* player = GameWorld::Instance()->GetPlayer();
+				if (player)
+				{
+					PushScreen(std::make_shared<Ryzharto_RogaliqueGame::InventoryScreen>(player));
+					return;
+				}
+			}
+			else
+			{}	
+		}
+
 		// Transfer events to screens, but dont delete it now
 		for (auto it = screens.rbegin(); it != screens.rend(); ++it)
 		{
 			(*it)->HandleEvent(event);
 			if((*it)->IsModal())
+			{
+				eventConsumed = true;   // event consumed it modal screen
 				break;
+			}
 		}
+
+		// If any screen pending pop - execute
+		if (pendingPop)
+		{
+			if (!screens.empty())
+				screens.pop_back();
+			pendingPop = false;
+			eventConsumed = true;
+		}
+
 		// After events handled safely delete marked
 		ProcessPendingClosures();
 	}
 
 	void UIManager::CloseActiveModal()
 	{
+
+	}
+
+	void UIManager::RequestPop()
+	{
+		pendingPop = true;
 	}
 
 	bool UIManager::IsInputBlocked() const
@@ -105,7 +144,10 @@ namespace XYZEngine
 		{
 			auto it = std::find(screens.begin(), screens.end(), screen);
 			if (it != screens.end())
+			{
+				XYZEngine::LOG_INFO("Removing closed screen: " + std::to_string((*it)->IsClosing()));
 				screens.erase(it);
+			}
 		}
 	}
 }

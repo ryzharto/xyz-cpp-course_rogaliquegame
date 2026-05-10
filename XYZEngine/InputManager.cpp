@@ -18,10 +18,12 @@ namespace XYZEngine
 		switch (event.type)
 		{
 		case sf::Event::KeyPressed:
+			// Reload
 			if (event.key.code == sf::Keyboard::R)
 				reloadButtonPressed = true;
-			else if (event.key.code == sf::Keyboard::I || event.key.code == sf::Keyboard::Tab)
-				inventoryButtonPressed = true;
+			// Interact
+			else if (event.key.code == sf::Keyboard::E)
+				interactButtonPressed = true;
 			// Add here more keys if needed
 			break;
 
@@ -83,7 +85,7 @@ namespace XYZEngine
 	{
 		mouseLeftButtonPressed = false;
 		reloadButtonPressed = false;
-		inventoryButtonPressed = false;
+		interactButtonPressed = false;
 	}
 
 

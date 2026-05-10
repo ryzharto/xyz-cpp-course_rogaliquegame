@@ -2,6 +2,7 @@
 #include "UIScreen.h"
 #include <SFML/Graphics.hpp>
 #include <memory>
+#include <vector>
 
 namespace XYZEngine
 {
@@ -10,6 +11,13 @@ namespace XYZEngine
 
 namespace Ryzharto_RogaliqueGame
 {
+    struct Notification
+    {
+        std::string text;
+        float lifetime = -1.f; // negative - permanent
+        float age = 0.f;
+    };
+
     class HUD : public XYZEngine::UIScreen
     {
     public:
@@ -17,6 +25,10 @@ namespace Ryzharto_RogaliqueGame
         void Init() override;
         void Update(float deltaTime) override;
         void Draw(sf::RenderWindow& window) override;
+
+        void ShowNotification(const std::string& text, float lifetime = -1.f);
+        void ClearPersistentNotification();   // delete persistent notify
+        void UpdateInteractableNotification();
 
     private:
         XYZEngine::GameObject* player = nullptr;
@@ -45,6 +57,10 @@ namespace Ryzharto_RogaliqueGame
         sf::Vector2f iconSize = { 150, 50 };
 
         float margin = 20.f; // Margin betwee elements
+        
+        // Notifications
+        std::vector<Notification> notifications;
+        sf::Text notifyText;
     };
 }
 

@@ -17,8 +17,10 @@ namespace XYZEngine
 		void Draw(sf::RenderWindow& window);
 		void HandleEvent(const sf::Event& event);
 		void CloseActiveModal();
+		void RequestPop();
 
 		bool IsInputBlocked() const;
+		bool IsEventConsumed() const { return eventConsumed; }
 
 	private:
 		UIManager() = default;
@@ -26,6 +28,8 @@ namespace XYZEngine
 
 		std::vector<std::shared_ptr<UIScreen>> screens;
 		std::vector<std::shared_ptr<UIScreen>> pendingRemove;
+		bool pendingPop = false;
+		bool eventConsumed = false;
 	};
 }
 

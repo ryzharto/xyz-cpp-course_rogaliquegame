@@ -38,7 +38,7 @@ namespace XYZEngine
 		// Init game clock
 		sf::Clock gameClock;
 		sf::Event event;
-		
+
 		// Game loop
 		while (RenderSystem::Instance()->GetMainWindow().isOpen())
 		{
@@ -50,27 +50,23 @@ namespace XYZEngine
 			{
 				// Close window if close button or Escape key pressed
 				if (event.type == sf::Event::Closed)
-				{
 					RenderSystem::Instance()->GetMainWindow().close();
-				}
 
 				// Handle UI events first
 				UIManager::Instance()->HandleEvent(event);
 
-				// If input is not blocked - update InputManager
-				if (!UIManager::Instance()->IsInputBlocked())
-					InputManager::Instance().HandleEvents(event);
-			}
-
-			// Process PauseMenu open/close
-			/*if (InputManager::Instance().IsPauseButtonPressed())
-			{
-				if (!UIManager::Instance()->IsInputBlocked())
+				// If input is not blocked and event not consumed - update InputManager
+				if (!UIManager::Instance()->IsInputBlocked() && !UIManager::Instance()->IsEventConsumed())
 				{
-					UIManager::Instance()->PushScreen(std::make_shared<Ryzharto_RogaliqueGame::PauseMenu>());
-					LOG_INFO("ENGINE::RUN: Pause menu opened");
+					InputManager::Instance().HandleEvents(event);
+
+					// Process interactable items
+					if (InputManager::Instance().IsInteractButtonPressed())
+					{
+						GameWorld::Instance()->ProcessInteract(GameWorld::Instance()->GetPlayer());
+					}
 				}
-			}*/
+			}
 
 			// Update axes and mouse position
 			InputManager::Instance().UpdateAxes();

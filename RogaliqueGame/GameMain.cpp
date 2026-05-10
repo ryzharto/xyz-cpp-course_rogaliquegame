@@ -45,6 +45,8 @@ int main()
 	else
 		LOG_ERROR("Player not found, HD cannot be created");
 
+	GameWorld::Instance()->SetPlayer(playerObj);
+
 	XYZEngine::Engine::Instance()->Run();
 
 	return 0;
