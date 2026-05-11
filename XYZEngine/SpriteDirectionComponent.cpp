@@ -10,14 +10,18 @@ namespace XYZEngine
 
 	void SpriteDirectionComponent::Update(float deltaTime)
 	{
-		if (input.GetHorizontalAxis() < 0)
-		{
+		auto* transform = gameObject->GetComponent<TransformComponent>();
+		if (!transform) return;
+
+		// Получаем мировую позицию мыши и текущую позицию объекта
+		sf::Vector2f mouseWorld = input.GetMouseWorldPosition();
+		Vector2Df myPos = transform->GetWorldPosition();
+
+		// Если курсор левее персонажа – отражаем спрайт по X
+		if (mouseWorld.x < myPos.x)
 			sprite->FlipX(true);
-		}
-		if (input.GetHorizontalAxis() > 0)
-		{
+		else
 			sprite->FlipX(false);
-		}
 	}
 
 	void SpriteDirectionComponent::Render()

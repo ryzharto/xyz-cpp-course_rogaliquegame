@@ -17,8 +17,14 @@ namespace XYZEngine
 
 		GameObject* CreateGameObject();
 		GameObject* CreateGameObject(std::string name);
+		GameObject* GetPlayer() const { return player; }
+		void SetPlayer(GameObject* newPlayer) { player = newPlayer; }
 		void DestroyGameObject(GameObject* gameObject);
 		void Clear();
+
+		void ProcessInteract(GameObject* instigator);
+		const std::vector<GameObject*> GetGameObjects() const { return gameObjects; }
+		bool IsMarkedForDeletion(GameObject* obj) const;
 
 		void Print() const;
 
@@ -35,6 +41,8 @@ namespace XYZEngine
 		std::vector<GameObject*> markedToDestroyGameObjects = {};
 
 		void DestroyGameObjectImmediate(GameObject* gameObject);
+
+		GameObject* player = nullptr;
 	};
 }
 

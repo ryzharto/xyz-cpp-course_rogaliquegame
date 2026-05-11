@@ -19,6 +19,7 @@ namespace Ryzharto_RogaliqueGame
 		void Start() override;
 		void Restart() override;
 		void Stop() override;
+		XYZEngine::GameObject* const GetPlayer() { return player ? player->GetGameObject() : nullptr; };
 
 		std::vector<std::unique_ptr<Wall>> walls;
 		std::vector<std::unique_ptr<Floor>> floors;

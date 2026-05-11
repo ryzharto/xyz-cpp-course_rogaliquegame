@@ -2,9 +2,10 @@
 #include "Engine.h"
 #include "GameWorld.h"
 #include "RenderSystem.h"
-//#include "InputComponent.h"
 #include "InputManager.h"
-//#include "UIManager.h"
+#include "UIManager.h"
+#include "../RogaliqueGame/PauseMenu.h"
+#include "../RogaliqueGame/Game.h"
 #include <iostream>
 #include <cassert>
 
@@ -38,7 +39,7 @@ namespace XYZEngine
 		// Init game clock
 		sf::Clock gameClock;
 		sf::Event event;
-		
+
 		// Game loop
 		while (RenderSystem::Instance()->GetMainWindow().isOpen())
 		{
@@ -50,26 +51,37 @@ namespace XYZEngine
 			{
 				// Close window if close button or Escape key pressed
 				if (event.type == sf::Event::Closed)
-				{
 					RenderSystem::Instance()->GetMainWindow().close();
-				}
 
 				// Handle UI events first
-				//UIManager::Instance().HandleEvent(event);
-				// ≈сли ввод не заблокирован Ц обновл€ем InputManager
-				//if (!UIManager::Instance().IsInputBlocked())
+				UIManager::Instance()->HandleEvent(event);
+
+				// If input is not blocked and event not consumed - update InputManager
+				if (!UIManager::Instance()->IsInputBlocked() && !UIManager::Instance()->IsEventConsumed())
+				{
 					InputManager::Instance().HandleEvents(event);
+
+					// Process interactable items
+					if (InputManager::Instance().IsInteractButtonPressed())
+					{
+						GameWorld::Instance()->ProcessInteract(GameWorld::Instance()->GetPlayer());
+						// —бросить флаг немедленно
+						InputManager::Instance().ConsumeInteractPress();
+					}
+				}
 			}
 
 			// Update axes and mouse position
 			InputManager::Instance().UpdateAxes();
 
-			//if (!UIManager::Instance().IsInputBlocked())
-			//{
-			GameWorld::Instance()->Update(deltaTime);
-			GameWorld::Instance()->FixedUpdate(deltaTime);
-			//}
-			// 
+			Ryzharto_RogaliqueGame::Game::Instance().Update(deltaTime);
+
+			if (Ryzharto_RogaliqueGame::Game::Instance().IsPlaying() && !UIManager::Instance()->IsInputBlocked())
+			{
+				GameWorld::Instance()->Update(deltaTime);
+				GameWorld::Instance()->FixedUpdate(deltaTime);
+			}
+			
 			// Rendering
 			if (!RenderSystem::Instance()->GetMainWindow().isOpen())
 			{
@@ -77,10 +89,15 @@ namespace XYZEngine
 			}
 			
 			RenderSystem::Instance()->GetMainWindow().clear();
-			GameWorld::Instance()->Render();
-			GameWorld::Instance()->LateUpdate();
-			//UIManager::Instance().Update(deltaTime);
-			//UIManager::Instance().Draw(window);
+
+			if (Ryzharto_RogaliqueGame::Game::Instance().IsPlaying())
+			{
+				GameWorld::Instance()->Render();
+				GameWorld::Instance()->LateUpdate();
+			}
+
+			UIManager::Instance()->Update(deltaTime);
+			UIManager::Instance()->Draw(window);
 			RenderSystem::Instance()->GetMainWindow().display();
 
 			// Reset frame input flags

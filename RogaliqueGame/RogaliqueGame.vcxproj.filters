@@ -50,6 +50,39 @@
     <ClCompile Include="Projectile.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseMenu.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="InventoryScreen.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="InteractionMenu.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="PrefabCatalog.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="PrefabSetup.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="InventoryActions.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="InteractionActions.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Debug.h">
@@ -89,6 +122,42 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Projectile.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseMenu.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryScreen.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractionMenu.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Prefab.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="PrefabCatalog.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="PrefabSetup.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryActions.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractionActions.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenu.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

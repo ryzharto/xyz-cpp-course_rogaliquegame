@@ -4,6 +4,7 @@
 #include "LifetimeComponent.h"
 #include "SpriteColliderComponent.h"
 #include "StatsComponent.h"
+#include <cmath>
 
 namespace Ryzharto_RogaliqueGame
 {
@@ -27,6 +28,9 @@ namespace Ryzharto_RogaliqueGame
 		auto rigidbody = gameObject->AddComponent<XYZEngine::RigidbodyComponent>();
 		rigidbody->SetKinematic(true);
 		rigidbody->SetLinearVelocity(velocity);
+
+		float angle = std::atan2(velocity.y, velocity.x) * 180.f / 3.14159265f;
+		transform->SetWorldRotation(angle);
 
 		auto collider = gameObject->AddComponent<XYZEngine::SpriteColliderComponent>();
 

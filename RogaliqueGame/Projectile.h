@@ -15,8 +15,8 @@ namespace Ryzharto_RogaliqueGame
 	private:
 		void OnProjectileCollision(XYZEngine::Collision collision);
 
-		XYZEngine::GameObject* gameObject;
-		XYZEngine::GameObject* owner;
+		XYZEngine::GameObject* gameObject = nullptr;
+		XYZEngine::GameObject* owner = nullptr;
 		float damage;
 	};
 }

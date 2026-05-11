@@ -166,11 +166,22 @@
     <ClCompile Include="EnemyRaptor.cpp" />
     <ClCompile Include="EnemySpawner.cpp" />
     <ClCompile Include="Floor.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameMain.cpp" />
+    <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="InteractionActions.cpp" />
+    <ClCompile Include="InteractionMenu.cpp" />
+    <ClCompile Include="InventoryActions.cpp" />
+    <ClCompile Include="InventoryScreen.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MazeGenerator.cpp" />
     <ClCompile Include="Music.cpp" />
+    <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PrefabCatalog.cpp" />
+    <ClCompile Include="PrefabSetup.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>
@@ -186,11 +197,23 @@
     <ClInclude Include="EnemyRaptor.h" />
     <ClInclude Include="EnemySpawner.h" />
     <ClInclude Include="Floor.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="GameSettings.h" />
+    <ClInclude Include="HUD.h" />
+    <ClInclude Include="InteractionActions.h" />
+    <ClInclude Include="InteractionMenu.h" />
+    <ClInclude Include="InventoryActions.h" />
+    <ClInclude Include="InventoryScreen.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="LevelLoader.h" />
+    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MazeGenerator.h" />
     <ClInclude Include="Music.h" />
+    <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Prefab.h" />
+    <ClInclude Include="PrefabCatalog.h" />
+    <ClInclude Include="PrefabSetup.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Wall.h" />
   </ItemGroup>

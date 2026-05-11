@@ -3,10 +3,13 @@
 // Modified and extended by Ryzharto (ryzharto@yandex.ru)
 
 #include <SFML/Graphics.hpp>
-#include "Player.h"
+#include "Game.h"
 #include "Engine.h"
 #include "ResourceSystem.h"
 #include "DeveloperLevel.h"
+#include "HUD.h"
+#include "UIManager.h"
+#include "PrefabSetup.h"
 #include "Matrix2D.h"
 
 //using namespace Ryzharto_RogaliqueGame;
@@ -21,6 +24,10 @@ int main()
 	XYZEngine::ResourceSystem::Instance()->LoadTexture("Raptor_biege", "Resources/Textures/velociraptor-dinosaur-beige.png");
 	XYZEngine::ResourceSystem::Instance()->LoadTexture("Raptor_red", "Resources/Textures/velociraptor-dinosaur-red.png");
 	XYZEngine::ResourceSystem::Instance()->LoadTexture("Bullet", "Resources/Textures/bullet.png");
+	XYZEngine::ResourceSystem::Instance()->LoadTexture("Medkit", "Resources/Textures/medkit.png");
+	XYZEngine::ResourceSystem::Instance()->LoadTexture("Ammo_box", "Resources/Textures/ammobox.png");
+	XYZEngine::ResourceSystem::Instance()->LoadTexture("Terminal", "Resources/Textures/terminal.png");
+
 	//XYZEngine::ResourceSystem::Instance()->LoadTexture("Brachiosaurus", "Resources/Textures/brachiosaurus.png");
 	//XYZEngine::ResourceSystem::Instance()->LoadTexture("Pteranodon", "Resources/Textures/pteranodon-dinosaur.png");
 
@@ -30,8 +37,9 @@ int main()
 
 	XYZEngine::ResourceSystem::Instance()->LoadSound("music", "Resources/Sounds/level-1.wav");
 
-	auto developerLevel = std::make_shared<Ryzharto_RogaliqueGame::DeveloperLevel>();
-	developerLevel->Start();	
+	Ryzharto_RogaliqueGame::SetupPrefabs();
+
+	Ryzharto_RogaliqueGame::Game::Instance().Init();
 
 	XYZEngine::Engine::Instance()->Run();
 

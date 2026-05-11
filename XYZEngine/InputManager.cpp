@@ -1,7 +1,8 @@
 #include "pch.h"
 #include "InputManager.h"
 #include "RenderSystem.h"
-//#include "UIManager.h"
+#include "UIManager.h"
+#include "../RogaliqueGame/PauseMenu.h"
 
 namespace XYZEngine
 {
@@ -17,10 +18,12 @@ namespace XYZEngine
 		switch (event.type)
 		{
 		case sf::Event::KeyPressed:
+			// Reload
 			if (event.key.code == sf::Keyboard::R)
 				reloadButtonPressed = true;
-			else if (event.key.code == sf::Keyboard::I || event.key.code == sf::Keyboard::Tab)
-				inventoryButtonPressed = true;
+			// Interact
+			else if (event.key.code == sf::Keyboard::E)
+				interactButtonPressed = true;
 			// Add here more keys if needed
 			break;
 
@@ -57,20 +60,17 @@ namespace XYZEngine
 				bool currentLeftButtonPressed = sf::Mouse::isButtonPressed(sf::Mouse::Left);
 
 				if (currentLeftButtonPressed && !mouseLeftButtonPressed)
-				{
-					LOG_INFO("Input Manager::UpdateAxes: Mouse left button just pressed");
-				}
 				mouseLeftButtonPressed = currentLeftButtonPressed;
 			}
 		}
 
 		// If UI blocked input - axes are zero
-		/*if (UIManager::Instance().IsInputBlocked())
+		if (UIManager::Instance()->IsInputBlocked())
 		{
 			horizontalAxis = 0.f;
 			verticalAxis = 0.f;
 			return;
-		}*/
+		}
 
 		// Keyboard axes handle
 		horizontalAxis = 0.f;
@@ -81,11 +81,18 @@ namespace XYZEngine
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) verticalAxis -= 1.f;
 	}
 
+	bool InputManager::ConsumeInteractPress()
+	{
+		bool pressed = interactButtonPressed;
+		interactButtonPressed = false;
+		return pressed;
+	}
+
 	void InputManager::ResetFrameFlags()
 	{
 		mouseLeftButtonPressed = false;
 		reloadButtonPressed = false;
-		inventoryButtonPressed = false;
+		interactButtonPressed = false;
 	}
 
 

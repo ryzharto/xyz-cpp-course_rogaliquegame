@@ -1,6 +1,10 @@
 #include "DeveloperLevel.h"
 #include "MazeGenerator.h"
+#include "PrefabCatalog.h"
 #include "Logger.h"
+
+// TEST INDLUDES
+#include "InteractableComponent.h"
 
 using namespace XYZEngine;
 
@@ -73,13 +77,13 @@ namespace Ryzharto_RogaliqueGame
 			}
 		}
 
-		// Maze Generator
+		// MAZE GENERATOR
 		MazeGenerator mazeGenerator(width, height, this);
 		//mazeGenerator.Generate();
 
 		LOG_INFO("Level generation: " + std::to_string(floors.size()) + " floors, " + std::to_string(walls.size()) + " walls created.");
 
-		// Player creation
+		// PLAYER
 		player = std::make_unique<Player>(std::forward<XYZEngine::Vector2Df>({width / 2 * 128.f, height / 2 * 128.f}));
 		if (!player->GetGameObject())
 		{
@@ -87,13 +91,21 @@ namespace Ryzharto_RogaliqueGame
 		}
 		LOG_INFO("Player created");
 
-		// Enemy characters creation
+		// ENEMIES
 		// EnemySpawner
 		std::vector<XYZEngine::Vector2Df> spawnPositions = {	{ width / 2.f * 128.f, height / 4.f * 128.f }, 
 																{ width / 3.f * 128.f, height / 2.f * 128.f }, 
 																{ width / 3.f * 128.f, height / 3.f * 128.f } };
 
 		auto enemies = EnemySpawner::SpawnEnemies("Raptor", 3, spawnPositions, player->GetGameObject());
+
+		// TEST OBJECTS
+		auto& catalog = Ryzharto_RogaliqueGame::PrefabCatalog::Instance();
+		catalog.Instantiate("wall_default", { 100.f, 200.f });
+		catalog.Instantiate("ladder", { 100.f, 100.f });
+		catalog.Instantiate("terminal", { 300.f, 400.f });
+		catalog.Instantiate("ammo_box", { 400.f, 400.f });
+		catalog.Instantiate("medkit", { 500.f, 400.f });
 
 		music = std::make_unique<Music>("music");
 	}

@@ -7,6 +7,7 @@
 #include "StatsComponent.h"
 #include "AttackComponent.h"
 #include "WeaponComponent.h"
+#include "InventoryComponent.h"
 
 namespace Ryzharto_RogaliqueGame
 {
@@ -44,7 +45,7 @@ namespace Ryzharto_RogaliqueGame
 
 		auto playerStats = gameObject->AddComponent<XYZEngine::StatsComponent>();
 		playerStats->SetHealth(100.f);
-		playerStats->SetArmour(100.f);
+		playerStats->SetArmour(10.f);
 
 		auto attack = gameObject->AddComponent<XYZEngine::AttackComponent>();
 		attack->SetAttackPower(15.f);
@@ -56,6 +57,14 @@ namespace Ryzharto_RogaliqueGame
 		weapon->SetBulletSpeed(600.f);
 		weapon->SetMaxAmmo(30);
 
-		XYZEngine::LOG_INFO("Player GameObject constructed with components: Transform, SpriteRenderer, Camera, Input, Movement, Rigidbody, Collider, Stats");
+		auto inventory = gameObject->AddComponent<XYZEngine::InventoryComponent>();
+
+		// Add test items
+		if (inventory)
+		{
+			
+		}
+
+		XYZEngine::LOG_INFO("Player GameObject constructed with components: Transform, SpriteRenderer, Camera, Input, Movement, Rigidbody, Collider, Stats, Attack, Weapon and Inventory");
 	}
 }

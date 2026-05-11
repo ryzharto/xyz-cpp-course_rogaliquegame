@@ -91,6 +91,18 @@
     <ClCompile Include="InputManager.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UIScreen.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="InventoryComponent.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="InteractableComponent.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -202,6 +214,21 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="InputManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="UIElement.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="UIScreen.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryComponent.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractableComponent.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

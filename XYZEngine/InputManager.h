@@ -22,7 +22,8 @@ namespace XYZEngine
 
         // Buttons
         bool IsReloadButtonPressed() const { return reloadButtonPressed; }
-        bool IsInventoryButtonPressed() const { return inventoryButtonPressed; }
+        bool IsInteractButtonPressed() const { return interactButtonPressed; }
+        bool ConsumeInteractPress();
         
         // Reset one frame dyration flags (call at end of frame)
         void ResetFrameFlags();
@@ -37,9 +38,8 @@ namespace XYZEngine
 
         // Button states
         bool mouseLeftButtonPressed = false;
-
         bool reloadButtonPressed = false;
-        bool inventoryButtonPressed = false;
+        bool interactButtonPressed = false;
         
         sf::RenderWindow* window = nullptr;
 	};

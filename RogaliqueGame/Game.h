@@ -1,82 +1,42 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-#include "GameSettings.h"
-#include "GameState.h"
-#include <unordered_map>
+#include <memory>
+#include "GameObject.h"
+
+namespace XYZEngine { class GameObject; }
 
 namespace Ryzharto_RogaliqueGame
 {
-	enum class GameOptions : std::uint8_t
-	{
-		InfiniteApples = 1 << 0,
-		WithAcceleration = 1 << 1,
+    class DeveloperLevel;
+    class HUD;
 
-		Default = InfiniteApples | WithAcceleration,
-		Empty = 0
-	};
+    class Game
+    {
+    public:
+        static Game& Instance();
 
-	enum class GameStateChangeType
-	{
-		None,
-		Push,
-		Pop,
-		Switch
-	};
+        void Init();                     // вызывается из main после загрузки ресурсов
+        void Update(float deltaTime);    // вызывается каждый кадр в Engine::Run
 
-	class Game
-	{
-	public:
-		void StartGame();
-		void PauseGame();
-		void WinGame();
-		void LooseGame();
-		void UpdateGame(float timeDelta, sf::RenderWindow& window);
-		void ExitGame();
-		void QuitGame();
-		void ShowRecords();
-		void LoadNextLevel();
+        void RequestNewGame();           // запланировать переход к новой игре
+        void RequestReturnToMainMenu();  // запланировать выход в главное меню
 
-	public:
-		using RecordsTable = std::unordered_map<std::string, int>;
+        bool IsPlaying() const { return state == State::Playing; }
+        XYZEngine::GameObject* GetPlayer() const { return player; }
 
-		Game();
-		~Game();
-		
-		bool IsEnableOptions(GameOptions option) const;
-		void SetOption(GameOptions option, bool value);
+    private:
+        Game() = default;
 
-		const RecordsTable& GetRecordsTable() const { return recordsTable; }
-		int GetRecordByPlayerId(const std::string& playerId) const;
+        enum class State { MainMenu, Playing };
+        State state = State::MainMenu;
 
-		// Remove current game state from the stack
-		void PopState();
+        std::unique_ptr<DeveloperLevel> currentLevel;
+        XYZEngine::GameObject* player = nullptr;
 
-		int maxBlocks = 0;
+        // Флаги отложенных переходов
+        bool pendingNewGame = false;
+        bool pendingReturnToMenu = false;
 
-	private:
-
-		// Add new game state on top of the stack
-		void PushState(GameStateType stateType, bool isExclusivelyVisible);
-
-		// Remove all game states from the stack and add new one
-		void SwitchStateTo(GameStateType newState);
-
-		void Shutdown();
-
-		void UpdateRecord(const std::string& playerId, int score);
-
-		void HandleWindowEvents(sf::RenderWindow& window);
-		bool Update(float deltaTime); // Return false if game should be closed
-		void Draw(sf::RenderWindow& window);
-
-	private:
-		std::vector<GameState> StateStack;
-		GameStateChangeType StateChangeType = GameStateChangeType::None;
-		GameStateType pendingGameStateType = GameStateType::None;
-		bool pendingGameStateIsExclusivelyVisible = false;
-
-		GameOptions options = GameOptions::Default;
-		RecordsTable recordsTable;
-	};
+        void ExecuteNewGame();
+        void ExecuteReturnToMainMenu();
+    };
 }
-
