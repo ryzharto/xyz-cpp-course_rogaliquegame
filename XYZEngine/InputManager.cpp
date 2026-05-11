@@ -81,6 +81,13 @@ namespace XYZEngine
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) verticalAxis -= 1.f;
 	}
 
+	bool InputManager::ConsumeInteractPress()
+	{
+		bool pressed = interactButtonPressed;
+		interactButtonPressed = false;
+		return pressed;
+	}
+
 	void InputManager::ResetFrameFlags()
 	{
 		mouseLeftButtonPressed = false;

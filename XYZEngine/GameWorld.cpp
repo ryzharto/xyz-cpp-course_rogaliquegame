@@ -111,6 +111,9 @@ namespace XYZEngine
 			auto* interact = go->GetComponent<InteractableComponent>();
 			if (!interact) continue;
 
+			if (IsMarkedForDeletion(go))
+				continue;
+
 			auto* goTransform = go->GetComponent<TransformComponent>();
 			if (!goTransform) continue;
 
@@ -141,6 +144,11 @@ namespace XYZEngine
 				LOG_INFO("GameWorld::ProcessInteract: InteractionMenu showed");
 			}
 		}
+	}
+
+	bool GameWorld::IsMarkedForDeletion(GameObject* obj) const
+	{
+		 return std::find(markedToDestroyGameObjects.begin(), markedToDestroyGameObjects.end(), obj) != markedToDestroyGameObjects.end();
 	}
 
 	void GameWorld::Print() const

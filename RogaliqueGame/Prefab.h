@@ -14,6 +14,7 @@ namespace Ryzharto_RogaliqueGame
 
     struct Prefab
     {
+        std::string key; // Catalog key
         std::string name; // "Terminal", "Medkit"
         std::string textureKey; // key at ResourceSystem
         sf::Vector2u textureSize = { 64, 64 };

@@ -18,6 +18,7 @@ namespace XYZEngine
 		void HandleEvent(const sf::Event& event);
 		void CloseActiveModal();
 		void RequestPop();
+		void ClearAllScreens() { screens.clear(); }
 
 		bool IsInputBlocked() const;
 		bool IsEventConsumed() const { return eventConsumed; }

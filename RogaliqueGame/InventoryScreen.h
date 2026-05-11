@@ -25,7 +25,8 @@ namespace Ryzharto_RogaliqueGame
         std::vector<sf::Text> actionTexts; // list of available item actions
         int selectedActionIndex = 0; // selected action
         sf::RectangleShape background;
-        sf::RectangleShape selector;
+        sf::RectangleShape itemSelector; // подсветка выбранного предмета
+        sf::RectangleShape actionSelector; // подсветка выбранного действия
 
         void RefreshItemList();
         void UpdateSelectorPosition();

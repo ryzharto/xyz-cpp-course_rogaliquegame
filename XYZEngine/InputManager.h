@@ -23,6 +23,7 @@ namespace XYZEngine
         // Buttons
         bool IsReloadButtonPressed() const { return reloadButtonPressed; }
         bool IsInteractButtonPressed() const { return interactButtonPressed; }
+        bool ConsumeInteractPress();
         
         // Reset one frame dyration flags (call at end of frame)
         void ResetFrameFlags();

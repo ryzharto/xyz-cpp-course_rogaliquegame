@@ -1,4 +1,5 @@
 #include "PauseMenu.h"
+#include "Game.h"
 #include "UIManager.h"
 #include "InputManager.h"
 #include "GameSettings.h"
@@ -96,8 +97,13 @@ namespace Ryzharto_RogaliqueGame
         }
         if (event.key.code == sf::Keyboard::Enter)
         {
-            if (selectedIndex == 0 || selectedIndex == 1)
+            if (selectedIndex == 0)
                 Close(); // Close pause menu
+            else if (selectedIndex == 1)
+            {
+                Game::Instance().RequestReturnToMainMenu();
+                Close(); // Close pause menu
+            }
         }
         if (event.key.code == sf::Keyboard::Escape)
         {

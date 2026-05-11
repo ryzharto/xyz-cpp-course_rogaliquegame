@@ -5,6 +5,7 @@
 #include "InputManager.h"
 #include "UIManager.h"
 #include "../RogaliqueGame/PauseMenu.h"
+#include "../RogaliqueGame/Game.h"
 #include <iostream>
 #include <cassert>
 
@@ -64,6 +65,8 @@ namespace XYZEngine
 					if (InputManager::Instance().IsInteractButtonPressed())
 					{
 						GameWorld::Instance()->ProcessInteract(GameWorld::Instance()->GetPlayer());
+						// —бросить флаг немедленно
+						InputManager::Instance().ConsumeInteractPress();
 					}
 				}
 			}
@@ -71,7 +74,9 @@ namespace XYZEngine
 			// Update axes and mouse position
 			InputManager::Instance().UpdateAxes();
 
-			if (!UIManager::Instance()->IsInputBlocked())
+			Ryzharto_RogaliqueGame::Game::Instance().Update(deltaTime);
+
+			if (Ryzharto_RogaliqueGame::Game::Instance().IsPlaying() && !UIManager::Instance()->IsInputBlocked())
 			{
 				GameWorld::Instance()->Update(deltaTime);
 				GameWorld::Instance()->FixedUpdate(deltaTime);
@@ -84,8 +89,13 @@ namespace XYZEngine
 			}
 			
 			RenderSystem::Instance()->GetMainWindow().clear();
-			GameWorld::Instance()->Render();
-			GameWorld::Instance()->LateUpdate();
+
+			if (Ryzharto_RogaliqueGame::Game::Instance().IsPlaying())
+			{
+				GameWorld::Instance()->Render();
+				GameWorld::Instance()->LateUpdate();
+			}
+
 			UIManager::Instance()->Update(deltaTime);
 			UIManager::Instance()->Draw(window);
 			RenderSystem::Instance()->GetMainWindow().display();

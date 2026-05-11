@@ -3,7 +3,6 @@
 #include "InventoryComponent.h"
 #include "UIManager.h"
 #include "GameSettings.h"
-#include "WorldItem.h"
 #include <sstream>
 
 namespace Ryzharto_RogaliqueGame
@@ -29,9 +28,14 @@ namespace Ryzharto_RogaliqueGame
 		title.setStyle(sf::Text::Bold);
 		title.setPosition(200, 50);
 
-		// Selection highlight 
-		selector.setSize(sf::Vector2f(250, 40));
-		selector.setFillColor(sf::Color(255, 255, 0, 80));   // semitransparent yellow
+		// Item selection highlight 
+		itemSelector.setSize(sf::Vector2f(250, 40));
+		itemSelector.setFillColor(sf::Color(255, 255, 0, 80));   // semitransparent yellow
+
+		// Action selection highlight 
+		actionSelector.setSize(sf::Vector2f(100, 24));
+		actionSelector.setFillColor(sf::Color(100, 255, 100, 80)); // another color
+
 
 		// Полупрозрачный фон
 		background.setFillColor(sf::Color(0, 0, 0, 180));
@@ -63,9 +67,11 @@ namespace Ryzharto_RogaliqueGame
 		for (auto& text : actionTexts)
 			window.draw(text);
 
-		// Draw selector
+		// Draw selectors
 		if (!itemTexts.empty())
-			window.draw(selector);
+			window.draw(itemSelector);
+		if (!actionTexts.empty())
+			window.draw(actionSelector);
 
 		// Input hint
 		sf::Text hint;
@@ -100,17 +106,19 @@ namespace Ryzharto_RogaliqueGame
 		// Item Action selection
 		if (event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::Left)
 		{
-			if (actionTexts.size() > 1)
+			int actionCount = static_cast<int>(actionTexts.size());
+			if (actionCount > 1)
 			{
-				selectedActionIndex = (selectedActionIndex - 1 + count) % count; // Move to last item
+				selectedActionIndex = (selectedActionIndex - 1 + actionCount) % actionCount; // Move to last item 
 				UpdateActionSelectorPosition();
 			}
 		}
 		else if (event.key.code == sf::Keyboard::D || event.key.code == sf::Keyboard::Right)
 		{
-			if (actionTexts.size() > 1)
+			int actionCount = static_cast<int>(actionTexts.size());
+			if (actionCount > 1)
 			{
-				selectedActionIndex = (selectedActionIndex + 1) % count; // Move to next bottom item (under current)
+				selectedActionIndex = (selectedActionIndex + 1) % actionCount; // Move to next bottom item (under current)
 				UpdateActionSelectorPosition();
 			}
 		}
@@ -140,15 +148,23 @@ namespace Ryzharto_RogaliqueGame
 				auto inv = player->GetComponent<XYZEngine::InventoryComponent>();
 				if (inv && selectedIndex < inv->GetItemCount())
 				{
-					// Создаём WorldItem на позиции игрока
-					auto playerTransform = player->GetComponent<XYZEngine::TransformComponent>();
-					XYZEngine::Vector2Df dropPos = playerTransform->GetWorldPosition();
-					const auto& item = inv->GetItem(selectedIndex);
-					std::string texName = "Bullet";//item.name;
-					new Ryzharto_RogaliqueGame::WorldItem(dropPos, item, texName);
-					inv->RemoveItem(selectedIndex);
-					RefreshItemList();
-					if (inv->GetItemCount() == 0) Close();
+					// Ищем действие "Drop" среди действий текущего предмета
+					const auto& actions = inv->GetItem(selectedIndex).actions;
+					int dropActionIndex = -1;
+					for (size_t i = 0; i < actions.size(); ++i)
+					{
+						if (actions[i].name == "Drop")
+						{
+							dropActionIndex = i;
+							break;
+						}
+					}
+					if (dropActionIndex != -1)
+					{
+						inv->UseItem(selectedIndex, dropActionIndex, player);
+						RefreshItemList();
+						if (inv->GetItemCount() == 0) Close();
+					}
 				}
 			}
 		}
@@ -205,7 +221,7 @@ namespace Ryzharto_RogaliqueGame
 		if (selectedIndex >= 0 && selectedIndex < static_cast<int>(itemTexts.size()))
 		{
 			sf::Vector2f pos = itemTexts[selectedIndex].getPosition();
-			selector.setPosition(pos.x - 10.f, pos.y - 5);
+			itemSelector.setPosition(pos.x - 10.f, pos.y - 5);
 		}
 	}
 
@@ -214,8 +230,7 @@ namespace Ryzharto_RogaliqueGame
 		if (selectedActionIndex < static_cast<int>(actionTexts.size()))
 		{
 			sf::Vector2f pos = actionTexts[selectedActionIndex].getPosition();
-			selector.setPosition(pos.x - 5.f, pos.y - 2);
-			selector.setSize(sf::Vector2f(100, 24));
+			actionSelector.setPosition(pos.x - 5.f, pos.y - 2);
 		}
 	}
 }

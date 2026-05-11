@@ -3,7 +3,7 @@
 // Modified and extended by Ryzharto (ryzharto@yandex.ru)
 
 #include <SFML/Graphics.hpp>
-#include "Player.h"
+#include "Game.h"
 #include "Engine.h"
 #include "ResourceSystem.h"
 #include "DeveloperLevel.h"
@@ -28,7 +28,6 @@ int main()
 	XYZEngine::ResourceSystem::Instance()->LoadTexture("Ammo_box", "Resources/Textures/ammobox.png");
 	XYZEngine::ResourceSystem::Instance()->LoadTexture("Terminal", "Resources/Textures/terminal.png");
 
-
 	//XYZEngine::ResourceSystem::Instance()->LoadTexture("Brachiosaurus", "Resources/Textures/brachiosaurus.png");
 	//XYZEngine::ResourceSystem::Instance()->LoadTexture("Pteranodon", "Resources/Textures/pteranodon-dinosaur.png");
 
@@ -40,20 +39,7 @@ int main()
 
 	Ryzharto_RogaliqueGame::SetupPrefabs();
 
-	auto developerLevel = std::make_shared<Ryzharto_RogaliqueGame::DeveloperLevel>();
-	developerLevel->Start();	
-
-	auto playerObj = developerLevel->GetPlayer();
-	if (playerObj)
-	{
-		auto hud = std::make_shared<Ryzharto_RogaliqueGame::HUD>(playerObj);
-		XYZEngine::UIManager::Instance()->PushScreen(hud);
-		LOG_INFO("HUD pushed successfully");
-	}
-	else
-		LOG_ERROR("Player not found, HD cannot be created");
-
-	GameWorld::Instance()->SetPlayer(playerObj);
+	Ryzharto_RogaliqueGame::Game::Instance().Init();
 
 	XYZEngine::Engine::Instance()->Run();
 

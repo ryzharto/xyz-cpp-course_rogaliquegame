@@ -62,29 +62,7 @@ namespace Ryzharto_RogaliqueGame
 		// Add test items
 		if (inventory)
 		{
-			inventory->AddItem(Item("MedKit", "Restore 20 HP",
-				{
-					Ryzharto_RogaliqueGame::ItemAction{"Use",[](XYZEngine::GameObject* owner)
-					{
-						auto stats = owner->GetComponent<XYZEngine::StatsComponent>();
-						if (stats) stats->Heal(20.f);
-					}
-				},
-					Ryzharto_RogaliqueGame::ItemAction{"Discard",[](XYZEngine::GameObject* owner)
-					{
-					}
-				}
-				}));
-
-			inventory->AddItem(Item("AmmoBox", "Gives additional 10 bullets",
-				{
-					Ryzharto_RogaliqueGame::ItemAction{"Use",[](XYZEngine::GameObject* owner)
-					{
-						auto weapon = owner->GetComponent<XYZEngine::WeaponComponent>();
-						if (weapon) weapon->SetMaxAmmo(weapon->GetMaxAmmo() + 10);
-					}
-				},
-				}));
+			
 		}
 
 		XYZEngine::LOG_INFO("Player GameObject constructed with components: Transform, SpriteRenderer, Camera, Input, Movement, Rigidbody, Collider, Stats, Attack, Weapon and Inventory");

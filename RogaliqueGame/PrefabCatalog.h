@@ -16,6 +16,7 @@ namespace Ryzharto_RogaliqueGame
         void RegisterPrefab(const std::string& key, const Prefab& prefab);
         void RegisterHandler(const std::string& handlerName, PrefabActionHandler handler);
 
+
         XYZEngine::GameObject* Instantiate(const std::string& key, const XYZEngine::Vector2Df& position) const;
 
     private:

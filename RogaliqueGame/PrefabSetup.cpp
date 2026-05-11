@@ -1,54 +1,8 @@
 #include "PrefabSetup.h"
 #include "PrefabCatalog.h"
-#include "InventoryComponent.h"
-#include "WeaponComponent.h"
-#include "StatsComponent.h"
-#include "GameWorld.h"
+#include "InventoryActions.h"
+#include "InteractionActions.h"
 #include "Logger.h"
-
-// ---------- Handlers (free functions) ----------
-namespace
-{
-    void Handler_HackTerminal(XYZEngine::GameObject* instigator, XYZEngine::GameObject* self)
-    {
-        XYZEngine::LOG_INFO("Terminal HACKED!");
-        // здесь может быть открытие двери, включение моста и т.п.
-    }
-
-    void Handler_DestroyTerminal(XYZEngine::GameObject* instigator, XYZEngine::GameObject* self)
-    {
-        XYZEngine::GameWorld::Instance()->DestroyGameObject(self);
-        XYZEngine::LOG_INFO("Terminal DESTROYED!");
-    }
-
-    void Handler_AddMedkit(XYZEngine::GameObject* instigator, XYZEngine::GameObject* self)
-    {
-        auto* inventory = instigator->GetComponent<XYZEngine::InventoryComponent>();
-        if (inventory)
-        {
-            Ryzharto_RogaliqueGame::Item medkit("Medkit", "Restores 20 HP",
-                {
-                Ryzharto_RogaliqueGame::ItemAction{"Use", [](XYZEngine::GameObject* owner)
-                {
-                    auto* stats = owner->GetComponent<XYZEngine::StatsComponent>();
-                    if (stats) stats->Heal(20.f);
-                }}
-                });
-            inventory->AddItem(medkit);
-        }
-    }
-
-    void Handler_AddAmmoBox(XYZEngine::GameObject* instigator, XYZEngine::GameObject* self)
-    {
-        auto* weapon = instigator->GetComponent<XYZEngine::WeaponComponent>();
-        if (weapon)
-        {
-            // ƒобавл€ем 10 патронов
-            weapon->SetMaxAmmo(weapon->GetMaxAmmo() + 10);
-            XYZEngine::LOG_INFO("Ammo box picked up, ammo: " + std::to_string(weapon->GetCurrentAmmo()));
-        }
-    }
-}
 
 namespace Ryzharto_RogaliqueGame
 {
@@ -57,32 +11,37 @@ namespace Ryzharto_RogaliqueGame
         auto& catalog = PrefabCatalog::Instance();
 
         // ---------- Register Handlers ----------
-        catalog.RegisterHandler("Handler_HackTerminal", Handler_HackTerminal);
-        catalog.RegisterHandler("Handler_DestroyTerminal", Handler_DestroyTerminal);
-        catalog.RegisterHandler("Handler_AddMedkit", Handler_AddMedkit);
-        catalog.RegisterHandler("Handler_AddAmmoBox", Handler_AddAmmoBox);
+        catalog.RegisterHandler("Handler_HackTerminal", InteractionActions::HackTerminal);
+        catalog.RegisterHandler("Handler_DestroyTerminal", InteractionActions::DestroyTerminal);
+        catalog.RegisterHandler("Handler_AddMedkit", InteractionActions::PickUpMedkit);
+        catalog.RegisterHandler("Handler_AddAmmoBox", InteractionActions::PickUpAmmoBox);
 
         // ---------- Register Static prefabs ----------
         Prefab wallPrefab;
+        wallPrefab.key = "wall_default";
         wallPrefab.name = "Wall";
         wallPrefab.textureKey = "level_walls";
         wallPrefab.textureMapIndex = 5;
         wallPrefab.textureSize = { 128, 128 };
         wallPrefab.isInteractive = false;
         wallPrefab.hasCollision = true;
-        catalog.RegisterPrefab("wall_default", wallPrefab);
+        catalog.RegisterPrefab(wallPrefab.key, wallPrefab);
+        InteractionActions::StorePrefab(wallPrefab.key, wallPrefab);
 
         Prefab ladderPrefab;
+        ladderPrefab.key = "ladder";
         ladderPrefab.name = "Ladder";
         ladderPrefab.textureKey = "level_floors";
         ladderPrefab.textureMapIndex = 16;
         ladderPrefab.textureSize = { 128, 128 };
         ladderPrefab.isInteractive = false;
         ladderPrefab.hasCollision = false;
-        catalog.RegisterPrefab("ladder", ladderPrefab);
+        catalog.RegisterPrefab(ladderPrefab.key, ladderPrefab);
+        InteractionActions::StorePrefab(ladderPrefab.key, ladderPrefab);
 
         // ---------- Register interactive prefas ----------
         Prefab terminalPrefab;
+        terminalPrefab.key = "terminal";
         terminalPrefab.name = "Terminal";
         terminalPrefab.textureKey = "Terminal";
         terminalPrefab.textureMapIndex = -1;
@@ -90,44 +49,51 @@ namespace Ryzharto_RogaliqueGame
         terminalPrefab.isInteractive = true;
         terminalPrefab.hasCollision = true;
         terminalPrefab.interactionRadius = 120.f;
-        terminalPrefab.prompt = "Press E: Terminal";
+        terminalPrefab.prompt = "Interact Terminal";
         terminalPrefab.singleUse = false;
         terminalPrefab.actions =
         {
             {"Hack", "Handler_HackTerminal"},
             {"Destroy", "Handler_DestroyTerminal"}
         };
-        catalog.RegisterPrefab("terminal", terminalPrefab);
+        catalog.RegisterPrefab(terminalPrefab.key, terminalPrefab);
+        InteractionActions::StorePrefab(terminalPrefab.key, terminalPrefab);
 
         Prefab medkitPrefab;
+        medkitPrefab.key = "medkit";
         medkitPrefab.name = "Medkit";
         medkitPrefab.textureKey = "Medkit";
-        terminalPrefab.textureMapIndex = -1;
+        medkitPrefab.textureMapIndex = -1;
         medkitPrefab.textureSize = { 32, 32 };
         medkitPrefab.isInteractive = true;
         medkitPrefab.hasCollision = false;
-        medkitPrefab.prompt = "Press E: Pick up Medkit";
+        medkitPrefab.interactionRadius = 30.f;
+        medkitPrefab.prompt = "Pick up Medkit";
         medkitPrefab.singleUse = true;
         medkitPrefab.actions =
         {
             {"Pick up", "Handler_AddMedkit"}
         };
-        catalog.RegisterPrefab("medkit", medkitPrefab);
+        catalog.RegisterPrefab(medkitPrefab.key, medkitPrefab);
+        InteractionActions::StorePrefab(medkitPrefab.key, medkitPrefab);
 
         Prefab ammoBoxPrefab;
+        ammoBoxPrefab.key = "ammo_box";
         ammoBoxPrefab.name = "Ammo Box";
         ammoBoxPrefab.textureKey = "Ammo_box";
-        terminalPrefab.textureMapIndex = -1;
+        ammoBoxPrefab.textureMapIndex = -1;
         ammoBoxPrefab.textureSize = { 32, 32 };
         ammoBoxPrefab.isInteractive = true;
         ammoBoxPrefab.hasCollision = false;
-        ammoBoxPrefab.prompt = "Press E: Pick up Ammo";
+        ammoBoxPrefab.interactionRadius = 30.f;
+        ammoBoxPrefab.prompt = "Pick up Ammo";
         ammoBoxPrefab.singleUse = true;
         ammoBoxPrefab.actions =
         {
             {"Pick up", "Handler_AddAmmoBox"}
         };
-        catalog.RegisterPrefab("ammo_box", ammoBoxPrefab);
+        catalog.RegisterPrefab(ammoBoxPrefab.key, ammoBoxPrefab);
+        InteractionActions::StorePrefab(ammoBoxPrefab.key, ammoBoxPrefab);
 
         XYZEngine::LOG_INFO("Prefab setup complete");
     }

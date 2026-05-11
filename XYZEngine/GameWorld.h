@@ -24,6 +24,7 @@ namespace XYZEngine
 
 		void ProcessInteract(GameObject* instigator);
 		const std::vector<GameObject*> GetGameObjects() const { return gameObjects; }
+		bool IsMarkedForDeletion(GameObject* obj) const;
 
 		void Print() const;
 
