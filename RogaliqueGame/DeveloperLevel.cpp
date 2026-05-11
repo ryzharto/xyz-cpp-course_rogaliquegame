@@ -1,5 +1,6 @@
 #include "DeveloperLevel.h"
 #include "MazeGenerator.h"
+#include "PrefabCatalog.h"
 #include "Logger.h"
 
 // TEST INDLUDES
@@ -99,24 +100,12 @@ namespace Ryzharto_RogaliqueGame
 		auto enemies = EnemySpawner::SpawnEnemies("Raptor", 3, spawnPositions, player->GetGameObject());
 
 		// TEST OBJECTS
-		auto* testObj = XYZEngine::GameWorld::Instance()->CreateGameObject("Test Terminal");
-		testObj->GetComponent<TransformComponent>()->SetWorldPosition({ 500.f, 300.f });
-		auto* sprite = testObj->AddComponent<XYZEngine::SpriteComponent>();
-		sprite->SetTexture(*XYZEngine::ResourceSystem::Instance()->GetTextureShared("Raptor_biege"));
-		sprite->SetPixelSize(64, 64);
-		auto* interact = testObj->AddComponent<XYZEngine::InteractableComponent>();
-		interact->SetPrompt("Press E: Terminal");
-		interact->SetInteractionRadius(100.f);
-		interact->AddAction("Hack", [](XYZEngine::GameObject* instigator, XYZEngine::GameObject* self)
-			{
-			LOG_INFO("Terminal hacked!");
-			});
-		interact->AddAction("Destroy", [](XYZEngine::GameObject* instigator, XYZEngine::GameObject* self)
-			{
-			XYZEngine::GameWorld::Instance()->DestroyGameObject(self);
-			LOG_INFO("Terminal destroyed!");
-			});
-
+		auto& catalog = Ryzharto_RogaliqueGame::PrefabCatalog::Instance();
+		catalog.Instantiate("wall_default", { 100.f, 200.f });
+		catalog.Instantiate("ladder", { 100.f, 100.f });
+		catalog.Instantiate("terminal", { 300.f, 400.f });
+		catalog.Instantiate("ammo_box", { 400.f, 400.f });
+		catalog.Instantiate("medkit", { 500.f, 400.f });
 
 		music = std::make_unique<Music>("music");
 	}

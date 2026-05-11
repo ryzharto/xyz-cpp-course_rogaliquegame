@@ -65,6 +65,12 @@
     <ClCompile Include="InteractionMenu.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="PrefabCatalog.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="PrefabSetup.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Debug.h">
@@ -122,6 +128,15 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="InteractionMenu.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Prefab.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="PrefabCatalog.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="PrefabSetup.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

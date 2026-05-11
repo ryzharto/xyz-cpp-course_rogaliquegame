@@ -103,7 +103,7 @@ namespace XYZEngine
 				}
 			}
 			textureMaps.emplace(name, *textureMapElements);
-			LOG_INFO("ResourceSystem::LoadTextureMap: Texture map loaded: " + name + " (" + sourcePath + ")");
+			LOG_INFO("ResourceSystem::LoadTextureMap: Texture map loaded: " + name + " (" + sourcePath + ") " + " has " + std::to_string(loadedElements) + " elements count");
 		}
 		else
 		{

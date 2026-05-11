@@ -22,7 +22,7 @@ namespace Ryzharto_RogaliqueGame
 		// Sprite
 		auto sprite = gameObject->AddComponent<XYZEngine::SpriteComponent>();
 		sprite->SetTexture(*XYZEngine::ResourceSystem::Instance()->GetTextureShared(projectileType));
-		sprite->SetPixelSize(60, 12);
+		sprite->SetPixelSize(12, 12);
 
 		// Physics
 		auto rigidbody = gameObject->AddComponent<XYZEngine::RigidbodyComponent>();

@@ -175,6 +175,8 @@
     <ClCompile Include="Music.cpp" />
     <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PrefabCatalog.cpp" />
+    <ClCompile Include="PrefabSetup.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="WorldItem.cpp" />
@@ -201,6 +203,9 @@
     <ClInclude Include="Music.h" />
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Prefab.h" />
+    <ClInclude Include="PrefabCatalog.h" />
+    <ClInclude Include="PrefabSetup.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="WorldItem.h" />
