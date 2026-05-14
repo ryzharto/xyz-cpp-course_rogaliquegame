@@ -1,10 +1,12 @@
 #include "Game.h"
 #include "DeveloperLevel.h"
 #include "Player.h"
+#include "StatsComponent.h"
 #include "HUD.h"
 #include "UIManager.h"
 #include "GameWorld.h"
 #include "MainMenu.h"
+#include "GameOverMenu.h"
 #include "Logger.h"
 
 namespace Ryzharto_RogaliqueGame
@@ -35,8 +37,21 @@ namespace Ryzharto_RogaliqueGame
             ExecuteReturnToMainMenu();
             pendingReturnToMenu = false;
         }
+        if (pendingGameOver)
+        {
+            ExecuteGameOver();
+            pendingGameOver = false;
+        }
 
-        // ¬ будущем здесь можно провер€ть услови€ победы/поражени€
+        // ѕровер€ем услови€ победы/поражени€
+        if (state == State::Playing && player)
+        {
+            auto* stats = player->GetComponent<XYZEngine::StatsComponent>();
+            if (stats && stats->GetCurrentHealth() <= 0)
+            {
+                RequestGameOver();
+            }
+        }
     }
 
     void Game::RequestNewGame()
@@ -47,8 +62,14 @@ namespace Ryzharto_RogaliqueGame
 
     void Game::RequestReturnToMainMenu()
     {
-        if (state == State::Playing)
+        if (state == State::Playing || state == State::GameOver)
             pendingReturnToMenu = true;
+    }
+
+    void Game::RequestGameOver()
+    {
+        if (state == State::Playing)
+            pendingGameOver = true;
     }
 
     void Game::ExecuteNewGame()
@@ -100,5 +121,12 @@ namespace Ryzharto_RogaliqueGame
 
         state = State::MainMenu;
         LOG_INFO("Returned to main menu");
+    }
+    void Game::ExecuteGameOver()
+    {
+        state = State::GameOver;
+
+        UIManager::Instance()->SetScreen(std::make_shared<GameOverMenu>());
+        LOG_INFO("Game Over screen displayed");
     }
 }

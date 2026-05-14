@@ -19,6 +19,7 @@ namespace XYZEngine
         // Mouse input
         bool IsMouseLeftButtonPressed() const { return mouseLeftButtonPressed; }
         sf::Vector2f GetMouseWorldPosition() const { return mouseWorldPos; }
+        int GetMouseWheelDelta() const { return mouseWheelDelta; }
 
         // Buttons
         bool IsReloadButtonPressed() const { return reloadButtonPressed; }
@@ -35,6 +36,8 @@ namespace XYZEngine
         float horizontalAxis = 0.f;
         float verticalAxis = 0.f;
         sf::Vector2f mouseWorldPos;
+        
+        int mouseWheelDelta = 0;
 
         // Button states
         bool mouseLeftButtonPressed = false;

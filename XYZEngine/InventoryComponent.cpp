@@ -10,31 +10,39 @@ namespace XYZEngine
 	void InventoryComponent::AddItem(const Ryzharto_RogaliqueGame::Item& item)
 	{
 		items.push_back(item);
-		LOG_INFO("InventoryComponent::AddItem: Item added: " + item.name);
+		LOG_INFO("InventoryComponent::AddItem: Item added: " + item.GetName());
 	}
 
 	void InventoryComponent::RemoveItem(size_t index)
 	{
 		if (index < items.size())
 		{
-			LOG_INFO("Item removed: " + items[index].name);
+			LOG_INFO("Item removed: " + items[index].GetName());
 			items.erase(items.begin() + index);
 		}
 	}
 
-	bool InventoryComponent::UseItem(size_t itemIndex, size_t actionIndex, GameObject* owner)
+	bool InventoryComponent::UseItem(size_t itemIndex, Ryzharto_RogaliqueGame::ItemActionType actionType, GameObject* owner)
 	{
 		if (itemIndex >= items.size()) return false;
 
-		const auto& actions = items[itemIndex].actions;
-		if (actionIndex >= actions.size()) return false;
+		const auto& item = items[itemIndex];
+		auto available = item.GetAvailableActions(owner);
 
-		auto& action = actions[actionIndex];
-		if (action.execute)
+		// »щем действие с нужным типом
+		for (auto& action : available)
 		{
-			action.execute(owner);
-			RemoveItem(itemIndex); // destroy object after using
-			return true;
+			if (action.type == actionType)
+			{
+				if (action.execute != nullptr)
+				{
+					LOG_INFO("Executing action: " + action.name);
+					action.execute(owner, &items[itemIndex]);
+					if (!action.keepItem)
+						RemoveItem(itemIndex);
+					return true;
+				}
+			}
 		}
 		return false;
 	}

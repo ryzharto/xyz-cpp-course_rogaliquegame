@@ -106,6 +106,7 @@ namespace Ryzharto_RogaliqueGame
 		catalog.Instantiate("terminal", { 300.f, 400.f });
 		catalog.Instantiate("ammo_box", { 400.f, 400.f });
 		catalog.Instantiate("medkit", { 500.f, 400.f });
+		catalog.Instantiate("rifle", { 600.f, 400.f });
 
 		music = std::make_unique<Music>("music");
 	}

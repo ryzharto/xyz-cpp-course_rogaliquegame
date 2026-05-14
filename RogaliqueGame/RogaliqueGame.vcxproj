@@ -168,6 +168,7 @@
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameMain.cpp" />
+    <ClCompile Include="GameOverMenu.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="InteractionActions.cpp" />
     <ClCompile Include="InteractionMenu.cpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="EnemySpawner.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameOverMenu.h" />
     <ClInclude Include="GameSettings.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="InteractionActions.h" />
@@ -205,6 +207,7 @@
     <ClInclude Include="InventoryActions.h" />
     <ClInclude Include="InventoryScreen.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemData.h" />
     <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MazeGenerator.h" />

@@ -48,7 +48,7 @@ namespace Ryzharto_RogaliqueGame
         selector.setPosition(items[0].getPosition().x - 10, items[0].getPosition().y - 5);
         selectedIndex = 0;
 
-        // BAckground
+        // Background
         background.setFillColor(sf::Color(0, 0, 0, 180));
     }
 

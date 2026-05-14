@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <vector>
+#include <unordered_map>
 
 namespace XYZEngine
 {
@@ -53,7 +54,6 @@ namespace Ryzharto_RogaliqueGame
 
         // Weapon
         sf::Sprite weaponIcon;
-        sf::Texture weaponIconTexture;
         sf::Vector2f iconSize = { 150, 50 };
 
         float margin = 20.f; // Margin betwee elements

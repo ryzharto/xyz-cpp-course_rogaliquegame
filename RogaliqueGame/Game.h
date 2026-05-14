@@ -19,6 +19,7 @@ namespace Ryzharto_RogaliqueGame
 
         void RequestNewGame();           // запланировать переход к новой игре
         void RequestReturnToMainMenu();  // запланировать выход в главное меню
+        void RequestGameOver();
 
         bool IsPlaying() const { return state == State::Playing; }
         XYZEngine::GameObject* GetPlayer() const { return player; }
@@ -26,7 +27,7 @@ namespace Ryzharto_RogaliqueGame
     private:
         Game() = default;
 
-        enum class State { MainMenu, Playing };
+        enum class State { MainMenu, Playing, GameOver };
         State state = State::MainMenu;
 
         std::unique_ptr<DeveloperLevel> currentLevel;
@@ -35,8 +36,10 @@ namespace Ryzharto_RogaliqueGame
         // Флаги отложенных переходов
         bool pendingNewGame = false;
         bool pendingReturnToMenu = false;
+        bool pendingGameOver = false;
 
         void ExecuteNewGame();
         void ExecuteReturnToMainMenu();
+        void ExecuteGameOver();
     };
 }

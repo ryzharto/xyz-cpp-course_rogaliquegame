@@ -16,7 +16,7 @@ namespace XYZEngine
 		void RemoveItem(size_t index);
 		size_t GetItemCount() const { return items.size(); }
 		const Ryzharto_RogaliqueGame::Item& GetItem(size_t index) const { return items.at(index); }
-		bool UseItem(size_t itemIndex, size_t actionIndex, GameObject* owner); // for UseItem with one index of actions call UseItem(itemIndex, 0, owner)
+		bool UseItem(size_t itemIndex, Ryzharto_RogaliqueGame::ItemActionType actionType, GameObject* owner); // for UseItem with one index of actions call UseItem(itemIndex, 0, owner)
 
 	private:
 		std::vector<Ryzharto_RogaliqueGame::Item> items;

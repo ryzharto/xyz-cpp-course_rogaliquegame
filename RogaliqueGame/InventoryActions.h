@@ -1,5 +1,7 @@
 #pragma once
 #include "GameObject.h"
+#include "WeaponComponent.h"
+#include "Item.h"
 #include <string>
 
 namespace Ryzharto_RogaliqueGame
@@ -7,12 +9,10 @@ namespace Ryzharto_RogaliqueGame
     class InventoryActions
     {
     public:
-        // Default item inventory actions
-        static void DropItem(XYZEngine::GameObject* owner, const std::string& prefabKey);
-        static void DestroyItem(XYZEngine::GameObject* owner);
-
-        // Конкретные эффекты Use
-        static void UseMedkit(XYZEngine::GameObject* owner);
-        static void UseAmmoBox(XYZEngine::GameObject* owner);
+        // Universal executioners
+        static void ExecuteEquip(XYZEngine::GameObject* owner, const XYZEngine::WeaponInfo& info);
+        static void ExecuteUnequip(XYZEngine::GameObject* owner, const XYZEngine::WeaponInfo& info);
+        static void ExecuteDrop(XYZEngine::GameObject* owner, Item& item);
+        static void ExecuteDestroy(XYZEngine::GameObject* owner);
     };
 }
