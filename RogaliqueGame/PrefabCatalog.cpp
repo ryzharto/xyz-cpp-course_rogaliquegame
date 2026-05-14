@@ -4,6 +4,7 @@
 #include "InteractableComponent.h"
 #include "ResourceSystem.h"
 #include "SpriteColliderComponent.h"
+#include "WeaponComponent.h"
 #include "Logger.h"
 
 namespace Ryzharto_RogaliqueGame
@@ -26,6 +27,12 @@ namespace Ryzharto_RogaliqueGame
         XYZEngine::LOG_INFO("Handler registered: " + handlerName);
     }
 
+    const Prefab* PrefabCatalog::GetPrefab(const std::string key) const
+    {
+        auto it = prefabs.find(key);
+        return (it != prefabs.end()) ? &it->second : nullptr;
+    }
+
     XYZEngine::GameObject* PrefabCatalog::Instantiate(const std::string& key, const XYZEngine::Vector2Df& position) const
     {
         auto it = prefabs.find(key);
@@ -36,7 +43,7 @@ namespace Ryzharto_RogaliqueGame
         }
 
         const Prefab& prefab = it->second;
-        auto* go = XYZEngine::GameWorld::Instance()->CreateGameObject(prefab.name);
+        auto* go = XYZEngine::GameWorld::Instance()->CreateGameObject(prefab.key);
         auto* transform = go->GetComponent<XYZEngine::TransformComponent>();
         transform->SetWorldPosition(position);
 
@@ -92,7 +99,7 @@ namespace Ryzharto_RogaliqueGame
             if (prefab.singleUse)
                 interact->SetOneShot(true);
 
-            for (const auto& action : prefab.actions)
+            for (const auto& action : prefab.interactActions)
             {
                 auto handlerIt = handlers.find(action.handlerName);
                 if (handlerIt != handlers.end())

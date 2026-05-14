@@ -27,15 +27,6 @@ namespace Ryzharto_RogaliqueGame
 		}
 
 		// WeaponIcon
-		if (weaponIconTexture.loadFromFile(SETTINGS.TEXTURES_PATH + "weapon_ppk-20.png"))
-		{
-			weaponIcon.setTexture(weaponIconTexture);
-			sf::Vector2u texSize = weaponIconTexture.getSize();
-			weaponIcon.setScale(iconSize.x / texSize.x, iconSize.y / texSize.y);
-			weaponIcon.setPosition(1280 - iconSize.x - margin, 720 - iconSize.y - margin * 3);
-		}
-		else
-			XYZEngine::LOG_WARN("Weapon icon texture not found, icon will be hidden");
 
 		// Texts
 		auto createText = [&](sf::Text& text, unsigned size, sf::Color color, float posX, float posY)
@@ -128,6 +119,16 @@ namespace Ryzharto_RogaliqueGame
 			ammoText.setString(ss.str());
 			float offset = ammoText.getLocalBounds().width;
 			ammoText.setPosition(weaponIcon.getPosition().x + iconSize.x - offset, weaponIcon.getPosition().y + iconSize.y + margin);
+
+			// Weapon Icon
+			const sf::Texture* texture = weapon->GetCurrentWeaponInfo().icon;
+			if (texture != nullptr && weaponIcon.getTexture() != texture)
+			{
+				weaponIcon.setTexture(*texture);
+				sf::Vector2u texSize = texture->getSize();
+				weaponIcon.setScale(iconSize.x / texSize.x, iconSize.y / texSize.y);
+				weaponIcon.setPosition(1280 - iconSize.x - margin, 720 - iconSize.y - margin * 3);
+			}
 		}
 
 		// Update notifications

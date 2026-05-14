@@ -83,6 +83,9 @@
     <ClCompile Include="MainMenu.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="GameOverMenu.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Debug.h">
@@ -158,6 +161,12 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="MainMenu.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemData.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverMenu.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

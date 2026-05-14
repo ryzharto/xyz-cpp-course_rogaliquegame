@@ -13,10 +13,10 @@ namespace Ryzharto_RogaliqueGame
 
         static void HackTerminal(XYZEngine::GameObject* instigator, XYZEngine::GameObject* self);
         static void DestroyTerminal(XYZEngine::GameObject* instigator, XYZEngine::GameObject* self);
-        static void PickUpMedkit(XYZEngine::GameObject* instigator, XYZEngine::GameObject* self);
-        static void PickUpAmmoBox(XYZEngine::GameObject* instigator, XYZEngine::GameObject* self);
+
+        static void PickUpItem(XYZEngine::GameObject* instigator, XYZEngine::GameObject* self);
 
     private:
-        static std::unordered_map<std::string, Prefab> s_prefabs;
+        static std::unordered_map<std::string, Prefab> prefabs;
     };
 }

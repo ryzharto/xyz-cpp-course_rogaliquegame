@@ -49,13 +49,20 @@ namespace Ryzharto_RogaliqueGame
 
 		auto attack = gameObject->AddComponent<XYZEngine::AttackComponent>();
 		attack->SetAttackPower(15.f);
-		attack->SetAttackRange(5.f);
-		attack->SetAttackCooldown(0.7f);
+		attack->SetAttackRange(150.f);
+		attack->SetAttackCooldown(0.2f);
 
 		auto weapon = gameObject->AddComponent<XYZEngine::WeaponComponent>();
-		weapon->SetFireRate(3.f);
-		weapon->SetBulletSpeed(600.f);
-		weapon->SetMaxAmmo(30);
+
+		// Machete - melee weapon
+		XYZEngine::WeaponInfo machete;
+		machete.name = "Machete";
+		machete.icon = XYZEngine::ResourceSystem::Instance()->GetTextureShared("Melee_Machete");
+		machete.damage = 15.f;
+		machete.fireRate = 3.f;
+		machete.maxAmmo = 0;
+		machete.isMelee = true;
+		weapon->AddWeapon(machete);
 
 		auto inventory = gameObject->AddComponent<XYZEngine::InventoryComponent>();
 

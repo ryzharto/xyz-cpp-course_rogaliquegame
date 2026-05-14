@@ -38,6 +38,10 @@ namespace XYZEngine
 				mouseLeftButtonPressed = false;
 			break;
 
+		case sf::Event::MouseWheelScrolled:
+			mouseWheelDelta += static_cast<int>(event.mouseWheelScroll.delta);
+			break;
+
 		default:
 			break;
 		}
@@ -90,10 +94,9 @@ namespace XYZEngine
 
 	void InputManager::ResetFrameFlags()
 	{
-		mouseLeftButtonPressed = false;
 		reloadButtonPressed = false;
 		interactButtonPressed = false;
+		mouseLeftButtonPressed = false;
+		mouseWheelDelta = 0;
 	}
-
-
 }

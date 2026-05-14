@@ -1,6 +1,8 @@
 #include "InventoryScreen.h"
 #include "GameObject.h"
+#include "ResourceSystem.h"
 #include "InventoryComponent.h"
+#include "WeaponComponent.h"
 #include "UIManager.h"
 #include "GameSettings.h"
 #include <sstream>
@@ -59,7 +61,11 @@ namespace Ryzharto_RogaliqueGame
 		title.setPosition(winSize.x / 2.f, 120.f);
 		window.draw(title);
 
-		// Draw items
+		// Draw items icons
+		for (auto& icon : itemIcons)
+			window.draw(icon);
+
+		// Draw items texts
 		for (auto& text : itemTexts)
 			window.draw(text);
 
@@ -95,12 +101,14 @@ namespace Ryzharto_RogaliqueGame
 			if (count == 0) return;
 			selectedIndex = (selectedIndex - 1 + count) % count; // Move to last item
 			UpdateSelectorPosition();
+			RefreshActionsForCurrentItem();
 		}
 		else if (event.key.code == sf::Keyboard::S || event.key.code == sf::Keyboard::Down)
 		{
 			if (count == 0) return;
 			selectedIndex = (selectedIndex + 1) % count; // Move to next bottom item (under current)
 			UpdateSelectorPosition();
+			RefreshActionsForCurrentItem();
 		}
 
 		// Item Action selection
@@ -130,7 +138,12 @@ namespace Ryzharto_RogaliqueGame
 			auto inv = player->GetComponent<XYZEngine::InventoryComponent>();
 			if (inv)
 			{
-				inv->UseItem(selectedIndex, selectedActionIndex, player);
+				if (selectedActionIndex < 0 || selectedActionIndex >= static_cast<int>(actionTypes.size()))
+					return;
+
+				ItemActionType type = actionTypes[selectedActionIndex];
+
+				inv->UseItem(selectedIndex, type, player);
 				RefreshItemList();
 				if (inv->GetItemCount() == 0) Close(); // Close inventory if its empty
 			}
@@ -149,19 +162,19 @@ namespace Ryzharto_RogaliqueGame
 				if (inv && selectedIndex < inv->GetItemCount())
 				{
 					// »щем действие "Drop" среди действий текущего предмета
-					const auto& actions = inv->GetItem(selectedIndex).actions;
-					int dropActionIndex = -1;
-					for (size_t i = 0; i < actions.size(); ++i)
+					auto available = inv->GetItem(selectedIndex).GetAvailableActions(player);
+					ItemActionType dropType = ItemActionType::None;
+					for (const auto& a : available)
 					{
-						if (actions[i].name == "Drop")
+						if (a.type == ItemActionType::Drop)
 						{
-							dropActionIndex = i;
+							dropType = a.type;
 							break;
 						}
 					}
-					if (dropActionIndex != -1)
+					if (dropType != ItemActionType::None)
 					{
-						inv->UseItem(selectedIndex, dropActionIndex, player);
+						inv->UseItem(selectedIndex, dropType, player);
 						RefreshItemList();
 						if (inv->GetItemCount() == 0) Close();
 					}
@@ -170,23 +183,54 @@ namespace Ryzharto_RogaliqueGame
 		}
 	}
 
+	bool InventoryScreen::IsWeaponEquipped(const Item& item) const
+	{
+		auto* weapon = player->GetComponent<XYZEngine::WeaponComponent>();
+		if (!weapon) return false;
+		return weapon->HasWeapon(item.GetPrefabKey());
+	}
+
 	void InventoryScreen::RefreshItemList()
 	{
-		// Fill items
+		// Clear actions and items lists
 		itemTexts.clear();
+		itemIcons.clear();
+
 		auto inv = player->GetComponent<XYZEngine::InventoryComponent>();
 		if (!inv) return;
 
 		for (size_t i = 0; i < inv->GetItemCount(); ++i)
 		{
+			// Items Icons
+			sf::Sprite icon;
+			const auto& item = inv->GetItem(i);
+			const sf::Texture* texture = XYZEngine::ResourceSystem::Instance()->GetTextureShared(inv->GetItem(i).GetIconTextureKey());
+			if (texture == nullptr)
+				texture = XYZEngine::ResourceSystem::Instance()->GetTextureShared("default_texture");
+			else
+			{
+				icon.setTexture(*texture);
+				sf::Vector2u textureSize = texture->getSize();
+				float desiredHeight = 24.f;
+				float scale = desiredHeight / textureSize.y; // scale only height
+				icon.setScale(scale, scale);
+				icon.setPosition(200.f, 150.f + i * 35.f);
+			}
+			itemIcons.push_back(icon);
+
+			// Items names
 			sf::Text text;
 			text.setFont(font);
 			text.setCharacterSize(24);
 			text.setFillColor(sf::Color::White);
-			text.setString(inv->GetItem(i).name);
+			text.setString(inv->GetItem(i).GetName());
 			text.setPosition(300.f, 150.f + i * 35.f); // offset
 			itemTexts.push_back(text);
 		}
+
+		// ≈сли selectedIndex выходит за границы Ц сбросить на 0
+		if (selectedIndex >= inv->GetItemCount())
+			selectedIndex = 0;
 
 		if (!itemTexts.empty())
 		{
@@ -194,24 +238,38 @@ namespace Ryzharto_RogaliqueGame
 			UpdateSelectorPosition();
 		}
 
-		// Fill available actions list
-		actionTexts.clear();
-		if (selectedIndex >= 0 && selectedIndex < inv->GetItemCount())
-		{
-			const auto& actions = inv->GetItem(selectedIndex).actions;
+		RefreshActionsForCurrentItem();
+	}
 
-			for (size_t i = 0; i < actions.size(); ++i)
-			{
-				sf::Text text;
-				text.setFont(font);
-				text.setCharacterSize(20);
-				text.setFillColor(sf::Color::White);
-				text.setString(actions[i].name);
-				text.setPosition(650.f, 150.f + i * 30.f); // offset
-				actionTexts.push_back(text);
-			}
-			if (!actionTexts.empty())
-				selectedActionIndex = 0;
+	void InventoryScreen::RefreshActionsForCurrentItem()
+	{
+		actionTexts.clear();
+		actionTypes.clear();
+
+		auto inv = player->GetComponent<XYZEngine::InventoryComponent>();
+		if (!inv || selectedIndex >= inv->GetItemCount()) return;
+
+		const auto& item = inv->GetItem(selectedIndex);
+		auto availableActions = item.GetAvailableActions(player);
+
+		for (size_t i = 0; i < availableActions.size(); ++i)
+		{
+			const auto& action = availableActions[i];
+
+			sf::Text text;
+			text.setFont(font);
+			text.setCharacterSize(20);
+			text.setFillColor(sf::Color::White);
+			text.setString(action.name);
+			text.setPosition(650.f, 150.f + i * 30.f); // offset
+			actionTexts.push_back(text);
+
+			actionTypes.push_back(action.type);   // запоминаем тип
+		}
+
+		if (!actionTexts.empty())
+		{
+			selectedActionIndex = 0;
 			UpdateActionSelectorPosition();
 		}
 	}

@@ -1,12 +1,15 @@
 #pragma once
 #include "GameObject.h"
+#include "ItemData.h"
+#include "WeaponComponent.h"
+#include "Vector.h"
 #include <string>
 #include <vector>
-#include "Vector.h"
+#include <optional>
 
 namespace Ryzharto_RogaliqueGame
 {
-    struct PrefabAction
+    struct PrefabAction // For world interactable objects
     {
         std::string actionName;   // "Hack", "Pick up"
         std::string handlerName;  // "Handler_HackTerminal"
@@ -23,10 +26,21 @@ namespace Ryzharto_RogaliqueGame
         bool isInteractive = false; // if true, then add InteractableComponent
         bool hasCollision = false; // if true object will collide (no - for fllors, pickables)
 
-        // Interactive setting (used if isInteractive == true)
+        ItemCategory category = ItemCategory::None;
+
+        std::vector<ItemAction> itemActions;
+        //std::vector<ItemActionType> availableActions; // inventory actions order
+       // std::function<void(XYZEngine::GameObject* owner)> useEffect; // for consumables
+        std::optional<XYZEngine::WeaponInfo> weaponData; // for weapons
+
+        // Weapons
+        //bool isWeapon = false;
+        //std::string weaponName;
+
+        // Interactive setting for world objects (used if isInteractive == true)
         float interactionRadius = 100.f;
         std::string prompt;
         bool singleUse = false;
-        std::vector<PrefabAction> actions;
+        std::vector<PrefabAction> interactActions; // actions in world (Hack, destroy, etc)
     };
 }
