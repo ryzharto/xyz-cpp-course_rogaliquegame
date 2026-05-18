@@ -23,6 +23,12 @@ namespace XYZEngine
 		if (currentArmour >= maxArmour) currentArmour = maxArmour;
 	}
 
+	void StatsComponent::SetStamina(float newStamina)
+	{
+		currentStamina = newStamina;
+		if (currentStamina >= maxStamina) currentStamina = maxStamina;
+	}
+
 	void StatsComponent::UseStamina(float amount)
 	{
 		currentStamina -= amount;

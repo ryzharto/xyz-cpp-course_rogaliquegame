@@ -1,7 +1,7 @@
 #pragma once
-#include <GameWorld.h>
-#include <SpriteComponent.h>
-#include <ResourceSystem.h>
+#include "GameWorld.h"
+#include "SpriteComponent.h"
+#include "ResourceSystem.h"
 #include "GameObject.h"
 
 namespace Ryzharto_RogaliqueGame

@@ -23,7 +23,7 @@ namespace Ryzharto_RogaliqueGame
 
         // Title
         title.setFont(font);
-        title.setString("CRETA ROGUELITE");
+        title.setString("CRETA ROGUELIKE");
         title.setCharacterSize(48);
         title.setFillColor(sf::Color::Red);
         title.setStyle(sf::Text::Bold);

@@ -175,7 +175,10 @@
     <ClCompile Include="InventoryActions.cpp" />
     <ClCompile Include="InventoryScreen.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="LevelBuilder.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
+    <ClCompile Include="LevelManager.cpp" />
+    <ClCompile Include="LevelTransitionScreen.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MazeGenerator.cpp" />
     <ClCompile Include="Music.cpp" />
@@ -208,12 +211,16 @@
     <ClInclude Include="InventoryScreen.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemData.h" />
+    <ClInclude Include="LevelBuilder.h" />
     <ClInclude Include="LevelLoader.h" />
+    <ClInclude Include="LevelManager.h" />
+    <ClInclude Include="LevelTransitionScreen.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MazeGenerator.h" />
     <ClInclude Include="Music.h" />
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerState.h" />
     <ClInclude Include="Prefab.h" />
     <ClInclude Include="PrefabCatalog.h" />
     <ClInclude Include="PrefabSetup.h" />

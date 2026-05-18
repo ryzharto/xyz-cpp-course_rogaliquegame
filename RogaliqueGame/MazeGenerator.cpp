@@ -1,108 +1,139 @@
 #include "MazeGenerator.h"
-#include "DeveloperLevel.h"
-#include <cstdlib>
-#include <ctime>
+#include <algorithm>
+#include <chrono>
 
 namespace Ryzharto_RogaliqueGame
 {
-    // Constructor: Initializes the maze generator with the given dimensions and level reference.
-    MazeGenerator::MazeGenerator(int width, int height, DeveloperLevel* level) : width(width), height(height), level(level)
+    MazeGenerator::MazeGenerator(int width, int height) : width(width), height(height)
     {
-        // Resize the grid to match the maze dimensions and initialize all cells as unvisited (false).
-        grid.resize(height, std::vector<bool>(width, false));
+        // Инициализируем генератор случайных чисел текущим временем
+        unsigned seed = static_cast<unsigned>(std::chrono::system_clock::now().time_since_epoch().count());
+        rng.seed(seed);
+
+        // Сетка с запасом для стен между комнатами: размер = (2*width+1) x (2*height+1)
+        int gridW = 2 * width + 1;
+        int gridH = 2 * height + 1;
+        grid.assign(gridW * gridH, CellType::Wall);
     }
 
-    // Generate: Creates a maze using the Depth-First Search (DFS) algorithm.
+    int MazeGenerator::GridIndex(int x, int y) const
+    {
+        return y * (2 * width + 1) + x;
+    }
+
+    bool MazeGenerator::IsInBounds(int x, int y) const
+    {
+        return (x >= 0 && x < 2 * width + 1 && y >= 0 && y < 2 * height + 1);
+    }
+
+    bool MazeGenerator::IsOuterWall(int x, int y) const
+    {
+        return (x == 0 || x == 2 * width || y == 0 || y == 2 * height);
+    }
+
+    bool MazeGenerator::ShouldPlaceDoor() const
+    {
+        std::uniform_real_distribution<float> dist(0.0f, 1.0f);
+        return dist(rng) < doorProbability;
+    }
+
+    void MazeGenerator::Carve(int x, int y)
+    {
+        // Превращаем текущую клетку в пол
+        grid[GridIndex(x, y)] = CellType::Floor;
+
+        // Направления: вверх, вправо, вниз, влево (смещение на 2 клетки)
+        const int dx[] = { 0, 2, 0, -2 };
+        const int dy[] = { -2, 0, 2, 0 };
+
+        // Перемешиваем порядок направлений
+        std::vector<int> dirs = { 0, 1, 2, 3 };
+        std::shuffle(dirs.begin(), dirs.end(), rng);
+
+        for (int d : dirs)
+        {
+            int nx = x + dx[d];
+            int ny = y + dy[d];
+
+            // Если соседняя клетка (через одну) в границах и ещё не является полом
+            if (IsInBounds(nx, ny) && !IsOuterWall(nx, ny) && grid[GridIndex(nx, ny)] == CellType::Wall)
+            {
+                // Убираем стену между текущей и соседней клеткой
+                int wallX = x + dx[d] / 2;
+                int wallY = y + dy[d] / 2;
+                if (!IsOuterWall(wallX, wallY))
+                {
+                    // Добавим в проем дверь по проверке
+                    if (ShouldPlaceDoor())
+                        grid[GridIndex(wallX, wallY)] = CellType::Door;
+                    else
+                        grid[GridIndex(wallX, wallY)] = CellType::Floor;
+                }
+                // Рекурсивно проходим в соседнюю клетку
+                Carve(nx, ny);
+            }
+        }
+    }
+
+    void MazeGenerator::PlaceEntranceAndExit()
+    {
+        // Вход: левая верхняя внутренняя комната
+        entrance = XYZEngine::Vector2Di{ 1, 1 };
+        // Выход: правая нижняя внутренняя комната
+        exit = XYZEngine::Vector2Di{ 2 * width - 1, 2 * height - 1 };
+
+        // Помечаем их
+        grid[GridIndex(entrance.x, entrance.y)] = CellType::Entrance;
+        grid[GridIndex(exit.x, exit.y)] = CellType::Exit;
+    }
+
     void MazeGenerator::Generate()
     {
-        // Seed the random number generator for consistent randomness.
-        std::srand(std::time(nullptr));
+        // Начинаем с внутренней клетки (1,1) – она гарантированно не внешняя стена
+        Carve(1, 1);
 
-        // Start from a random cell in the grid.
-        int startX = std::rand() % width;
-        int startY = std::rand() % height;
-
-        // Use a stack to keep track of visited cells during DFS.
-        std::stack<std::pair<int, int>> stack;
-        stack.push({ startX, startY });
-        grid[startY][startX] = true; // Mark the starting cell as visited.
-
-        // Continue until the stack is empty (all cells are processed).
-        while (!stack.empty())
-        {
-            // Get the current cell from the top of the stack.
-            auto [x, y] = stack.top();
-            stack.pop();
-
-            // Get all available directions (unvisited neighboring cells) from the current cell.
-            std::vector<std::pair<int, int>> directions = GetAvailableDirections(x, y);
-
-            // If there are available directions, process them.
-            if (!directions.empty())
-            {
-                // Push the current cell back onto the stack to revisit later.
-                stack.push({ x, y });
-
-                // Randomly select one of the available directions.
-                std::pair<int, int> dir = directions[std::rand() % directions.size()];
-                int nx = x + dir.first;
-                int ny = y + dir.second;
-
-                // Remove the wall between the current cell and the selected neighbor.
-                RemoveWall(x, y, nx, ny);
-
-                // Mark the neighbor as visited and push it onto the stack for further exploration.
-                grid[ny][nx] = true;
-                stack.push({ nx, ny });
-            }
-        }
+        // Устанавливаем вход и выход
+        PlaceEntranceAndExit();
     }
 
-    // GetAvailableDirections: Returns a list of valid, unvisited neighboring cells.
-    std::vector<std::pair<int, int>> MazeGenerator::GetAvailableDirections(int x, int y)
+    CellType MazeGenerator::GetCell(int x, int y) const
     {
-        // Define possible directions: up, down, left, right (2 cells away to leave space for walls).
-        std::vector<std::pair<int, int>> directions =
-        {
-            {0, -2}, // Up
-            {0, 2},  // Down
-            {-2, 0}, // Left
-            {2, 0}   // Right
-        };
-
-        std::vector<std::pair<int, int>> available;
-
-        // Check each direction to see if it leads to a valid, unvisited cell.
-        for (const auto& dir : directions)
-        {
-            int nx = x + dir.first;
-            int ny = y + dir.second;
-
-            // Ensure the neighbor is within bounds and unvisited.
-            if (nx >= 0 && nx < width && ny >= 0 && ny < height && !grid[ny][nx])
-            {
-                available.push_back(dir);
-            }
-        }
-
-        return available;
+        if (!IsInBounds(x, y)) return CellType::Wall;
+        return grid[GridIndex(x, y)];
     }
 
-    // RemoveWall: Removes the wall between two cells and adds floors and walls to the level.
-    void MazeGenerator::RemoveWall(int x1, int y1, int x2, int y2)
+    int MazeGenerator::GetGridWidth() const
     {
-        // Calculate the position of the wall between the two cells.
-        int wallX = (x1 + x2) / 2;
-        int wallY = (y1 + y2) / 2;
+        return 2 * width + 1;
+    }
 
-        // Add floors to the current cell and the neighboring cell.
-        level->floors.push_back(std::make_unique<Floor>(XYZEngine::Vector2Df{ x1 * 128.f, y1 * 128.f }, 0));
-        level->floors.push_back(std::make_unique<Floor>(XYZEngine::Vector2Df{ x2 * 128.f, y2 * 128.f }, 0));
+    int MazeGenerator::GetGridHeight() const
+    {
+        return 2 * height + 1;
+    }
 
-        // Add a wall at the midpoint if the cells are not directly adjacent.
-        if (wallX != x1 || wallY != y1)
+    XYZEngine::Vector2Di MazeGenerator::GetEntrance() const
+    {
+        return entrance;
+    }
+
+    XYZEngine::Vector2Di MazeGenerator::GetExit() const
+    {
+        return exit;
+    }
+
+    std::vector<XYZEngine::Vector2Di> MazeGenerator::GetFloorCells() const
+    {
+        std::vector<XYZEngine::Vector2Di> floors;
+        for (int y = 0; y < 2 * height + 1; ++y)
         {
-            level->walls.push_back(std::make_unique<Wall>(XYZEngine::Vector2Df{ wallX * 128.f, wallY * 128.f }, 14));
+            for (int x = 0; x < 2 * width + 1; ++x)
+            {
+                CellType cell = grid[GridIndex(x, y)];
+                if (cell == CellType::Floor || cell == CellType::Entrance || cell == CellType::Exit)
+                    floors.push_back({ x, y });
+            }
         }
+        return floors;
     }
 }

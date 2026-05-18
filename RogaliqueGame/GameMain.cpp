@@ -18,13 +18,13 @@ int main()
 {
 	XYZEngine::Engine::Instance(); // Logger initialize
 
-	XYZEngine::RenderSystem::Instance()->SetMainWindow(new sf::RenderWindow(sf::VideoMode(1280, 720), "Ryzharto's Creta Roguelite"));
+	XYZEngine::RenderSystem::Instance()->SetMainWindow(new sf::RenderWindow(sf::VideoMode(1280, 720), "Ryzharto's Creta Roguelike"));
 
 	// Default texture
 	XYZEngine::ResourceSystem::Instance()->LoadTexture("default_texture", "Resources/Textures/default_texture.png");
 
 	// Actors - player and enemies
-	XYZEngine::ResourceSystem::Instance()->LoadTexture("player", "Resources/Textures/vecteezy_soldier-in-uniform-cartoon.png");
+	XYZEngine::ResourceSystem::Instance()->LoadTexture("player", "Resources/Textures/soldier.png");
 	//XYZEngine::ResourceSystem::Instance()->LoadTextureMap("player", "Resources/TextureMaps/Player.png", { 48, 63 }, 4, false);
 	XYZEngine::ResourceSystem::Instance()->LoadTexture("Raptor_biege", "Resources/Textures/velociraptor-dinosaur-beige.png");
 	XYZEngine::ResourceSystem::Instance()->LoadTexture("Raptor_red", "Resources/Textures/velociraptor-dinosaur-red.png");
@@ -41,14 +41,14 @@ int main()
 	XYZEngine::ResourceSystem::Instance()->LoadTexture("SMG_PPK-20", "Resources/Textures/weapon_ppk-20.png");
 
 	// Static objects
-	XYZEngine::ResourceSystem::Instance()->LoadTextureMap("level_floors", "Resources/TextureMaps/Floor.png", { 16, 16 }, 49, false);
-	XYZEngine::ResourceSystem::Instance()->LoadTextureMap("level_walls", "Resources/TextureMaps/Wall.png", { 16, 16 }, 48, false);
+	XYZEngine::ResourceSystem::Instance()->LoadTextureMap("level_floors", "Resources/TextureMaps/Floor.png", { 128, 128 }, 49, false);
+	XYZEngine::ResourceSystem::Instance()->LoadTextureMap("level_walls", "Resources/TextureMaps/Wall.png", { 128, 128 }, 48, false);
 	XYZEngine::ResourceSystem::Instance()->LoadTexture("Terminal", "Resources/Textures/terminal.png");
+	XYZEngine::ResourceSystem::Instance()->LoadTexture("Door_Locked", "Resources/Textures/door_locked.png");
+	//XYZEngine::ResourceSystem::Instance()->LoadTexture("Crate", "Resources/Textures/crate.png");
 
 	// Music
 	XYZEngine::ResourceSystem::Instance()->LoadSound("music", "Resources/Sounds/level-1.wav");
-
-	Ryzharto_RogaliqueGame::SetupPrefabs();
 
 	Ryzharto_RogaliqueGame::Game::Instance().Init();
 

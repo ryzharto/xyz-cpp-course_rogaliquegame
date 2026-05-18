@@ -5,6 +5,8 @@
 #include "HUD.h"
 #include "UIManager.h"
 #include "GameWorld.h"
+#include "PrefabSetup.h"
+#include "LevelManager.h"
 #include "MainMenu.h"
 #include "GameOverMenu.h"
 #include "Logger.h"
@@ -19,6 +21,28 @@ namespace Ryzharto_RogaliqueGame
 
     void Game::Init()
     {
+        Ryzharto_RogaliqueGame::SetupPrefabs();
+
+        LevelManager::Instance().RegisterLevel("Level 1", "Abandoned Laboratory", [](Game* game)
+            {
+            // Фабрика уровня
+            auto level = std::make_unique<DeveloperLevel>(7, 7);
+            level->Start();
+            game->SetCurrentLevel(std::move(level));
+            game->SetPlayer(game->currentLevel ? game->currentLevel->GetPlayer() : nullptr);
+            });
+
+        LevelManager::Instance().RegisterLevel("Level 2", "Jungle Outpost", [](Game* game)
+            {
+            auto level = std::make_unique<DeveloperLevel>(10, 10);
+            level->Start();
+            game->SetCurrentLevel(std::move(level));
+            game->SetPlayer(game->currentLevel ? game->currentLevel->GetPlayer() : nullptr);
+            });
+
+        // Загружаем первый уровень
+        //LevelManager::Instance().LoadLevel("Level 1");
+
         // Показываем главное меню (оно само добавится в UIManager)
         UIManager::Instance()->ClearAllScreens();
         UIManager::Instance()->PushScreen(std::make_shared<MainMenu>());
@@ -72,6 +96,23 @@ namespace Ryzharto_RogaliqueGame
             pendingGameOver = true;
     }
 
+    void Game::OnLevelLoaded()
+    {
+        // Получаем игрока
+        player = nullptr;
+        player = currentLevel->GetPlayer();
+        if (player)
+            XYZEngine::GameWorld::Instance()->SetPlayer(player);
+
+        // Очищаем все экраны UI и добавляем HUD
+        if (player)
+        {
+            auto hud = std::make_shared<HUD>(player);
+            UIManager::Instance()->PushScreen(hud);
+            LOG_INFO("New game started, HUD added");
+        }
+    }
+
     void Game::ExecuteNewGame()
     {
         // Очищаем старый уровень и мир
@@ -81,27 +122,13 @@ namespace Ryzharto_RogaliqueGame
             currentLevel.reset();
         }
         XYZEngine::GameWorld::Instance()->Clear();
-        player = nullptr;
+        XYZEngine::UIManager::Instance()->ClearAllScreens();
 
-        // Создаём новый уровень
-        currentLevel = std::make_unique<DeveloperLevel>();
-        currentLevel->Start();
-
-        // Получаем игрока
-        player = currentLevel->GetPlayer();
-        if (player)
-            XYZEngine::GameWorld::Instance()->SetPlayer(player);
-
-        // Очищаем все экраны UI и добавляем HUD
-        UIManager::Instance()->ClearAllScreens();
-        if (player)
-        {
-            auto hud = std::make_shared<HUD>(player);
-            UIManager::Instance()->PushScreen(hud);
-            LOG_INFO("New game started, HUD added");
-        }
+        // Загружаем первый уровень через LevelManager
+        LevelManager::Instance().LoadLevel("Level 1");
 
         state = State::Playing;
+        LOG_INFO("New game started via LevelManager");
     }
 
     void Game::ExecuteReturnToMainMenu()

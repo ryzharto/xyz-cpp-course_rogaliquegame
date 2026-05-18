@@ -1,5 +1,5 @@
-#include <GameWorld.h>
-#include <ResourceSystem.h>
+#include "GameWorld.h"
+#include "ResourceSystem.h"
 #include "GameObject.h"
 
 namespace Ryzharto_RogaliqueGame

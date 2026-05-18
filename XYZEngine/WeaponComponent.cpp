@@ -147,6 +147,11 @@ namespace XYZEngine
 		LOG_INFO("Switched to previous weapon: " + current.name);
 	}
 
+	void WeaponComponent::SetCurrentWeaponIndex(int index)
+	{
+		if (index >= 0 && index < weapons.size()) currentIndex = index;
+	}
+
 	bool WeaponComponent::HasWeapon(const std::string& name) const
 	{
 		for (const auto& w : weapons)
