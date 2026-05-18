@@ -5,6 +5,7 @@
 #include "InventoryActions.h"
 #include "GameWorld.h"
 #include "PrefabCatalog.h"
+#include "LevelManager.h"
 #include "Logger.h"
 
 namespace Ryzharto_RogaliqueGame
@@ -17,19 +18,6 @@ namespace Ryzharto_RogaliqueGame
     {
         prefabs[key] = prefab;
     }
-
-    void InteractionActions::HackTerminal(XYZEngine::GameObject* instigator, XYZEngine::GameObject* self)
-    {
-        XYZEngine::LOG_INFO("Terminal HACKED!");
-        // Здесь может быть открытие двери и т.п.
-    }
-
-    void InteractionActions::DestroyTerminal(XYZEngine::GameObject* instigator, XYZEngine::GameObject* self)
-    {
-        XYZEngine::GameWorld::Instance()->DestroyGameObject(self);
-        XYZEngine::LOG_INFO("Terminal DESTROYED!");
-    }
-
 
     void InteractionActions::PickUpItem(XYZEngine::GameObject* instigator, XYZEngine::GameObject* self)
     {
@@ -56,5 +44,53 @@ namespace Ryzharto_RogaliqueGame
 
         XYZEngine::GameWorld::Instance()->DestroyGameObject(self);
     }
+
+    void InteractionActions::HackTerminal(XYZEngine::GameObject* instigator, XYZEngine::GameObject* self)
+    {
+        XYZEngine::LOG_INFO("Terminal HACKED!");
+        // Здесь может быть открытие двери и т.п.
+    }
+
+    void InteractionActions::DestroyTerminal(XYZEngine::GameObject* instigator, XYZEngine::GameObject* self)
+    {
+        XYZEngine::GameWorld::Instance()->DestroyGameObject(self);
+        XYZEngine::LOG_INFO("Terminal DESTROYED!");
+    }
+
+    void InteractionActions::UnlockDoor(XYZEngine::GameObject* instigator, XYZEngine::GameObject* self)
+    {
+        // Simple realization - door changed to floor
+        XYZEngine::GameWorld* world = XYZEngine::GameWorld::Instance();
+        XYZEngine::Vector2Df pos = self->GetComponent<XYZEngine::TransformComponent>()->GetWorldPosition();
+        world->DestroyGameObject(self); // delete door
+        //PrefabCatalog::Instance().Instantiate("floor", pos); // change to floor
+        XYZEngine::LOG_INFO("Door unlocked and replaced with floor");
+        XYZEngine::LOG_INFO("Door unlocked");
+    }
+
+    void InteractionActions::BreakCrate(XYZEngine::GameObject* instigator, XYZEngine::GameObject* self)
+    {
+        // Create random object next to crate (medkit ar ammobox)
+        XYZEngine::Vector2Df pos = self->GetComponent<XYZEngine::TransformComponent>()->GetWorldPosition();
+        XYZEngine::GameWorld::Instance()->DestroyGameObject(self);
+        // Random object
+        std::string prefabKey = (rand() % 2 == 0) ? "medkit" : "ammo_box";
+        PrefabCatalog::Instance().Instantiate(prefabKey, pos);
+        XYZEngine::LOG_INFO("Crate broken, spawned " + prefabKey);
+    }
+
+    void InteractionActions::ActivateComputer(XYZEngine::GameObject* instigator, XYZEngine::GameObject* self)
+    {
+        XYZEngine::LOG_INFO("Computer activated! (no effect yet)");
+        // В будущем: открыть удалённую дверь, опустить мост и т.д.
+    }
+
+    void InteractionActions::UseLevelExit(XYZEngine::GameObject* instigator, XYZEngine::GameObject* self)
+    {
+        LevelManager::Instance().LoadNextLevel();
+        XYZEngine::LOG_INFO("Level exit used. Loading next level...");
+        // Пока заглушка, позже вызовет LevelManager::Instance().LoadNextLevel();
+    }
+
 
 }

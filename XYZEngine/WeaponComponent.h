@@ -32,9 +32,12 @@ namespace XYZEngine
 		void AddWeapon(const WeaponInfo& info);
 		void RemoveWeapon(const std::string& name);
 		const WeaponInfo& GetCurrentWeaponInfo() const;
+		const WeaponInfo& GetWeaponInfo(int index) const { return weapons[index]; }
 		void SwitchToNextWeapon();
 		void SwitchToPrevWeapon();
+		void SetCurrentWeaponIndex(int index);
 		int GetCurrentWeaponIndex() const { return currentIndex; }
+		int GetWeaponCount() const { return weapons.size(); }
 		bool HasWeapon(const std::string& name) const;
 		void SetActive(bool newActive) { active = newActive; }
 		bool isActive() const { return active; }

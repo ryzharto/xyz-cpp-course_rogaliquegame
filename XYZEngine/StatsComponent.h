@@ -25,6 +25,7 @@ namespace XYZEngine
 		float GetCurrentArmour() const { return currentArmour; }
 		float GetMaxArmour() const { return maxArmour; }
 
+		void SetStamina(float newStamina);
 		float GetCurrentStamina() const { return currentStamina;  }
 		float GetMaxStamina() const { return maxStamina; }
 		

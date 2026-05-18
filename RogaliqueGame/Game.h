@@ -1,12 +1,13 @@
 #pragma once
 #include <memory>
 #include "GameObject.h"
+#include "DeveloperLevel.h"
 
 namespace XYZEngine { class GameObject; }
 
 namespace Ryzharto_RogaliqueGame
 {
-    class DeveloperLevel;
+    //class DeveloperLevel;
     class HUD;
 
     class Game
@@ -22,6 +23,9 @@ namespace Ryzharto_RogaliqueGame
         void RequestGameOver();
 
         bool IsPlaying() const { return state == State::Playing; }
+        void SetPlayer(XYZEngine::GameObject* player) { player = player; }
+        void SetCurrentLevel(std::unique_ptr<DeveloperLevel> level) { currentLevel = std::move(level); }
+        void OnLevelLoaded();
         XYZEngine::GameObject* GetPlayer() const { return player; }
 
     private:

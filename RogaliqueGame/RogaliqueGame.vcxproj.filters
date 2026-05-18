@@ -86,6 +86,15 @@
     <ClCompile Include="GameOverMenu.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="LevelBuilder.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelManager.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelTransitionScreen.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Debug.h">
@@ -167,6 +176,18 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="GameOverMenu.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelBuilder.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerState.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelTransitionScreen.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

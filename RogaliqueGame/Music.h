@@ -1,8 +1,8 @@
 #pragma once
-#include <GameObject.h>
-#include <GameWorld.h>
-#include <AudioComponent.h>
-#include <ResourceSystem.h>
+#include "GameObject.h"
+#include "GameWorld.h"
+#include "AudioComponent.h"
+#include "ResourceSystem.h"
 
 namespace Ryzharto_RogaliqueGame
 {
