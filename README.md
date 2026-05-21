@@ -1,7 +1,7 @@
 # Ryzharto's Creta Roguelike (рабочее название)
 
 **Жанр:** 2D top‑down action roguelite/roguelike.  
-**Платформа:** Windows.
+**Платформа:** Windows (в перспективе macOS и Linux).  
 **Технологии:** C++17, SFML 2.6, Visual Studio 2022.
 
 ---
